@@ -1,0 +1,36 @@
+<ul class="metismenu">
+    <li class="text">Navigasi</li>
+    <li><a href="/admin/menu" class="{{ @$MenuActive }}"><i class="cs-menu-icon bi-menu-app"></i> Menu</a></li>
+    <li><a href="#" class="cs-menu-dropdown has-arrow active" aria-expanded="true"><i class="cs-menu-icon bi-puzzle-fill"></i> Widget</a>
+        <ul class="cs-menu-dropdown-item {{ @$active ? 'mm-collapse mm-show' : ''}}">
+            <li><a href="#" class="{{ @$active ? 'active' : ''}}">Slider</a></li>
+            <li><a href="#">Slot Iklan</a></li>
+            <li><a href="#">Selayang Pandang</a></li>
+            <li><a href="#">Deskripsi Singkat</a></li>
+        </ul>
+    </li>
+    <li><a href="#" class="cs-menu-dropdown has-arrow" aria-expanded="true"><i class="cs-menu-icon bi-gear-fill"></i> Meta</a>
+        <ul class="cs-menu-dropdown-item">
+            <li><a href="#">Media Sosial</a></li>
+            <li><a href="#">Identitas Instansi</a></li>
+        </ul>
+    </li>
+    <li><a href="#"><i class="cs-menu-icon bi-info-circle"></i> Blog</a></li>
+    <li><a href="#"><i class="cs-menu-icon bi-image-fill"></i> Galeri</a></li>
+    <li><a href="#" class="cs-menu-dropdown has-arrow" aria-expanded="true"><i class="cs-menu-icon bi-cash-coin"></i> Program</a>
+        <ul class="cs-menu-dropdown-item">
+            <li><a href="#">Kelola Program</a></li>
+            <li><a href="#">Rekapitulasi</a></li>
+        </ul>
+    </li>
+
+
+    <li class="text">Pengaturan</li>
+    <li><a href="/admin/user" class="{{ @$UserActive }}"><i class="cs-menu-icon bi-file-person-fill"></i> Kelola User</a></li>
+
+    <li class="text">Lain-lain</li>
+    <li><a href="/admin/user/detail" class="{{ @$ProfileActive }}"><i class="cs-menu-icon bi-person-badge"></i> Profil Anda</a></li>
+    <li><a href="#"><i class="cs-menu-icon bi-pencil-square"></i> Ubah Password</a></li>
+    <li><a href="/logout"><i class="cs-menu-icon bi-door-open-fill"></i> Logout</a></li>
+
+</ul>
