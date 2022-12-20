@@ -2,9 +2,11 @@
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Auth\Middleware\Authenticate;
+use App\Http\Controllers\RedactorController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\MenuController;
+use App\Http\Controllers\WidgetController;
 use App\Http\Kernel;
 
 
@@ -39,6 +41,10 @@ Route::group(['prefix'=>'admin', 'middleware'=>['auth']], function(){
         return view('sample');
     });
 
+    /* PLUGINS: REDACTORX */
+    Route::post('/redactor/upload', [RedactorController::class, 'upload']);
+
+    /* BAGIAN OCHA */
     Route::get('/user', [UserController::class, 'index']);
     Route::get('/user/table', [UserController::class, 'table']);
     Route::get('/user/{id}/delete', [UserController::class, 'delete']);
@@ -47,8 +53,19 @@ Route::group(['prefix'=>'admin', 'middleware'=>['auth']], function(){
     Route::get('/user/detail', [UserController::class, 'detail']);
     Route::post('/user/add', [UserController::class, 'store']);
 
+    
+    /* ---- */
+
+    /* BAGIAN PA ANDRI */
+    /* MENU */
     Route::get('/menu', [MenuController::class, 'index']);
     Route::get('/menu/table', [MenuController::class, 'table']);
     Route::get('/menu/{id}/delete', [MenuController::class, 'delete']);
+
+    /* WIDGET: SLIDER */
+    Route::get('/widget/slider', [WidgetController::class, 'index_slider']);
+    Route::get('/widget/slider/table', [WidgetController::class, 'table_slider']);
+    Route::get('/widget/slider/add', [WidgetController::class, 'form_slider']);
+    /* ---- */
 
 });

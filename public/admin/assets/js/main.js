@@ -30,6 +30,25 @@ function clearImageGenUrl(id){
     imgContainer.setAttribute('src', image);
 }
 
+/* article */
+/*
+ArticleEditor('#article', {
+    css: '/admin/assets/plugins/imperavi/article/'
+});
+*/
+
+/* redactorx */
+var header = $('meta[name="csrf_token"]').attr('content');
+console.log($('#csrf_token').attr('content'))
+RedactorX('#redactor', {
+    image: {
+        upload: '/admin/redactor/upload/',
+        data: {
+            _token: header
+        },
+        //multiple: false,
+    }
+});
 
 $(document).ready(function(){
     $('.loader').hide();

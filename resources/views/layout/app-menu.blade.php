@@ -1,9 +1,9 @@
 <ul class="metismenu">
     <li class="text">Navigasi</li>
     <li><a href="/admin/menu" class="{{ @$MenuActive }}"><i class="cs-menu-icon bi-menu-app"></i> Menu</a></li>
-    <li><a href="#" class="cs-menu-dropdown has-arrow active" aria-expanded="true"><i class="cs-menu-icon bi-puzzle-fill"></i> Widget</a>
-        <ul class="cs-menu-dropdown-item {{ @$active ? 'mm-collapse mm-show' : ''}}">
-            <li><a href="#" class="{{ @$active ? 'active' : ''}}">Slider</a></li>
+    <li><a href="#" class="cs-menu-dropdown has-arrow {{ @$WidgetActive }}" aria-expanded="true"><i class="cs-menu-icon bi-puzzle-fill"></i> Widget</a>
+        <ul class="cs-menu-dropdown-item {{ @$WidgetActive ? 'mm-collapse mm-show' : ''}}">
+            <li><a href="/admin/widget/slider" class="{{ @$WidSliderActive }}">Slider</a></li>
             <li><a href="#">Slot Iklan</a></li>
             <li><a href="#">Selayang Pandang</a></li>
             <li><a href="#">Deskripsi Singkat</a></li>

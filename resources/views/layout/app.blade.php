@@ -5,8 +5,12 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
+    @yield('meta')
+
     <link href="{{ asset('admin/assets/plugins/bootstrap/css/bootstrap.css') }}" rel="stylesheet"/>
     <link href="{{ asset('admin/assets/plugins/metismenu/metisMenu.min.css') }}" rel="stylesheet"/>
+    <!--<link href="{{ asset('admin/assets/plugins/imperavi/article/article-editor.min.css') }}" rel="stylesheet"/>-->
+    <link href="{{ asset('admin/assets/plugins/imperavi/redactorx/redactorx.min.css?build230') }}" rel="stylesheet"/>
     <link href="{{ asset('admin/assets/plugins/scss/custom.css') }}" rel="stylesheet"/>
 
     <title>@yield('title')</title>
@@ -49,10 +53,21 @@
     <script src="{{ asset('admin/assets/plugins/jquery/jquery-3.6.0.min.js') }}"></script>
     <script src="{{ asset('admin/assets/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 
-    <!-- datatable -->
+    <!-- plugins -->
     <script src="{{ asset('admin/assets/plugins/datatable/datatables.js') }}"></script>
     <script src="{{ asset('admin/assets/plugins/metismenu/metismenu.js') }}"></script>
     <script src="{{ asset('admin/assets/plugins/sweetalert/sweetalert.min.js') }}"></script>
+
+    <!--
+    <script src="{{ asset('admin/assets/plugins/imperavi/article/article-editor.js') }}"></script>
+    <script src="{{ asset('admin/assets/plugins/imperavi/article/reorder.min.js') }}"></script>
+    <script src="{{ asset('admin/assets/plugins/imperavi/article/inlineformat.min.js') }}"></script>
+    <script src="{{ asset('admin/assets/plugins/imperavi/article/style.min.js') }}"></script>
+    <script src="{{ asset('admin/assets/plugins/imperavi/article/imageposition.min.js') }}"></script>
+    -->
+    <script src="{{ asset('admin/assets/plugins/imperavi/redactorx/redactorx.js?build230') }}"></script>
+    <script src="{{ asset('admin/assets/plugins/imperavi/redactorx/inlineformat.min.js?build230') }}"></script>
+    <script src="{{ asset('admin/assets/plugins/imperavi/redactorx/imageposition.min.js?build230') }}"></script>
     <script src="{{ asset('admin/assets/js/main.js') }}"></script>
     
     @stack('scripts')
