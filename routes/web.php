@@ -60,12 +60,18 @@ Route::group(['prefix'=>'admin', 'middleware'=>['auth']], function(){
     /* MENU */
     Route::get('/menu', [MenuController::class, 'index']);
     Route::get('/menu/table', [MenuController::class, 'table']);
+    Route::get('/menu/add', [MenuController::class, 'form']);
+    Route::get('/menu/{id}/edit', [MenuController::class, 'form']);
     Route::get('/menu/{id}/delete', [MenuController::class, 'delete']);
+    Route::post('/menu/add', [MenuController::class, 'store']);
 
     /* WIDGET: SLIDER */
     Route::get('/widget/slider', [WidgetController::class, 'index_slider']);
     Route::get('/widget/slider/table', [WidgetController::class, 'table_slider']);
     Route::get('/widget/slider/add', [WidgetController::class, 'form_slider']);
+    Route::get('/widget/slider/{id}/edit', [WidgetController::class, 'form_slider']);
+    Route::get('/widget/slider/{id}/delete', [WidgetController::class, 'delete_slider']);
+    Route::post('/widget/slider/add', [WidgetController::class, 'store_slider']);
     /* ---- */
 
 });

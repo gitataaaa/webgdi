@@ -54,7 +54,14 @@
                         render: function(data, type, row, meta){
                             return (data == 'A' ? 'Ya' : 'Tidak');
                         }
-                    },{ data: 'status_display' },
+                    },
+                    {
+                        data: 'status_display',
+                        render: function(data, type, row, meta){
+                            return '<span class="badge rounded-pill bg-primary">'+data+'</span>';
+                        }
+                        
+                    },
                     { 
                         data: 'action',
                         orderable: false, searchable: false
@@ -67,7 +74,7 @@
 
                 swal({
                     title: "Peringatan!",
-                    text: "Menghapus data berikut akan berdampak pada data lainnya. Anda yakin akan menghapus data yang bersangkutan?",
+                    text: "Menghapus data berikut akan berdampak pada fungsi lainnya. Anda yakin akan menghapus data yang bersangkutan?",
                     icon: "warning",
                     buttons: true,
                     dangerMode: true,

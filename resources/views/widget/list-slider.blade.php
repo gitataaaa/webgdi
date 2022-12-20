@@ -21,7 +21,11 @@
                 <th width="5%">No.</th>
                 <th>Image</th>
                 <th>Title/Subtitle/Desc</th>
-                <th>Button</th>
+                <!-- hidd -->
+                <th>Subtitle</th>
+                <th>Desc</th>
+                <!-- ---- -->
+                <th>Tombol</th>
                 <th>Status</th>
                 <th>&nbsp;</th>
             </tr>
@@ -43,9 +47,37 @@
                         data: 'DT_RowIndex',
                         orderable: false, searchable: false
                     },
-                    { data: 'image_upload' },
-                    { data: 'title' },
-                    { data: 'button' },
+                    { 
+                        data: 'image_upload',
+                        render: function(data, type, row, meta){
+                            return '<img src="{{ asset('') }}'+data.replace('public', 'storage')+'" width="200px"/>';
+                        }
+                    },
+                    { 
+                        data: 'title',
+                        render: function(data, type, row, meta){
+                            var desc = '<h5>'+data+(row.subtitle ? '<br/><small><i>'+row.subtitle+'</i></small>' : '')+'</h5>';
+                            if(row.description){
+                                desc += '<p>'+row.description+'</p>';
+                            }
+
+                            return desc;
+                        }
+                    },
+                    { 
+                        data: 'subtitle',
+                        visible: false
+                    },
+                    {
+                        data: 'description',
+                        visible: false
+                    },
+                    { 
+                        data: 'button',
+                        render: function(data, type, row, meta){
+                            return (data ? 'Ada' : 'Tidak Ada');
+                        }
+                    },
                     {
                         data: 'status',
                         render: function(data, type, row, meta){
@@ -71,7 +103,7 @@
                 })
                 .then((willDelete) => {
                     if (willDelete) {
-                        $.get('/admin/user/'+id+'/delete', function(){
+                        $.get('/admin/widget/slider/'+id+'/delete', function(){
                             table.ajax.reload(false, null);
                             swal('Berhasil!', 'Data telah dihapus!', 'success');
                         });

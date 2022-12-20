@@ -15,9 +15,6 @@ class RedactorController extends Controller
         
         $output = [];
         foreach($req->file as $key=>$val){
-            //echo $key; exit();
-            //$key = 0;
-            //dd($req->file('file')[$key]);
             $name = $req->file('file')[$key]->getClientOriginalName();
             $path = $req->file('file')[$key]->store('public/images');
 
@@ -25,29 +22,7 @@ class RedactorController extends Controller
                 'url' => asset(str_replace('public', 'storage', $path)),
                 'id' => $name
             ];
-            /*
-            if($input['file']){
-                echo 'oke'; exit();
-            }else{
-                echo 'no'; exit();
-            }
-            */
         }
-        //print_r($req->file('file[0]')); exit();
-        
-    
-        //echo $_FILES['file[]']['name']; exit();
-        /*
-        $name = $req->file('file[]')->getClientOriginalName();
-        $path = $req->file('file[]')->store('public/images');
-
-        $output = [
-            'file' => [
-                'url' => $path.'/'.$name,
-                'id' => $name
-            ]
-        ];
-        */
         return response()->json($output, 200);
     }
 }

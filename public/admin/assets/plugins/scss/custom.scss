@@ -382,6 +382,17 @@ hr:not([size]){
     background: #f6f6f6;
 }
 
+.preview-slider-img{
+    width: 100%;
+    height: 300px;
+    margin-bottom: 10px;
+}
+.preview-slider-img img{
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+}
+
 .loader{
     position: fixed;
     width: 100%;

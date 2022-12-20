@@ -21,11 +21,25 @@
 
     <div class="row">
         <div class="col-md-8">
-            <form method="post" action="/admin/user/add" enctype="multipart/form-data">
+            <form method="post" action="/admin/widget/slider/add" enctype="multipart/form-data">
                 @csrf
 
                 <input type="hidden" name="id" value="{{ @$detail->id }}"/>
                 <input type="hidden" name="type" value="slider"/>
+                <div class="mb-3 row">
+                    <label class="col-sm-2 col-form-label">Image Upload *</label>
+                    <div class="col-sm-10">
+                        <div class="preview-slider-img">
+                            @php
+                                $imgUrl = @$detail->image_upload ? asset(str_replace('public', 'storage', @$detail->image_upload)) : asset('admin/assets/img/setting/_img.jpg');
+                            @endphp
+                            <img id="image_upload" src="{{ $imgUrl }}"/>
+                        </div>
+                        <input type="file" name="image_upload" style="display: none" id="img"/>
+                        <label class="btn btn-primary btn-upload" for="img"><i class="bi-upload"></i> Upload</label>
+                    </div>
+                </div>
+                <hr/>
                 <div class="mb-3 row">
                     <label class="col-sm-2 col-form-label">Judul *</label>
                     <div class="col-sm-6">
@@ -44,13 +58,9 @@
                         <input type="text" class="form-control" name="description" value="{{ @$detail->description }}">
                     </div>
                 </div>
-                <hr/>
-                <div class="mb-3 row">
-                    <label class="col-sm-2 col-form-label">Image Upload *</label>
-                    <div class="col-sm-10">
-                        <input type="text" class="form-control" name="image_upload" required value="{{ @$detail->image_upload }}">
-                    </div>
-                </div>
+                
+                
+                <!--
                 <div class="mb-3 row">
                     <label class="col-sm-2 col-form-label">Posisi Image</label>
                     <div class="col-sm-3">
@@ -60,19 +70,73 @@
                         </select>
                     </div>
                 </div>
+                -->
                 <hr/>
                 <div class="mb-3 row">
                     <label class="col-sm-2 col-form-label">Tombol (Jika Ada)</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" name="button" value="{{ @$detail->button }}">
+                        @php
+                            $button = [];
+                            if(@$detail->button){
+                                $button = json_decode($detail->button);
+                            }
+                        @endphp
+                        @if($button)
+                        <!-- just in case need more button -->
+                        @foreach($button as $btn)
+                        <div class="group-btn">
+                            <div class="mb-3 row">
+                                <label class="col-sm-3 col-form-label">Teks Tombol</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" name="btn-text[]" value="{{ $btn->text }}" placeholder="eg. Registrasi">
+                                </div>
+                            </div>
+                            <div class="mb-3 row">
+                                <label class="col-sm-3 col-form-label">URL</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" name="btn-url[]" value="{{ $btn->url }}" placeholder="eg. https://example.com/link">
+                                </div>
+                            </div>
+                            <div class="mb-3 row">
+                                <label class="col-sm-3 col-form-label">Class Name (Jika ada)</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" name="btn-class[]" value="{{ $btn->classname }}">
+                                </div>
+                            </div>
+                        </div>
+                        @endforeach
+                        @else
+                        <div class="group-btn">
+                            <div class="mb-3 row">
+                                <label class="col-sm-3 col-form-label">Teks Tombol</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" name="btn-text[]" value="" placeholder="eg. Registrasi">
+                                </div>
+                            </div>
+                            <div class="mb-3 row">
+                                <label class="col-sm-3 col-form-label">URL</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" name="btn-url[]" value="" placeholder="eg. https://example.com/link">
+                                </div>
+                            </div>
+                            <div class="mb-3 row">
+                                <label class="col-sm-3 col-form-label">Class Name (Jika ada)</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" name="btn-class[]" value="">
+                                </div>
+                            </div>
+                        </div>
+                        @endif
                     </div>
                 </div>
+                <!--
                 <div class="mb-3 row">
                     <label class="col-sm-2 col-form-label">Rich text (temp)</label>
                     <div class="col-sm-10">
                         <textarea class="form-control" id="redactor"></textarea>
                     </div>
                 </div>
+                -->
                 <hr/>
                 <div class="mb-3 row">
                     <label class="col-sm-2 col-form-label">Status</label>
@@ -98,15 +162,10 @@
 @push('scripts')
     <script>
         $(document).ready(function(){
-            $('#flexCheckChecked').click(function(){
-                var ch = $(this).prop('checked');
-                if(ch == true){
-                    $('#showPass').show();
-                    $('[name=password]').attr('required', 'required');
-                }else{
-                    $('#showPass').hide();
-                    $('[name=password]').removeAttr('required');
-                }
+            $('input[name="image_upload"]').change(function(){
+                readImageUrl(this, 'image_upload', function(response){
+                    //$('input[name="picture"]').val(response);
+                });
             })
         })
     </script>

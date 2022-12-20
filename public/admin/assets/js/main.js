@@ -39,14 +39,13 @@ ArticleEditor('#article', {
 
 /* redactorx */
 var header = $('meta[name="csrf_token"]').attr('content');
-console.log($('#csrf_token').attr('content'))
 RedactorX('#redactor', {
     image: {
         upload: '/admin/redactor/upload/',
         data: {
             _token: header
         },
-        //multiple: false,
+        multiple: false,
     }
 });
 
