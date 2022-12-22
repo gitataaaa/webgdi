@@ -7,6 +7,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\MenuController;
 use App\Http\Controllers\WidgetController;
+use App\Http\Controllers\SocialMediaController;
 use App\Http\Kernel;
 
 
@@ -72,6 +73,23 @@ Route::group(['prefix'=>'admin', 'middleware'=>['auth']], function(){
     Route::get('/widget/slider/{id}/edit', [WidgetController::class, 'form_slider']);
     Route::get('/widget/slider/{id}/delete', [WidgetController::class, 'delete_slider']);
     Route::post('/widget/slider/add', [WidgetController::class, 'store_slider']);
+
+    /* WIDGET: ADS */
+    Route::get('/widget/ads', [WidgetController::class, 'index_ads']);
+    Route::post('/widget/ads/add', [WidgetController::class, 'store_ads']);
+
+    /* WIDGET: SELAYANG PANDANG */
+    Route::get('/widget/about', [WidgetController::class, 'index_about']);
+    Route::post('/widget/about/add', [WidgetController::class, 'store_about']);
+
+    /* WIDGET: SHORT DESC/DESKRIPSI SINGKAT */
+    Route::get('/widget/desc', [WidgetController::class, 'index_desc']);
+    Route::post('/widget/desc/add', [WidgetController::class, 'store_desc']);
+
+    /* META: MEDIA SOSIAL */
+    Route::get('/meta/social-media', [SocialMediaController::class, 'index']);
+    Route::get('/meta/social-media/{id}/detail', [SocialMediaController::class, 'detail']);
+    Route::post('/meta/social-media', [SocialMediaController::class, 'update']);
     /* ---- */
 
 });

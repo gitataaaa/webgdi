@@ -4,14 +4,14 @@
     <li><a href="#" class="cs-menu-dropdown has-arrow {{ @$WidgetActive }}" aria-expanded="true"><i class="cs-menu-icon bi-puzzle-fill"></i> Widget</a>
         <ul class="cs-menu-dropdown-item {{ @$WidgetActive ? 'mm-collapse mm-show' : ''}}">
             <li><a href="/admin/widget/slider" class="{{ @$WidSliderActive }}">Slider</a></li>
-            <li><a href="#">Slot Iklan</a></li>
-            <li><a href="#">Selayang Pandang</a></li>
-            <li><a href="#">Deskripsi Singkat</a></li>
+            <li><a href="/admin/widget/ads" class="{{ @$WidAdsActive }}">Slot Iklan</a></li>
+            <li><a href="/admin/widget/about" class="{{ @$WidAboutActive }}">Selayang Pandang</a></li>
+            <li><a href="/admin/widget/desc" class="{{ @$WidDescActive }}">Deskripsi Singkat</a></li>
         </ul>
     </li>
-    <li><a href="#" class="cs-menu-dropdown has-arrow" aria-expanded="true"><i class="cs-menu-icon bi-gear-fill"></i> Meta</a>
-        <ul class="cs-menu-dropdown-item">
-            <li><a href="#">Media Sosial</a></li>
+    <li><a href="#" class="cs-menu-dropdown has-arrow {{ @$MetaActive }}" aria-expanded="true"><i class="cs-menu-icon bi-gear-fill"></i> Meta</a>
+        <ul class="cs-menu-dropdown-item {{ @$MetaActive ? 'mm-collapse mm-show' : ''}}">
+            <li><a href="/admin/meta/social-media" class="{{ @$MetaSMActive }}">Media Sosial</a></li>
             <li><a href="#">Identitas Instansi</a></li>
         </ul>
     </li>

@@ -20,7 +20,7 @@
             <tr>
                 <th width="5%">No.</th>
                 <th>Menu</th>
-                <th>Parent</th>
+                <!--<th>Parent</th>-->
                 <th>Page Type</th>
                 <th>Menu Type</th>
                 <th>Footer Display</th>
@@ -28,7 +28,47 @@
                 <th>&nbsp;</th>
             </tr>
         </thead>
-        <tbody></tbody>
+        <tbody>
+            @if($list_menu)
+                @php 
+                    $no = 1;
+                @endphp
+                @foreach($list_menu as $menu)
+                    <tr>
+                        <td>{{ $no++ }}</td>
+                        <td>{{ $menu['title'] }}</td>
+                        <td>{{ $menu['page_type'] }}</td>
+                        <td>{{ $menu['menu_type'] }}</td>
+                        <td>{{ $menu['footer_display'] }}</td>
+                        <td>{{ $menu['status_display'] }}</td>
+                        <td>
+                            <a href="/admin/menu/{{ $menu['id'] }}/edit" class="btn btn-sm btn-primary"><i class="bi-pencil-square"></i></a> 
+                            <button type="button" class="btn btn-sm btn-danger btn-del" data-id="{{ $menu['id'] }}"><i class="bi-trash"></i></button>
+                        </td>
+                    </tr>
+
+                    @php
+                        $child = json_decode($menu['child'], TRUE);
+                    @endphp
+                    @if($child)
+                        @foreach($child as $ch)
+                        <tr>
+                            <td>{{ $no++ }}</td>
+                            <td><span style="padding-right: 10px"><i class="bi-arrow-right"></i></span> {{ $ch['title'] }}</td>
+                            <td>{{ $pageType[$ch['page_type']] }}</td>
+                            <td>{{ ucfirst($ch['menu_type']) }}</td>
+                            <td>{{ $ch['footer_display'] == 'A' ? 'Ya' : 'Tidak' }}</td>
+                            <td>{{ ucfirst($ch['status_display']) }}</td>
+                            <td>
+                                <a href="/admin/menu/{{ $ch['id'] }}/edit" class="btn btn-sm btn-primary"><i class="bi-pencil-square"></i></a> 
+                                <button type="button" class="btn btn-sm btn-danger btn-del" data-id="{{ $ch['id'] }}"><i class="bi-trash"></i></button>
+                            </td>
+                        </tr>
+                        @endforeach
+                    @endif
+                @endforeach
+            @endif
+        </tbody>
     </table>
 </div>
 @endsection
@@ -36,6 +76,11 @@
 @push('scripts')
     <script>
         $(document).ready(function(){
+            var table = $('#datatable').DataTable({
+                paging: false,
+                order: false
+            });
+            /*
             var table = $('#datatable').DataTable({
                 processing: true,
                 serverSide: true,
@@ -68,6 +113,7 @@
                     },
                 ],
             });
+            */
 
             $(document).on('click', '.btn-del', function(){
                 const id = $(this).data('id');
@@ -82,8 +128,16 @@
                 .then((willDelete) => {
                     if (willDelete) {
                         $.get('/admin/menu/'+id+'/delete', function(){
-                            table.ajax.reload(false, null);
-                            swal('Berhasil!', 'Data telah dihapus!', 'success');
+                            //table.ajax.reload(false, null);
+                            //swal('Berhasil!', 'Data telah dihapus!', 'success');
+
+                            swal({
+                                title: 'Berhasil!',
+                                text: 'Data telah dihapus!',
+                                icon: 'success'
+                            }).then(() => {
+                                window.location.href = '/admin/menu';
+                            })
                         });
                     }
                 });

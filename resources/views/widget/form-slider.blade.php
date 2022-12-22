@@ -29,6 +29,7 @@
                 <div class="mb-3 row">
                     <label class="col-sm-2 col-form-label">Image Upload *</label>
                     <div class="col-sm-10">
+                        <div>Ukuran yang disarankan: 1894 x 781 px</div>
                         <div class="preview-slider-img">
                             @php
                                 $imgUrl = @$detail->image_upload ? asset(str_replace('public', 'storage', @$detail->image_upload)) : asset('admin/assets/img/setting/_img.jpg');

@@ -14,16 +14,34 @@ class MenuController extends Controller
         'general' => 'General',
         'contact' => 'Contact',
         'blog_list' => 'Blog List',
-        'program_list' => 'Program_list',
+        'program_list' => 'Program list',
         'gallery' => 'Gallery',
         'homepage' => 'Homepage'
     ];
     public function __construct(){}
 
     public function index(){
+        $menu = [];
+        $parentMenu = Menu::where('parent_id', 0)->get();
+        if($parentMenu){
+            foreach($parentMenu as $par){
+                $child_menu = Menu::where('parent_id', $par->id)->get();
+                $menu[] = [
+                    'id' => $par->id,
+                    'title' => $par->title,
+                    'page_type' => $this->pageType[$par->page_type],
+                    'menu_type' => ucfirst($par->menu_type),
+                    'footer_display' => $par->footer_display == 'A' ? 'Ya' : 'Tidak',
+                    'status_display' => ucfirst($par->status_display),
+                    'child' => json_encode($child_menu),
+                ];
+            }
+        }
         return view('menu.list-menu', [
             'pageTitle' => 'Menu',
             'active' => ['MenuActive' => 'active'],
+            'list_menu' => $menu,
+            'pageType' => $this->pageType
         ]);
     }
 

@@ -20,7 +20,7 @@ class CreateWidgetsTable extends Migration
             $table->text('description')->nullable();
             $table->mediumText('image_upload')->nullable();
             $table->enum('image_position', ['right', 'left', 'none'])->nullable();
-            $table->enum('type', ['slider', 'ads', 'general']);
+            $table->enum('type', ['slider', 'ads', 'general', 'about']);
             $table->text('text')->nullable();
             $table->text('button')->nullable();
             $table->enum('status', ['A','NA']);
