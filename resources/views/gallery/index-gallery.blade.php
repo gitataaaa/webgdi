@@ -81,7 +81,6 @@
 
             $(document).on('click', '.btn-del', function(){
                 const id = $(this).attr('data-id');
-                console.log(id);
 
                 swal({
                     title: "Peringatan!",
@@ -93,6 +92,7 @@
                 .then((willDelete) => {
                     if (willDelete) {
                         $.post('/admin/gallery/delete', {'path':id, '_token':header}, function(){
+                            $('.btn-del').attr('data-id', '').hide();
                             $('img[data-path="'+id+'"]').remove();
                             swal('Berhasil!', 'Data telah dihapus!', 'success');
                         });

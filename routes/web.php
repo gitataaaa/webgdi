@@ -12,6 +12,7 @@ use App\Http\Controllers\MetaController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\GalleryController;
+use App\Http\Controllers\ProgramController;
 use App\Http\Kernel;
 
 
@@ -70,6 +71,14 @@ Route::group(['prefix'=>'admin', 'middleware'=>['auth']], function(){
     Route::get('/gallery', [GalleryController::class, 'index']);
     Route::post('/gallery/save', [GalleryController::class, 'store']);
     Route::post('/gallery/delete', [GalleryController::class, 'delete']);
+
+    /* PROGRAM */
+    Route::get('/program', [ProgramController::class, 'index']);
+    Route::get('/program/table', [ProgramController::class, 'table']);
+    Route::get('/program/add', [ProgramController::class, 'form']);
+    Route::get('/program/{id}/delete', [ProgramController::class, 'delete']);
+    Route::get('/program/{id}/edit', [ProgramController::class, 'form']);
+    Route::post('/program/add', [ProgramController::class, 'store']);
     /* ---- */
 
     /* BAGIAN PA ANDRI */

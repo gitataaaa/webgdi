@@ -11,7 +11,7 @@ class Program extends Model
     use HasFactory, SoftDeletes;
 
     protected $fillable = [
-        'title', 'description', 'image_upload', 'date_publish', 'status',
+        'title', 'slug', 'description', 'image_upload', 'date_publish', 'status',
         'target_nominal', 'date_start', 'date_end', 'pic', 'contact', 'category',
         'user_verify', 'deleted_at'
     ];

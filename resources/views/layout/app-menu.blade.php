@@ -18,9 +18,9 @@
     <li><a href="/admin/message" class="{{ @$MsgActive }}"><i class="cs-menu-icon bi-envelope"></i> Pesan</a></li>
     <li><a href="/admin/blog" class="{{ @$BlogActive }}"><i class="cs-menu-icon bi-info-circle"></i> Blog</a></li>
     <li><a href="/admin/gallery" class="{{ @$GalleryActive }}"><i class="cs-menu-icon bi-image-fill"></i> Galeri</a></li>
-    <li><a href="#" class="cs-menu-dropdown has-arrow" aria-expanded="true"><i class="cs-menu-icon bi-cash-coin"></i> Program</a>
-        <ul class="cs-menu-dropdown-item">
-            <li><a href="#">Kelola Program</a></li>
+    <li><a href="#" class="cs-menu-dropdown has-arrow {{ @$ProgActive }}" aria-expanded="true"><i class="cs-menu-icon bi-cash-coin"></i> Program</a>
+        <ul class="cs-menu-dropdown-item {{ @$ProgActive ? 'mm-collapse mm-show' : ''}}">
+            <li><a href="/admin/program" class="{{ @$ProgMngActive }}">Kelola Program</a></li>
             <li><a href="#">Rekapitulasi</a></li>
         </ul>
     </li>

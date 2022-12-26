@@ -74,8 +74,8 @@ $(document).ready(function(){
         toggle();
     });
 
-    //$('.money').number( true, 0 );
-    //$('.date').inputmask('99-99-9999');
+    $('.money').number( true, 0 );
+    $('.date').inputmask('99-99-9999');
 
     
 });
