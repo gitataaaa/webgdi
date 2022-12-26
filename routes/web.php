@@ -8,6 +8,10 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\MenuController;
 use App\Http\Controllers\WidgetController;
 use App\Http\Controllers\SocialMediaController;
+use App\Http\Controllers\MetaController;
+use App\Http\Controllers\MessageController;
+use App\Http\Controllers\BlogController;
+use App\Http\Controllers\GalleryController;
 use App\Http\Kernel;
 
 
@@ -54,7 +58,18 @@ Route::group(['prefix'=>'admin', 'middleware'=>['auth']], function(){
     Route::get('/user/detail', [UserController::class, 'detail']);
     Route::post('/user/add', [UserController::class, 'store']);
 
-    
+    /* BLOG */
+    Route::get('/blog', [BlogController::class, 'index']);
+    Route::get('/blog/table', [BlogController::class, 'table']);
+    Route::get('/blog/{id}/delete', [BlogController::class, 'delete']);
+    Route::get('/blog/add', [BlogController::class, 'form']);
+    Route::get('/blog/{id}/edit', [BlogController::class, 'form']);
+    Route::post('/blog/add', [BlogController::class, 'store']);
+
+    /* GALERI */
+    Route::get('/gallery', [GalleryController::class, 'index']);
+    Route::post('/gallery/save', [GalleryController::class, 'store']);
+    Route::post('/gallery/delete', [GalleryController::class, 'delete']);
     /* ---- */
 
     /* BAGIAN PA ANDRI */
@@ -90,6 +105,18 @@ Route::group(['prefix'=>'admin', 'middleware'=>['auth']], function(){
     Route::get('/meta/social-media', [SocialMediaController::class, 'index']);
     Route::get('/meta/social-media/{id}/detail', [SocialMediaController::class, 'detail']);
     Route::post('/meta/social-media', [SocialMediaController::class, 'update']);
+
+    /* META: IDENTITAS INSTANSI */
+    Route::get('/meta/identitas-instansi', [MetaController::class, 'index']);
+    Route::post('/meta/identitas-instansi/add', [MetaController::class, 'store']);
+
+    /* MESSAGE */
+    Route::get('/message', [MessageController::class, 'index']);
+    Route::get('/message/table', [MessageController::class, 'table']);
+    Route::get('/message/{id}/delete', [MessageController::class, 'delete']);
+    Route::get('/message/{id}/detail', [MessageController::class, 'detail']);
+
+
     /* ---- */
 
 });

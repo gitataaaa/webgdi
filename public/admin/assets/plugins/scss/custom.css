@@ -400,6 +400,27 @@ hr:not([size]) {
      object-fit: cover;
 }
 
+.box-gallery {
+  margin-top: 10px;
+  border: 1px solid #ddd;
+  padding: 5px 5px;
+  height: 500px;
+  overflow: auto;
+}
+
+.box-gallery img {
+  height: 150px;
+  border: 1px solid #eee;
+  margin-left: 5px;
+  margin-right: 5px;
+  margin-bottom: 5px;
+  margin-top: 5px;
+}
+
+.box-gallery-focus {
+  border: 2px solid #0E3EDA;
+}
+
 .loader {
   position: fixed;
   width: 100%;
