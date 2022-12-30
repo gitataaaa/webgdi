@@ -78,6 +78,7 @@ Route::group(['prefix'=>'admin', 'middleware'=>['auth']], function(){
     Route::get('/program/add', [ProgramController::class, 'form']);
     Route::get('/program/{id}/delete', [ProgramController::class, 'delete']);
     Route::get('/program/{id}/edit', [ProgramController::class, 'form']);
+    Route::get('/program/{id}/detail', [ProgramController::class, 'detail']);
     Route::post('/program/add', [ProgramController::class, 'store']);
     /* ---- */
 

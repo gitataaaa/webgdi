@@ -67,13 +67,13 @@
                         <div class="mb-3 row">
                             <label class="col-sm-2 col-form-label">Tgl Mulai *</label>
                             <div class="col-sm-3">
-                                <input type="text" class="form-control date" required name="date_start" placeholder="hh-bb-tttt" value="{{ date('d-m-Y', strtotime(@$detail->date_start)) }}">
+                                <input type="text" class="form-control date" required name="date_start" placeholder="hh-bb-tttt" value="{{ @$detail->date_start ? date('d-m-Y', strtotime(@$detail->date_start)) : ''}}">
                             </div>
                         </div>
                         <div class="mb-3 row">
                             <label class="col-sm-2 col-form-label">Tgl Selesai *</label>
                             <div class="col-sm-3">
-                                <input type="text" class="form-control date" required name="date_end" placeholder="hh-bb-tttt" value="{{ date('d-m-Y', strtotime(@$detail->date_end)) }}">
+                                <input type="text" class="form-control date" required name="date_end" placeholder="hh-bb-tttt" value="{{ @$detail->date_end ? date('d-m-Y', strtotime(@$detail->date_end)) : '' }}">
                             </div>
                         </div>
                     </div>

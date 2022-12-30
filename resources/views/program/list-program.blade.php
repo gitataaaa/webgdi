@@ -40,6 +40,10 @@
 
 @push('scripts')
     <script>
+        function dateFormat(date){
+            var d = date.split('-');
+            return d[2]+'-'+d[1]+'-'+d[0];
+        }
         $(document).ready(function(){
             var table = $('#datatable').DataTable({
                 processing: true,
@@ -58,13 +62,33 @@
                         }
                     },
                     { data: 'title' },
-                    { data: 'target_nominal' },
                     { 
-                        data: 'date_start'
+                        data: 'target_nominal',
+                        render: function(data, type, row, meta){
+                            return Intl.NumberFormat('en-US').format(data);
+                        }
                     },
-                    { data: 'date_end' },
-                    { data: 'contact' },
-                    { data: 'pic'},
+                    { 
+                        data: 'date_start',
+                        render: function(data, type, row, meta){
+                            return dateFormat(data)+' s/d '+dateFormat(row.date_end);
+                        }
+                    },
+                    { 
+                        data: 'date_end',
+                        visible: false
+                        
+                    },
+                    { 
+                        data: 'contact',
+                        visible: false
+                    },
+                    { 
+                        data: 'pic',
+                        render: function(data, type, row, meta){
+                            return data +' ('+row.contact+')';
+                        }
+                    },
                     { data: 'category'},
                     {
                         data: 'status',

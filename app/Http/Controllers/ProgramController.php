@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use DataTables;
 use App\Models\Program;
+use App\Models\ProgramRealisasi;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
@@ -27,7 +28,8 @@ class ProgramController extends Controller
         return DataTables::eloquent(Program::query())
             ->addIndexColumn()
             ->addColumn('action', function(Program $table){
-                $button = '<a href="/admin/program/'.$table->id.'/edit" class="btn btn-sm btn-primary"><i class="bi-pencil-square"></i></a> 
+                $button = '<a href="/admin/program/'.$table->id.'/detail" class="btn btn-sm btn-warning" title="Detail Program"><i class="bi-list"></i></a> 
+                    <a href="/admin/program/'.$table->id.'/edit" class="btn btn-sm btn-primary"><i class="bi-pencil-square"></i></a> 
                     <button type="button" class="btn btn-sm btn-danger btn-del" data-id="'.$table->id.'"><i class="bi-trash"></i></button>';
                 return $button;
             })
@@ -90,5 +92,15 @@ class ProgramController extends Controller
         }
         
         return redirect('/admin/program');
+    }
+
+    /* realisasi */
+    public function detail($id){
+        $detail = Program::find($id);
+        return view('program.detail-program', [
+            'pageTitle' => 'Detail Program',
+            'active' => ['ProgActive'=>'active', 'ProgMngActive'=>'active'],
+            'detail' => $detail
+        ]);
     }
 }
