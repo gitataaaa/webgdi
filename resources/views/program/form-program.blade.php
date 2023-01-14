@@ -7,7 +7,7 @@
 @section('breadcrumb')
     <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="#"><i class="bi-house"></i></a></li>
-        <li class="breadcrumb-item"><a href="/admin/menu">Program</a></li>
+        <li class="breadcrumb-item"><a href="/admin/program">Program</a></li>
         <li class="breadcrumb-item active" aria-current="page">{{ $mode }}</li>
     </ol>
 @endsection

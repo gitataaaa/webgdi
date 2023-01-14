@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use DataTables;
 use App\Models\Program;
 use App\Models\ProgramRealisasi;
+use App\Models\ProgramDonasi;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Str;
@@ -109,11 +110,69 @@ class ProgramController extends Controller
         return DataTables::eloquent(ProgramRealisasi::query())
             ->addIndexColumn()
             ->addColumn('action', function(ProgramRealisasi $table){
-                $button = '<a href="/admin/program/realisasi'.$table->id.'/detail" class="btn btn-sm btn-warning" title="Detail Program"><i class="bi-list"></i></a> 
-                    <a href="/admin/program/realisasi'.$table->id.'/edit" class="btn btn-sm btn-primary"><i class="bi-pencil-square"></i></a> 
+                $button = '<a href="/admin/program/realisasi/'.$table->program_id.'/'.$table->id.'/edit" class="btn btn-sm btn-primary"><i class="bi-pencil-square"></i></a> 
                     <button type="button" class="btn btn-sm btn-danger btn-del" data-id="'.$table->id.'"><i class="bi-trash"></i></button>';
                 return $button;
             })
             ->make();
+    }
+
+    public function form_realisasi($program, $id=null){
+        $detail = [];
+        $programList = Program::find($program);
+        if($id){
+            $mode = 'Ubah Data';
+            $detail = ProgramRealisasi::find($id);
+        }else{
+            $mode = 'Tambah';
+        }
+        
+        return view('program.form-program-realisasi', [
+            'pageTitle' => $mode.' Realisasi Program',
+            'active' => ['ProgActive'=>'active', 'ProgMngActive'=>'active'],
+            'mode' => $mode,
+            'detail' => $detail,
+            'program' => $programList
+        ]);
+    }
+
+    public function store_realisasi(Request $req){
+        /* nanti dilengkapi */
+        $dataCheck = $req->validate([
+            'title' => ['required', 'string'],
+        ]);
+        $dataInput = [
+            'program_id' => $req->program_id,
+            'title' => $req->title,
+            'description' => $req->description,
+            'date_realisasi' => $this->_dateFormat($req->date_realisasi),
+            'pelaksana' => $req->pelaksana,
+            'date_publish' => $req->status == 'publish' ? date('Y-m-d H:i:s') : null,
+            'status' => $req->status
+        ];
+        
+        if($req->id){
+            ProgramRealisasi::where('id', $req->id)->update($dataInput);
+        }else{
+            ProgramRealisasi::create($dataInput);
+        }
+        
+        return redirect('/admin/program/'.$req->program_id.'/detail');
+    }
+
+    public function delete_realisasi($id){
+        $prog = ProgramRealisasi::find($id);
+        $prog->delete();
+    }
+
+    /* rekapitulasi */
+
+    public function index_recap(){
+        $program = Program::all();
+        return view('program.list-program-recap', [
+            'pageTitle' => 'Rekapitulasi Program',
+            'active' => ['ProgActive'=>'active', 'ProgRecapActive'=>'active'],
+            'program' => $program
+        ]);
     }
 }

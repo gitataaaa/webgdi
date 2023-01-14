@@ -82,6 +82,12 @@ Route::group(['prefix'=>'admin', 'middleware'=>['auth']], function(){
     Route::post('/program/add', [ProgramController::class, 'store']);
 
     Route::get('/program/realisasi/{id}/table', [ProgramController::class, 'table_realisasi']);
+    Route::get('/program/realisasi/{program}/add', [ProgramController::class, 'form_realisasi']);
+    Route::get('/program/realisasi/{program}/{id}/edit', [ProgramController::class, 'form_realisasi']);
+    Route::get('/program/realisasi/{id}/delete', [ProgramController::class, 'delete_realisasi']);
+    Route::post('/program/realisasi/add', [ProgramController::class, 'store_realisasi']);
+
+    Route::get('/program/rekapitulasi', [ProgramController::class, 'index_recap']);
     /* ---- */
 
     /* BAGIAN PA ANDRI */

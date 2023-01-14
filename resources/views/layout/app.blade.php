@@ -12,6 +12,7 @@
     <!--<link href="{{ asset('admin/assets/plugins/imperavi/article/article-editor.min.css') }}" rel="stylesheet"/>-->
     <link href="{{ asset('admin/assets/plugins/imperavi/redactorx/redactorx.min.css?build230') }}" rel="stylesheet"/>
     <link href="{{ asset('admin/assets/plugins/inputmask/css/inputmask.css') }}" rel="stylesheet"/>
+    <link href="{{ asset('admin/assets/plugins/datepicker/daterangepicker.css') }}" rel="stylesheet"/>
     <link href="{{ asset('admin/assets/plugins/scss/custom.css') }}" rel="stylesheet"/>
 
     <title>@yield('title')</title>
@@ -60,6 +61,8 @@
     <script src="{{ asset('admin/assets/plugins/sweetalert/sweetalert.min.js') }}"></script>
     <script src="{{ asset('admin/assets/plugins/number/jquery.number.min.js') }}"></script>
     <script src="{{ asset('admin/assets/plugins/inputmask/dist/jquery.inputmask.bundle.min.js') }}"></script>
+    <script src="{{ asset('admin/assets/plugins/datepicker/moment.min.js')}}"></script>
+    <script src="{{ asset('admin/assets/plugins/datepicker/daterangepicker.js')}}"></script>
 
     <!--
     <script src="{{ asset('admin/assets/plugins/imperavi/article/article-editor.js') }}"></script>

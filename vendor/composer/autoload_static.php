@@ -507,6 +507,7 @@ class ComposerStaticInitafa2e5d4203d3819da1f3c251973be66
     public static $classMap = array (
         'App\\Console\\Kernel' => __DIR__ . '/../..' . '/app/Console/Kernel.php',
         'App\\Exceptions\\Handler' => __DIR__ . '/../..' . '/app/Exceptions/Handler.php',
+        'App\\Helper' => __DIR__ . '/../..' . '/app/Helper.php',
         'App\\Http\\Controllers\\AuthController' => __DIR__ . '/../..' . '/app/Http/Controllers/AuthController.php',
         'App\\Http\\Controllers\\BlogController' => __DIR__ . '/../..' . '/app/Http/Controllers/BlogController.php',
         'App\\Http\\Controllers\\Controller' => __DIR__ . '/../..' . '/app/Http/Controllers/Controller.php',
@@ -533,6 +534,7 @@ class ComposerStaticInitafa2e5d4203d3819da1f3c251973be66
         'App\\Models\\Message' => __DIR__ . '/../..' . '/app/Models/Message.php',
         'App\\Models\\Meta' => __DIR__ . '/../..' . '/app/Models/Meta.php',
         'App\\Models\\Program' => __DIR__ . '/../..' . '/app/Models/Program.php',
+        'App\\Models\\ProgramDonasi' => __DIR__ . '/../..' . '/app/Models/ProgramDonasi.php',
         'App\\Models\\ProgramRealisasi' => __DIR__ . '/../..' . '/app/Models/ProgramRealisasi.php',
         'App\\Models\\SocialMedia' => __DIR__ . '/../..' . '/app/Models/SocialMedia.php',
         'App\\Models\\User' => __DIR__ . '/../..' . '/app/Models/User.php',

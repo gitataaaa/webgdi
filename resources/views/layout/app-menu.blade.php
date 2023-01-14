@@ -21,7 +21,7 @@
     <li><a href="#" class="cs-menu-dropdown has-arrow {{ @$ProgActive }}" aria-expanded="true"><i class="cs-menu-icon bi-cash-coin"></i> Program</a>
         <ul class="cs-menu-dropdown-item {{ @$ProgActive ? 'mm-collapse mm-show' : ''}}">
             <li><a href="/admin/program" class="{{ @$ProgMngActive }}">Kelola Program</a></li>
-            <li><a href="#">Rekapitulasi</a></li>
+            <li><a href="/admin/program/rekapitulasi" class="{{ @$ProgRecapActive }}">Rekapitulasi</a></li>
         </ul>
     </li>
 

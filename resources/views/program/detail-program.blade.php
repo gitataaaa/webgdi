@@ -74,7 +74,7 @@
 <hr/>
 <div class="container">
     <h5>Daftar Realisasi Program</h5>
-    <a href="/admin/program/realisasi/add" class="btn btn-primary"><i class="bi-plus-square"></i> Tambah Data Realisasi</a>
+    <a href="/admin/program/realisasi/{{ @$detail->id }}/add" class="btn btn-primary"><i class="bi-plus-square"></i> Tambah Data Realisasi</a>
     <hr/>
 
     <table id="datatable" class="table" style="width:100%">
@@ -83,6 +83,7 @@
                 <th width="5%">No.</th>
                 <th>Tanggal Realisasi</th>
                 <th>Penanggung Jawab</th>
+                <th>Judul Kegiatan</th>
                 <!--<th>Lokasi</th>-->
                 <th>Status Publish</th>
                 <th width="10%">&nbsp;</th>
@@ -104,28 +105,51 @@
             processing: true,
             serverSide: true,
             ajax: "{{ '/admin/program/realisasi/'.@$detail->id.'/table' }}",
-            column: [
+            columns: [
                 { 
                     data: 'DT_RowIndex',
                     orderable: false, searchable: false
-                },
-                {
+                },{
                     data: 'date_realisasi',
                     render: function(data, type, row, meta){
                         return dateFormat(data);
                     }
-                },
-                {
+                },{
                     data: 'pelaksana'
+                },{
+                    data: 'title'
                 },
                 {
                     data: 'status',
                     render: function(data, type, row, meta){
                         return (data == 'draft' ? 'Draft' : 'Published');
                     }
-                }
-            ]
+                },{
+                    data: 'action',
+                    orderable: false, searchable: false
+                },
+            ],
         });
+
+        $(document).on('click', '.btn-del', function(){
+            const id = $(this).data('id');
+
+            swal({
+                title: "Peringatan!",
+                text: "Menghapus data berikut akan berdampak pada data lainnya. Anda yakin akan menghapus data yang bersangkutan?",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            })
+            .then((willDelete) => {
+                if (willDelete) {
+                    $.get('/admin/program/realisasi/'+id+'/delete', function(){
+                        table.ajax.reload(false, null);
+                        swal('Berhasil!', 'Data telah dihapus!', 'success');
+                    });
+                }
+            });
+        })
     });
 </script>
 @endpush
