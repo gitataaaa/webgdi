@@ -88,6 +88,7 @@ Route::group(['prefix'=>'admin', 'middleware'=>['auth']], function(){
     Route::post('/program/realisasi/add', [ProgramController::class, 'store_realisasi']);
 
     Route::get('/program/rekapitulasi', [ProgramController::class, 'index_recap']);
+    Route::post('/program/rekapitulasi/table', [ProgramController::class, 'table_recap']);
     /* ---- */
 
     /* BAGIAN PA ANDRI */

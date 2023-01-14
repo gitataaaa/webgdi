@@ -9,6 +9,7 @@ use App\Models\ProgramDonasi;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\DB;
 
 class ProgramController extends Controller
 {
@@ -107,7 +108,7 @@ class ProgramController extends Controller
     }
 
     public function table_realisasi($id){
-        return DataTables::eloquent(ProgramRealisasi::query())
+        return DataTables::eloquent(ProgramRealisasi::where('program_id', $id))
             ->addIndexColumn()
             ->addColumn('action', function(ProgramRealisasi $table){
                 $button = '<a href="/admin/program/realisasi/'.$table->program_id.'/'.$table->id.'/edit" class="btn btn-sm btn-primary"><i class="bi-pencil-square"></i></a> 
@@ -174,5 +175,48 @@ class ProgramController extends Controller
             'active' => ['ProgActive'=>'active', 'ProgRecapActive'=>'active'],
             'program' => $program
         ]);
+    }
+
+    private function _rangeReFormat($dates){
+        $date = explode(' s/d ', $dates);
+        return array(
+            'date_start' => $this->_dateFormat($date[0]),
+            'date_end'   => $this->_dateFormat($date[1])
+        );
+    }
+
+    public function table_recap(Request $req){
+        $program = $req->program;
+
+        $dStart = null;
+        $dEnd = null;
+        if($req->dates){
+            $dates = $this->_rangeReFormat($req->dates);
+            $dStart = $dates['date_start'];
+            $dEnd = $dates['date_end'];
+        }
+
+        if($program == 'all'){
+            if($req->dates){
+                $table = Program::selectRaw('*, (SELECT SUM(nominal) FROM program_donasis WHERE program_donasis.program_id = id AND DATE_FORMAT(program_donasis.date_donasi, "%Y-%m-%d") BETWEEN "'.$dStart.'" AND "'.$dEnd.'") as total_donasi');
+            }else{
+                $table = Program::selectRaw('*, (SELECT SUM(nominal) FROM program_donasis WHERE program_donasis.program_id = id) as total_donasi');
+            }
+        }else{
+            if($req->dates){
+                $table = Program::selectRaw('*, (SELECT SUM(nominal) FROM program_donasis WHERE program_donasis.program_id = id AND DATE_FORMAT(program_donasis.date_donasi, "%Y-%m-%d") BETWEEN "'.$dStart.'" AND "'.$dEnd.'") as total_donasi')
+                            ->where('id', $program);
+            }else{
+                $table = Program::selectRaw('*, (SELECT SUM(nominal) FROM program_donasis WHERE program_donasis.program_id = id) as total_donasi')
+                            ->where('id', $program);
+            }
+            
+        }
+
+        
+        
+        return DataTables::eloquent($table)
+            ->addIndexColumn()
+            ->make();
     }
 }

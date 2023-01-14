@@ -64,6 +64,8 @@
     <script src="{{ asset('admin/assets/plugins/datepicker/moment.min.js')}}"></script>
     <script src="{{ asset('admin/assets/plugins/datepicker/daterangepicker.js')}}"></script>
 
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
     <!--
     <script src="{{ asset('admin/assets/plugins/imperavi/article/article-editor.js') }}"></script>
     <script src="{{ asset('admin/assets/plugins/imperavi/article/reorder.min.js') }}"></script>
