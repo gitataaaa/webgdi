@@ -30,7 +30,7 @@
                 <th>PIC/Kontak</th>
                 <th>Kategori</th>
                 <th>Status</th>
-                <th>&nbsp;</th>
+                <th width="15%">&nbsp;</th>
             </tr>
         </thead>
         <tbody></tbody>

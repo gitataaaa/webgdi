@@ -454,6 +454,10 @@ hr:not([size]) {
   -webkit-animation: blink-animation 2s steps(55, start) infinite;
 }
 
+.row-plaintext {
+  margin-bottom: 0rem !important;
+}
+
 @keyframes blink-animation {
   from {
     opacity: 0%;

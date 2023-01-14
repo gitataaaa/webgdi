@@ -20,7 +20,7 @@
 
     <div class="row">
         <div class="col-md-8">
-            <form method="post" action="/admin/program/add" enctype="multipart/form-data">
+            <form method="post" id="fProgram" action="/admin/program/add" enctype="multipart/form-data">
                 @csrf
 
                 <input type="hidden" name="id" value="{{ @$detail->id }}"/>
@@ -164,7 +164,44 @@
                     $('#newcat').hide();
                     $('#newcat').find('input').removeAttr('required');
                 }
-            })
+            });
+
+            $('#fProgram').submit(function(e){
+                e.preventDefault();
+
+                var el = $(this);
+                var data = el.serializeArray();
+                var url = el.attr('action');
+
+                // check date
+                var dS = dateFormat($('[name=date_start]').val());
+                var dE = dateFormat($('[name=date_end]').val())
+                var dStart = dS ? new Date(dS).getTime() : null;
+                var dEnd = dE ? new Date(dE).getTime() : null;
+
+                if(dS === false || dE === false){
+                    swal('Peringatan!', 'Format Tanggal pada isian Waktu Pencapaian SALAH!', 'error');
+                    return false;
+                }
+                if(dStart > dEnd){
+                    swal('Peringatan!', 'Tanggal Mulai TIDAK BOLEH lebih besar dari Tanggal Selesai', 'error');
+                    return false;
+                }else{
+                    $('button[type="submit"]').html('Saving...');
+                    $.post(url, data, function(){
+                        window.location.href = '/admin/program';
+                    })
+                }
+            });
         })
+
+        function dateFormat(date){
+            var d = date.split('-');
+            if(d[1] > 12 || d[0] > 31){
+                return false;
+            }else{
+                return d[2]+'-'+d[1]+'-'+d[0];
+            }
+        }
     </script>
 @endpush

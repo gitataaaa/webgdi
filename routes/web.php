@@ -80,6 +80,8 @@ Route::group(['prefix'=>'admin', 'middleware'=>['auth']], function(){
     Route::get('/program/{id}/edit', [ProgramController::class, 'form']);
     Route::get('/program/{id}/detail', [ProgramController::class, 'detail']);
     Route::post('/program/add', [ProgramController::class, 'store']);
+
+    Route::get('/program/realisasi/{id}/table', [ProgramController::class, 'table_realisasi']);
     /* ---- */
 
     /* BAGIAN PA ANDRI */

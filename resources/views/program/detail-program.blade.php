@@ -10,63 +10,122 @@
 @endsection
 
 @section('content')
-<div class="container">
-    <h5>Daftar Program</h5>
+<div class="container" style="margin-bottom: 20px">
+    <h5>Detail Program</h5>
     <a href="/admin/program" class="btn btn-primary"><i class="bi-arrow-left-square"></i> Kembali</a>
-    <a href="/admin/program/realisasi/add" class="btn btn-success"><i class="bi-plus-square"></i> Tambah Data Realisasi</a>
     <hr/>
 
     <div class="row">
-        <div class="col-md-8">
+        <div class="col-md-6">
             <form>
-                <div class="mb-3 row">
-                    <label class="col-sm-2 col-form-label">Judul Program</label>
-                    <div class="col-sm-10">
-                        <p class="form-control-plaintext">{{ @$detail->title }}</p>
+                <div class="mb-3 row row-plaintext" style="">
+                    <label class="col-sm-3 col-form-label">Judul Program</label>
+                    <div class="col-sm-9">
+                        <p class="form-control-plaintext">: {{ @$detail->title }}</p>
                     </div>
                 </div>
-                <div class="mb-3 row">
-                    <label class="col-sm-2 col-form-label">Target Pencapaian</label>
-                    <div class="col-sm-10">
-                        <p class="form-control-plaintext">{{ number_format(@$detail->target_nominal) }}</p>
+                <div class="mb-3 row row-plaintext">
+                    <label class="col-sm-3 col-form-label">Target Pencapaian</label>
+                    <div class="col-sm-9">
+                        <p class="form-control-plaintext">: {{ number_format(@$detail->target_nominal) }}</p>
                     </div>
                 </div>
-                <div class="mb-3 row">
-                    <label class="col-sm-2 col-form-label">Waktu Program</label>
-                    <div class="col-sm-10">
-                        <p class="form-control-plaintext">{{ (@$detail->date_start ? date('d-m-Y', strtotime(@$detail->date_start)) : '').(@$detail->date_end ? ' s/d '.date('d-m-Y', strtotime(@$detail->date_end)) : '') }}</p>
+                <div class="mb-3 row row-plaintext">
+                    <label class="col-sm-3 col-form-label">Waktu Program</label>
+                    <div class="col-sm-9">
+                        <p class="form-control-plaintext">: {{ (@$detail->date_start ? \App\Helper::dateFormat(@$detail->date_start) : '').(@$detail->date_end ? ' s/d '.\App\Helper::dateFormat(@$detail->date_end) : '') }}</p>
                     </div>
                 </div>
-                <div class="mb-3 row">
-                    <label class="col-sm-2 col-form-label">Penanggung Jawab</label>
-                    <div class="col-sm-10">
-                        <p class="form-control-plaintext">{{ @$detail->pic }}</p>
+                <div class="mb-3 row row-plaintext">
+                    <label class="col-sm-3 col-form-label">Penanggung Jawab</label>
+                    <div class="col-sm-9">
+                        <p class="form-control-plaintext">: {{ @$detail->pic }}</p>
                     </div>
                 </div>
-                <div class="mb-3 row">
-                    <label class="col-sm-2 col-form-label">Kontak</label>
-                    <div class="col-sm-10">
-                        <p class="form-control-plaintext">{{ @$detail->contact }}</p>
+                <div class="mb-3 row row-plaintext">
+                    <label class="col-sm-3 col-form-label">Kontak</label>
+                    <div class="col-sm-9">
+                        <p class="form-control-plaintext">: {{ @$detail->contact }}</p>
                     </div>
                 </div>
-                <div class="mb-3 row">
-                    <label class="col-sm-2 col-form-label">Status</label>
-                    <div class="col-sm-10">
-                        <p class="form-control-plaintext">{{ ucfirst(@$detail->status).(@$detail->date_publish ? ' [Tanggal: '.date('d-m-Y', strtotime(@$detail->date_publish)).']' : '') }}</p>
+                <div class="mb-3 row row-plaintext">
+                    <label class="col-sm-3 col-form-label">Status</label>
+                    <div class="col-sm-9">
+                        <p class="form-control-plaintext">: {{ ucfirst(@$detail->status).(@$detail->date_publish ? ' [Tanggal: '.date('d-m-Y', strtotime(@$detail->date_publish)).']' : '') }}</p>
                     </div>
                 </div>
-                <div class="mb-3 row">
-                    <label class="col-sm-2 col-form-label">Kategori</label>
-                    <div class="col-sm-10">
-                        <p class="form-control-plaintext">{{ @$detail->category }}</p>
+                <div class="mb-3 row row-plaintext">
+                    <label class="col-sm-3 col-form-label">Kategori</label>
+                    <div class="col-sm-9">
+                        <p class="form-control-plaintext">: {{ @$detail->category }}</p>
                     </div>
                 </div>
             </form>
         </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label class="control-label">Deskripsi :</label>
+                <div style="margin-top: 5px; border: 1px solid #ddd; padding: 10px 10px; height: 250px; overflow: auto">{!! @$detail->description !!}</div>
+            </div>
+        </div>
     </div>
     
+</div>
+<hr/>
+<div class="container">
+    <h5>Daftar Realisasi Program</h5>
+    <a href="/admin/program/realisasi/add" class="btn btn-primary"><i class="bi-plus-square"></i> Tambah Data Realisasi</a>
+    <hr/>
+
+    <table id="datatable" class="table" style="width:100%">
+        <thead>
+            <tr>
+                <th width="5%">No.</th>
+                <th>Tanggal Realisasi</th>
+                <th>Penanggung Jawab</th>
+                <!--<th>Lokasi</th>-->
+                <th>Status Publish</th>
+                <th width="10%">&nbsp;</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
 </div>
 @endsection
 
 @push('scripts')
+<script>
+    function dateFormat(date){
+        var d = date.split('-');
+        return d[2]+'-'+d[1]+'-'+d[0];
+    }
+    $(document).ready(function(){
+        var table = $('#datatable').DataTable({
+            processing: true,
+            serverSide: true,
+            ajax: "{{ '/admin/program/realisasi/'.@$detail->id.'/table' }}",
+            column: [
+                { 
+                    data: 'DT_RowIndex',
+                    orderable: false, searchable: false
+                },
+                {
+                    data: 'date_realisasi',
+                    render: function(data, type, row, meta){
+                        return dateFormat(data);
+                    }
+                },
+                {
+                    data: 'pelaksana'
+                },
+                {
+                    data: 'status',
+                    render: function(data, type, row, meta){
+                        return (data == 'draft' ? 'Draft' : 'Published');
+                    }
+                }
+            ]
+        });
+    });
+</script>
 @endpush

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use DataTables;
 use App\Models\Blog;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class BlogController extends Controller
 {
@@ -62,7 +63,7 @@ class BlogController extends Controller
         $dataInput = [
             'title' => $req->title,
             'author' => $req->author,
-            'slug' => $req->slug,
+            'slug' => Str::of($req->title)->slug('-'), //$req->slug,
             'kategori' => $req->kategori_baru ? $req->kategori_baru : $req->kategori,
             'url' => $req->url,
             'content' => $req->content, 

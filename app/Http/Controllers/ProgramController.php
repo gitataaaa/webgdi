@@ -7,6 +7,7 @@ use App\Models\Program;
 use App\Models\ProgramRealisasi;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Str;
 
 class ProgramController extends Controller
 {
@@ -68,7 +69,7 @@ class ProgramController extends Controller
         ]);
         $dataInput = [
             'title' => $req->title,
-            'slug' => $req->slug,
+            'slug' => Str::of($req->title)->slug('-'), //$req->slug,
             'description' => $req->description,
             'target_nominal' => str_replace(',','',$req->target_nominal),
             'date_start' => $this->_dateFormat($req->date_start),
@@ -102,5 +103,17 @@ class ProgramController extends Controller
             'active' => ['ProgActive'=>'active', 'ProgMngActive'=>'active'],
             'detail' => $detail
         ]);
+    }
+
+    public function table_realisasi($id){
+        return DataTables::eloquent(ProgramRealisasi::query())
+            ->addIndexColumn()
+            ->addColumn('action', function(ProgramRealisasi $table){
+                $button = '<a href="/admin/program/realisasi'.$table->id.'/detail" class="btn btn-sm btn-warning" title="Detail Program"><i class="bi-list"></i></a> 
+                    <a href="/admin/program/realisasi'.$table->id.'/edit" class="btn btn-sm btn-primary"><i class="bi-pencil-square"></i></a> 
+                    <button type="button" class="btn btn-sm btn-danger btn-del" data-id="'.$table->id.'"><i class="bi-trash"></i></button>';
+                return $button;
+            })
+            ->make();
     }
 }
