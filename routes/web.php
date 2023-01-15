@@ -88,7 +88,12 @@ Route::group(['prefix'=>'admin', 'middleware'=>['auth']], function(){
     Route::post('/program/realisasi/add', [ProgramController::class, 'store_realisasi']);
 
     Route::get('/program/rekapitulasi', [ProgramController::class, 'index_recap']);
+    Route::get('/program/rekapitulasi/donatur', [ProgramController::class, 'index_recap_donatur']);
+    Route::post('/program/rekapitulasi/chart', [ProgramController::class, 'getDataChart']);
     Route::post('/program/rekapitulasi/table', [ProgramController::class, 'table_recap']);
+    Route::post('/program/rekapitulasi/donatur/table', [ProgramController::class, 'table_recap_donatur']);
+    Route::get('/program/rekapitulasi/donatur/export/excel/{program}/{dateStart}/{dateEnd}', [ProgramController::class, 'exportExcel']);
+    Route::get('/program/rekapitulasi/donatur/export/excel', [ProgramController::class, 'exportExcel']);
     /* ---- */
 
     /* BAGIAN PA ANDRI */

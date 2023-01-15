@@ -3,13 +3,18 @@
 namespace App\Http\Controllers;
 
 use DataTables;
+use App\Helper;
 use App\Models\Program;
 use App\Models\ProgramRealisasi;
 use App\Models\ProgramDonasi;
+use App\Exports\DonaturExport;
+use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
+
+
 
 class ProgramController extends Controller
 {
@@ -179,11 +184,48 @@ class ProgramController extends Controller
 
     public function index_recap(){
         $program = Program::all();
+        
         return view('program.list-program-recap', [
             'pageTitle' => 'Rekapitulasi Program',
             'active' => ['ProgActive'=>'active', 'ProgRecapActive'=>'active'],
-            'program' => $program
+            'program' => $program,
         ]);
+    }
+
+    public function getDataChart(Request $req){
+        $program = @$req->program;
+        $dates = [];
+        if(@$req->dates){
+            $dates = $this->_rangeReFormat($req->dates);
+            if(@$req->program != 'all'){
+                $table = Program::selectRaw('programs.title, (SELECT SUM(program_donasis.nominal) FROM program_donasis WHERE program_donasis.program_id = programs.id AND DATE_FORMAT(program_donasis.date_donasi, "%Y-%m-%d") BETWEEN "'.$dates['date_start'].'" AND "'.$dates['date_end'].'") as donasi')
+                                    ->where('programs.id', $req->program)->get();
+            }else{
+                $table = Program::selectRaw('programs.title, (SELECT SUM(program_donasis.nominal) FROM program_donasis WHERE program_donasis.program_id = programs.id AND DATE_FORMAT(program_donasis.date_donasi, "%Y-%m-%d") BETWEEN "'.$dates['date_start'].'" AND "'.$dates['date_end'].'") as donasi')->get();
+            }
+        }else{
+            if(@$req->program != 'all'){
+                $table = Program::selectRaw('programs.title, (SELECT SUM(nominal) FROM program_donasis WHERE program_id = programs.id) as donasi')
+                                    ->where('programs.id', $req->program)->get();
+            }else{
+                $table = Program::selectRaw('programs.title, (SELECT SUM(nominal) FROM program_donasis WHERE program_id = programs.id) as donasi')->get();
+            }
+        }
+        $output = [
+            'program' => [],
+            'donasi' => [],
+            'total' => 0,
+            'range' => @$req->dates ? Helper::dateFormat($dates['date_start']).' s/d '.Helper::dateFormat($dates['date_end']) : ''
+        ];
+        if($table){
+            foreach($table as $dt){
+                $output['program'][] = $dt->title;
+                $output['donasi'][] = $dt->donasi; 
+                $output['total'] += $dt->donasi;
+            }
+        }
+
+        return response()->json($output, 200);
     }
 
     public function table_recap(Request $req){
@@ -199,25 +241,85 @@ class ProgramController extends Controller
 
         if($program == 'all'){
             if($req->dates){
-                $table = Program::selectRaw('*, (SELECT SUM(nominal) FROM program_donasis WHERE program_donasis.program_id = id AND DATE_FORMAT(program_donasis.date_donasi, "%Y-%m-%d") BETWEEN "'.$dStart.'" AND "'.$dEnd.'") as total_donasi');
+                $table = Program::selectRaw('programs.*, (SELECT SUM(nominal) FROM program_donasis WHERE program_donasis.program_id = programs.id AND DATE_FORMAT(program_donasis.date_donasi, "%Y-%m-%d") BETWEEN "'.$dStart.'" AND "'.$dEnd.'") as total_donasi');
             }else{
-                $table = Program::selectRaw('*, (SELECT SUM(nominal) FROM program_donasis WHERE program_donasis.program_id = id) as total_donasi');
+                $table = Program::selectRaw('programs.*, (SELECT SUM(nominal) FROM program_donasis WHERE program_donasis.program_id = programs.id) as total_donasi');
             }
         }else{
             if($req->dates){
-                $table = Program::selectRaw('*, (SELECT SUM(nominal) FROM program_donasis WHERE program_donasis.program_id = id AND DATE_FORMAT(program_donasis.date_donasi, "%Y-%m-%d") BETWEEN "'.$dStart.'" AND "'.$dEnd.'") as total_donasi')
-                            ->where('id', $program);
+                $table = Program::selectRaw('programs.*, (SELECT SUM(nominal) FROM program_donasis WHERE program_donasis.program_id = programs.id AND DATE_FORMAT(program_donasis.date_donasi, "%Y-%m-%d") BETWEEN "'.$dStart.'" AND "'.$dEnd.'") as total_donasi')
+                            ->where('programs.id', $program);
             }else{
-                $table = Program::selectRaw('*, (SELECT SUM(nominal) FROM program_donasis WHERE program_donasis.program_id = id) as total_donasi')
-                            ->where('id', $program);
+                $table = Program::selectRaw('programs.*, (SELECT SUM(nominal) FROM program_donasis WHERE program_donasis.program_id = programs.id) as total_donasi')
+                            ->where('programs.id', $program);
             }
             
         }
 
-        
-        
         return DataTables::eloquent($table)
             ->addIndexColumn()
             ->make();
+    }
+
+    /* rekapitulasi donatur */
+    public function index_recap_donatur(){
+        $program = Program::all();
+        
+        return view('program.list-program-recap-donatur', [
+            'pageTitle' => 'Rekapitulasi Donatur',
+            'active' => ['ProgActive'=>'active', 'ProgRecapActive'=>'active'],
+            'program' => $program,
+        ]);
+    }
+
+    public function table_recap_donatur(Request $req){
+        $program = $req->program;
+
+        $dStart = null;
+        $dEnd = null;
+        if($req->dates){
+            $dates = $this->_rangeReFormat($req->dates);
+            $dStart = $dates['date_start'];
+            $dEnd = $dates['date_end'];
+        }
+
+        
+        if($program == 'all'){
+            if($req->dates){
+                $table = ProgramDonasi::leftJoin('programs', 'programs.id', '=', 'program_donasis.program_id')
+                            ->selectRaw('donatur, nominal, DATE_FORMAT(date_donasi, "%d-%m-%Y %H:%i") as date_donasi, programs.title as program')
+                            ->whereRaw('DATE_FORMAT(date_donasi, "%Y-%m-%d") BETWEEN "'.$dStart.'" AND "'.$dEnd.'"')
+                            ->orderBy('program_donasis.date_donasi', 'desc');
+            }else{
+                $table = ProgramDonasi::leftJoin('programs', 'programs.id', '=', 'program_donasis.program_id')
+                            ->selectRaw('donatur, nominal, DATE_FORMAT(date_donasi, "%d-%m-%Y %H:%i") as date_donasi, programs.title as program')
+                            ->orderBy('program_donasis.date_donasi', 'desc');
+            }
+        }else{
+            if($req->dates){
+                $table = ProgramDonasi::leftJoin('programs', 'programs.id', '=', 'program_donasis.program_id')
+                            ->selectRaw('donatur, nominal, DATE_FORMAT(date_donasi, "%d-%m-%Y %H:%i") as date_donasi, programs.title as program')
+                            ->whereRaw('DATE_FORMAT(date_donasi, "%Y-%m-%d") BETWEEN "'.$dStart.'" AND "'.$dEnd.'"')
+                            ->where('program_id', $program)
+                            ->orderBy('program_donasis.date_donasi', 'desc');
+            }else{
+                $table = ProgramDonasi::leftJoin('programs', 'programs.id', '=', 'program_donasis.program_id')
+                            ->selectRaw('donatur, nominal, DATE_FORMAT(date_donasi, "%d-%m-%Y %H:%i") as date_donasi, programs.title as program')
+                            ->where('program_id', $program)
+                            ->orderBy('program_donasis.date_donasi', 'desc');
+            }
+            
+        }
+
+        //dd($table->get());
+
+        return DataTables::eloquent($table)
+            ->addIndexColumn()
+            ->make();
+    }
+
+    public function exportExcel($program=null, $dateStart=null, $dateEnd=null){
+        $program = $program ? $program : 'all';
+        return Excel::download(new DonaturExport($program, $dateStart, $dateEnd), 'Rekapitulasi_Daftar_Donatur.xlsx');
     }
 }

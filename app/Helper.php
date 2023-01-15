@@ -25,6 +25,6 @@ class Helper{
         $m = date('m', strtotime($date));
         $y = date('Y', strtotime($date));
 
-        return $d.' '.Arr::get($month, $d).' '.$y;
+        return $d.' '.Arr::get($month, $m).' '.$y;
     }
 }
