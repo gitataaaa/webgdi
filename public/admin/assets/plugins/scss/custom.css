@@ -458,6 +458,11 @@ hr:not([size]) {
   margin-bottom: 0rem !important;
 }
 
+/* redactor */
+figure > img {
+  width: 100%;
+}
+
 @keyframes blink-animation {
   from {
     opacity: 0%;

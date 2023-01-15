@@ -19,6 +19,16 @@
         <div class="col-md-6">
             <form>
                 <div class="mb-3 row row-plaintext" style="">
+                    <label class="col-sm-3 col-form-label">Poster Program</label>
+                    <div class="col-sm-9">
+                        @if(@$detail->image_upload)
+                            <div style="float: left; padding-right: 5px">: </div> <img src="{{ asset(@$detail->image_upload) }}" style="width: 170px">
+                        @else
+                            <p class="form-control-plaintext">: <i>No Image</i></p>
+                        @endif
+                    </div>
+                </div>
+                <div class="mb-3 row row-plaintext" style="">
                     <label class="col-sm-3 col-form-label">Judul Program</label>
                     <div class="col-sm-9">
                         <p class="form-control-plaintext">: {{ @$detail->title }}</p>
@@ -65,7 +75,7 @@
         <div class="col-md-6">
             <div class="form-group">
                 <label class="control-label">Deskripsi :</label>
-                <div style="margin-top: 5px; border: 1px solid #ddd; padding: 10px 10px; height: 250px; overflow: auto">{!! @$detail->description !!}</div>
+                <div style="margin-top: 5px; border: 1px solid #ddd; padding: 10px 10px; height: 400px; overflow: auto">{!! @$detail->description !!}</div>
             </div>
         </div>
     </div>

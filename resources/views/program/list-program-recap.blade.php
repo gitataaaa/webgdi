@@ -34,7 +34,7 @@
                 <div class="mb-3 row">
                     <label class="col-sm-2 col-form-label">Rentang Waktu</label>
                     <div class="col-sm-6">
-                        <input type="text" name="dates" class="form-control"/>
+                        <input type="text" name="dates" class="form-control daterange-input"/>
                     </div>
                 </div>
                 <div class="mb-3 row">
@@ -65,6 +65,14 @@
             </tr>
         </thead>
         <tbody></tbody>
+        <tfoot>
+            <tr>
+                <th colspan="2">Total</th>
+                <th></th>
+                <th></th>
+                <th></th>
+            </tr>
+        </tfoot>
     </table>
 </div>
 @endsection
@@ -97,15 +105,6 @@
             return d[2]+'-'+d[1]+'-'+d[0];
         }
         $(document).ready(function(){
-            $('[name=dates]').daterangepicker({
-                autoUpdateInput: false,
-                locale: {
-                    cancelLabel: 'Clear'
-                }
-            });
-            $('input[name="dates"]').on('apply.daterangepicker', function(ev, picker) {
-                $(this).val(picker.startDate.format('DD-MM-YYYY') + ' s/d ' + picker.endDate.format('DD-MM-YYYY'));
-            });
             
             var table = $('#datatable').DataTable({
                 processing: true,
@@ -119,6 +118,7 @@
                         e.dates = $('[name=dates]').val();
                     }
                 },
+                paging: false,
                 columns: [
                     { 
                         data: 'DT_RowIndex',

@@ -39,7 +39,8 @@ class MetaController extends Controller
         $instEmail = $req->INST_EMAIL;
 
         if($req->file('image_upload')){
-            $path = $req->file('image_upload')->store('public/images/meta');
+            $filename = $req->file('image_upload')->getClientOriginalName();
+            $path = $req->file('image_upload')->move('images/meta', $filename);
             $instLogo = $path;
         }
 

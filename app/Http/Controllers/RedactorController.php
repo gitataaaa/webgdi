@@ -16,10 +16,10 @@ class RedactorController extends Controller
         $output = [];
         foreach($req->file as $key=>$val){
             $name = $req->file('file')[$key]->getClientOriginalName();
-            $path = $req->file('file')[$key]->store('public/images');
+            $path = $req->file('file')[$key]->move('images/general', $name);
 
             $output['file'] =  [
-                'url' => asset(str_replace('public', 'storage', $path)),
+                'url' => asset($path),
                 'id' => $name
             ];
         }

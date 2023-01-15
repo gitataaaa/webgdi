@@ -29,7 +29,7 @@
                     <div class="col-sm-5">
                         <div class="preview-slider-img">
                             @php
-                                $imgUrl = @$detail->image_upload ? asset(str_replace('public', 'storage', @$detail->image_upload)) : asset('admin/assets/img/setting/_img.jpg');
+                                $imgUrl = @$detail->image_upload ? asset(@$detail->image_upload) : asset('admin/assets/img/setting/_img.jpg');
                             @endphp
                             <img id="image_upload" src="{{ $imgUrl }}"/>
                         </div>
@@ -63,19 +63,22 @@
                 </div>
                 <div class="mb-3 row">
                     <label class="col-sm-2 col-form-label">Waktu Pencapaian</label>
-                    <div class="col-sm-10">
+                    <div class="col-sm-6">
+                        <input type="text" class="form-control daterange-input" required name="dates" value="{{ (@$detail->date_start ? date('d-m-Y', strtotime($detail->date_start)) : '').(@$detail->date_end ? ' s/d '.date('d-m-Y', strtotime($detail->date_end)) : '') }}"/>
+                        <!--
                         <div class="mb-3 row">
                             <label class="col-sm-2 col-form-label">Tgl Mulai *</label>
                             <div class="col-sm-3">
-                                <input type="text" class="form-control date" required name="date_start" placeholder="hh-bb-tttt" value="{{ @$detail->date_start ? date('d-m-Y', strtotime(@$detail->date_start)) : ''}}">
+                                <input type="text" class="form-control date-input" required name="date_start" placeholder="hh-bb-tttt" value="{{ @$detail->date_start ? date('d-m-Y', strtotime(@$detail->date_start)) : ''}}">
                             </div>
                         </div>
                         <div class="mb-3 row">
                             <label class="col-sm-2 col-form-label">Tgl Selesai *</label>
                             <div class="col-sm-3">
-                                <input type="text" class="form-control date" required name="date_end" placeholder="hh-bb-tttt" value="{{ @$detail->date_end ? date('d-m-Y', strtotime(@$detail->date_end)) : '' }}">
+                                <input type="text" class="form-control date-input" required name="date_end" placeholder="hh-bb-tttt" value="{{ @$detail->date_end ? date('d-m-Y', strtotime(@$detail->date_end)) : '' }}">
                             </div>
                         </div>
+                        -->
                     </div>
                 </div>
                 <hr/>
@@ -166,34 +169,7 @@
                 }
             });
 
-            $('#fProgram').submit(function(e){
-                e.preventDefault();
-
-                var el = $(this);
-                var data = el.serializeArray();
-                var url = el.attr('action');
-
-                // check date
-                var dS = dateFormat($('[name=date_start]').val());
-                var dE = dateFormat($('[name=date_end]').val())
-                var dStart = dS ? new Date(dS).getTime() : null;
-                var dEnd = dE ? new Date(dE).getTime() : null;
-
-                if(dS === false || dE === false){
-                    swal('Peringatan!', 'Format Tanggal pada isian Waktu Pencapaian SALAH!', 'error');
-                    return false;
-                }
-                if(dStart > dEnd){
-                    swal('Peringatan!', 'Tanggal Mulai TIDAK BOLEH lebih besar dari Tanggal Selesai', 'error');
-                    return false;
-                }else{
-                    $('button[type="submit"]').html('Saving...');
-                    $.post(url, data, function(){
-                        window.location.href = '/admin/program';
-                    })
-                }
-            });
-        })
+        });
 
         function dateFormat(date){
             var d = date.split('-');

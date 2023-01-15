@@ -66,7 +66,8 @@ class WidgetController extends Controller
         ];
         
         if($req->file('image_upload')){
-            $path = $req->file('image_upload')->store('public/images/slider');
+            $filename = $req->file('image_upload')->getClientOriginalName();
+            $path = $req->file('image_upload')->move('images/slider', $filename);
             $dataInput['image_upload'] = $path;
         }
 
@@ -131,7 +132,8 @@ class WidgetController extends Controller
         ];
         
         if($req->file('image_upload')){
-            $path = $req->file('image_upload')->store('public/images/ads');
+            $filename = $req->file('image_upload')->getClientOriginalName();
+            $path = $req->file('image_upload')->move('images/ads', $filename);
             $dataInput['image_upload'] = $path;
         }
 
@@ -200,7 +202,8 @@ class WidgetController extends Controller
         
         $image = [];
         if($req->file('image_upload_1')){
-            $path = $req->file('image_upload_1')->store('public/images/about');
+            $filename = $req->file('image_upload_1')->getClientOriginalName();
+            $path = $req->file('image_upload_1')->move('images/about', $filename);
             $image[] = [
                 'id' => '1',
                 'path' => $path
@@ -212,7 +215,8 @@ class WidgetController extends Controller
             ];
         }
         if($req->file('image_upload_2')){
-            $path = $req->file('image_upload_2')->store('public/images/about');
+            $filename = $req->file('image_upload_2')->getClientOriginalName();
+            $path = $req->file('image_upload_2')->move('images/about', $filename);
             $image[] = [
                 'id' => '2',
                 'path' => $path
@@ -280,7 +284,8 @@ class WidgetController extends Controller
         ];
         
         if($req->file('image_upload')){
-            $path = $req->file('image_upload')->store('public/images/widget');
+            $filename = $req->file('image_upload')->getClientOriginalName();
+            $path = $req->file('image_upload')->move('images/widget', $filename);
             $dataInput['image_upload'] = $path;
         }
 

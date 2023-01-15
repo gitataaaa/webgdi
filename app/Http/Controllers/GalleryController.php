@@ -12,7 +12,8 @@ class GalleryController extends Controller
     public function __construct(){}
 
     public function index(){
-        $files = Storage::disk('local')->files('public/images/gallery/');
+        $files = File::files(public_path('images/gallery/')); //Storage::disk('local')->files('public/images/gallery/');
+        //dd($files);
         return view('gallery.index-gallery', [
             'pageTitle' => 'Galeri',
             'active' => ['GalleryActive' => 'active'],
@@ -27,10 +28,12 @@ class GalleryController extends Controller
         $output = [];
         if($req->file('image_upload.*')){
             foreach($req->file('image_upload.*') as $key=>$val){
-                $path = $req->file('image_upload')[$key]->store('public/images/gallery');
+                $file = $req->file('image_upload')[$key];
+                $filename = md5($file->getClientOriginalName().date('YmdHis')).'.'.$file->getClientOriginalExtension();
+                $path = $req->file('image_upload')[$key]->move('images/gallery', $filename);
                 $output[] = [
-                    'file' => asset(str_replace('public', 'storage', $path)),
-                    'path' => $path
+                    'file' => asset('images/gallery/'.$filename),
+                    'path' => 'images/gallery/'.$filename
                 ];
             }
         }
@@ -39,7 +42,7 @@ class GalleryController extends Controller
     }
 
     public function delete(Request $req){
-        $imgPath = storage_path('app/'.$req->path);
+        $imgPath = public_path($req->path);
         if(File::exists($imgPath)){
             unlink($imgPath);
         }

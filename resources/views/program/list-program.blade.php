@@ -57,8 +57,12 @@
                     { 
                         data: 'image_upload',
                         render: function(data, type, row, meta){
-                            var path = data.replace('public','storage');
-                            return '<img src="{{ asset('') }}'+path+'" width="150px"/>';
+                            if(data){
+                                return '<img src="{{ asset('') }}'+data+'" width="150px"/>';
+                            }else{
+                                return 'No Image';
+                            }
+                            
                         }
                     },
                     { data: 'title' },

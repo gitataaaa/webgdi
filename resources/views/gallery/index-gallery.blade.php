@@ -24,8 +24,12 @@
     </form>
     <div class="box-gallery">
         @if(@$files)
-            @foreach($files as $key=>$val)
-                <img src="{{ asset(str_replace('public', 'storage', $val)) }}" data-path="{{ $val }}"/>
+            @foreach($files as $val)
+                @php
+                    $file = new SplFileInfo($val);
+                    $val = 'images/gallery/'.$file->getFilename();
+                @endphp
+                <img src="{{ asset($val) }}" data-path="{{ $val }}"/>
             @endforeach
         @endif
     </div>

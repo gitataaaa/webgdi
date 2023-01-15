@@ -77,5 +77,24 @@ $(document).ready(function(){
     $('.money').number( true, 0 );
     $('.date').inputmask('99-99-9999');
 
-    
+    $('.date-input').daterangepicker({
+        autoUpdateInput: false,
+        singleDatePicker: true,
+        locale: {
+            cancelLabel: 'Clear'
+        }
+    });
+    $('.date-input').on('apply.daterangepicker', function(ev, picker) {
+        $(this).val(picker.startDate.format('DD-MM-YYYY'));
+    });
+
+    $('.daterange-input').daterangepicker({
+        autoUpdateInput: false,
+        locale: {
+            cancelLabel: 'Clear'
+        }
+    });
+    $('.daterange-input').on('apply.daterangepicker', function(ev, picker) {
+        $(this).val(picker.startDate.format('DD-MM-YYYY') + ' s/d ' + picker.endDate.format('DD-MM-YYYY'));
+    });
 });

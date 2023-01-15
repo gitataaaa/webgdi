@@ -19,6 +19,13 @@ class ProgramController extends Controller
         $d = explode('-', $date);
         return $d[2].'-'.$d[1].'-'.$d[0];
     }
+    private function _rangeReFormat($dates){
+        $date = explode(' s/d ', $dates);
+        return array(
+            'date_start' => $this->_dateFormat($date[0]),
+            'date_end'   => $this->_dateFormat($date[1])
+        );
+    }
 
     public function index(){
         return view('program.list-program', [
@@ -69,22 +76,24 @@ class ProgramController extends Controller
             'title' => ['required', 'string'],
             'image_upload' => 'image|mimes:jpg,png,jpeg,gif,svg|max:2048'
         ]);
+
+        $dates = $this->_rangeReFormat($req->dates);
         $dataInput = [
             'title' => $req->title,
             'slug' => Str::of($req->title)->slug('-'), //$req->slug,
             'description' => $req->description,
             'target_nominal' => str_replace(',','',$req->target_nominal),
-            'date_start' => $this->_dateFormat($req->date_start),
-            'date_end' => $this->_dateFormat($req->date_end),
+            'date_start' => @$dates['date_start'], //$this->_dateFormat($req->date_start),
+            'date_end' => @$dates['date_end'], //$this->_dateFormat($req->date_end),
             'pic' => $req->pic,
             'date_publish' => $req->status == 'publish' ? date('Y-m-d H:i:s') : null,
             'contact' => $req->contact,
             'category' => $req->kategori_baru ? $req->kategori_baru : $req->category,
             'status' => $req->status
         ];
-        
         if($req->file('image_upload')){
-            $path = $req->file('image_upload')->store('public/images/program');
+            $fileName = $req->file('image_upload')->getClientOriginalName() ;
+            $path = $req->file('image_upload')->move('images/program', $fileName);
             $dataInput['image_upload'] = $path;
         }
         
@@ -175,14 +184,6 @@ class ProgramController extends Controller
             'active' => ['ProgActive'=>'active', 'ProgRecapActive'=>'active'],
             'program' => $program
         ]);
-    }
-
-    private function _rangeReFormat($dates){
-        $date = explode(' s/d ', $dates);
-        return array(
-            'date_start' => $this->_dateFormat($date[0]),
-            'date_end'   => $this->_dateFormat($date[1])
-        );
     }
 
     public function table_recap(Request $req){

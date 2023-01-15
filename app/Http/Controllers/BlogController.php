@@ -73,7 +73,8 @@ class BlogController extends Controller
         ];
 
         if($req->file('featured_img')){
-            $path = $req->file('featured_img')->store('public/images/blog');
+            $filename = $req->file('image_upload')->getClientOriginalName();
+            $path = $req->file('featured_img')->move('images/blog', $filename);
             $dataInput['featured_img'] = $path;
         }
         

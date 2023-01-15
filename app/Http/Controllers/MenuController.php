@@ -101,7 +101,8 @@ class MenuController extends Controller
         ];
 
         if($req->file('featured_img')){
-            $path = $req->file('featured_img')->store('public/images/menu');
+            $filename = $req->file('featured_img')->getClientOriginalName();
+            $path = $req->file('featured_img')->move('images/menu', $filename);
             $dataInput['featured_img'] = $path;
         }
         

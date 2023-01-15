@@ -78,7 +78,7 @@
                     <div class="col-sm-10">
                         <div class="preview-slider-img">
                             @php
-                                $imgUrl = @$detail->featured_img ? asset(str_replace('public', 'storage', @$detail->featured_img)) : asset('admin/assets/img/setting/_img.jpg');
+                                $imgUrl = @$detail->featured_img ? asset(@$detail->featured_img) : asset('admin/assets/img/setting/_img.jpg');
                             @endphp
                             <img id="featured_img" src="{{ $imgUrl }}"/>
                         </div>
