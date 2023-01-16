@@ -55,8 +55,8 @@
                     <label class="col-sm-2 col-form-label">Status Publish *</label>
                     <div class="col-sm-3">
                         <select class="form-select" name="status" required>
-                            <option value="draft" {{ @$detail->status_display == 'draft' ? 'selected' : '' }}>Draft</option>
-                            <option value="publish" {{ @$detail->status_display == 'publish' ? 'selected' : '' }}>Publish</option>
+                            <option value="draft" {{ @$detail->status == 'draft' ? 'selected' : '' }}>Draft</option>
+                            <option value="publish" {{ @$detail->status == 'publish' ? 'selected' : '' }}>Publish</option>
                         </select>
                     </div>
                 </div>

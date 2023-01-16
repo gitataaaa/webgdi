@@ -132,7 +132,7 @@
                 {
                     data: 'status',
                     render: function(data, type, row, meta){
-                        return (data == 'draft' ? 'Draft' : 'Published');
+                        return (data == 'draft' ? '<span class="badge bg-secondary">Draft</span>' : '<span class="badge bg-primary">Publish</span>');
                     }
                 },{
                     data: 'action',

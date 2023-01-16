@@ -84,7 +84,7 @@
   <body>
     
     <main class="form-signin w-100 m-auto">
-        <form method="post" action="/login">
+        <form method="post" action="/q/login">
             @csrf
 
             <div class="text-center">

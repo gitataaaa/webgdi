@@ -2,7 +2,12 @@
 
 namespace App;
 
+use App\Models\Menu;
+use App\Models\SocialMedia;
+use App\Models\Meta;
+use App\Models\Program;
 use Illuminate\Support\Arr;
+use Carbon\Carbon;
 
 class Helper{
     public function dateFormat($date){
@@ -26,5 +31,106 @@ class Helper{
         $y = date('Y', strtotime($date));
 
         return $d.' '.Arr::get($month, $m).' '.$y;
+    }
+
+    public function totalDays($dateEnd){
+        $startDate = Carbon::parse(date('Y-m-d'));
+        $endDate = Carbon::parse($dateEnd);
+        $interval = $startDate->diffInDays($endDate, false);
+        return $interval;
+    }
+
+    public function displayMenu(){
+        $arrMenu = [
+            [
+                'id' => 0,
+                'title' => 'Beranda',
+                'url' => '',
+                'submenu' => [],
+                'type' => 'homepage'
+            ]
+        ];
+
+        $parent = Menu::where([
+            'parent_id' => 0,
+            'status_display' => 'publish'
+        ])->get();
+        if($parent){
+            foreach($parent as $p){
+                $submenu = [];
+                $child = Menu::where([
+                    'parent_id' => $p->id,
+                    'status_display' => 'publish'
+                ])->get();
+                if($child){
+                    foreach($child as $c){
+                        $submenu[] = [
+                            'id' => $c->id,
+                            'title' => $c->title,
+                            'url' => $c->menu_type == 'page' ? $c->slug : $p->url,
+                        ];
+                    }
+                }
+
+                if($p->page_type == 'program_list'){
+                    /* diisi daftar program */
+                    $submenu = [
+                        [
+                            'id' => 0,
+                            'title' => 'Program Donasi/Fundraising',
+                            'url' => 'program/donasi'
+                        ],
+                    ];
+
+                    $program = Program::where([
+                        'status' => 'publish',
+                        'program_type' => 'non-donation'
+                    ])->get();
+
+                    if($program){
+                        foreach($program as $prog){
+                            $submenu[] = [
+                                'id' => $prog->id,
+                                'title' => $prog->title,
+                                'url' => 'program/'.$prog->slug
+                            ];
+                        }
+                    }
+
+                }
+                $arrMenu[] = [
+                    'id' => $p->id,
+                    'title' => $p->title,
+                    'url' => $p->menu_type == 'page' ? $p->slug : $p->url,
+                    'submenu' => $submenu,
+                    'type' => $p->page_type
+                ];
+            }
+        }
+
+        return $arrMenu;
+    }
+
+    public function displayFooterMenu(){
+        $result = Menu::where('footer_display', 'A')->get();
+
+        return $result;
+    }
+
+    public function displaySocialMedia(){
+        return SocialMedia::where('status', 'A')->get();
+    }
+
+    public function displayContact(){
+        $telp = Meta::where('var', 'INST_TELP')->first()->value;
+        $addr = Meta::where('var', 'INST_ADDR')->first()->value;
+        $email = Meta::where('var', 'INST_EMAIL')->first()->value; 
+        $result = [
+            'inst_telp' => $telp,
+            'inst_addr' => $addr,
+            'inst_email' => $email
+        ];
+
+        return $result;
     }
 }

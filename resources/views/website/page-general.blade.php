@@ -1,0 +1,26 @@
+@extends('layout.layout-page', ['active' => $active])
+@section('title', $pageTitle)
+
+@section('breadcrumb')
+<ul class="thm-breadcrumb list-unstyled">
+    <li><a href="/">Beranda</a></li>
+    <li><span>/</span></li>
+    <li>{{ @$detail->title }}</li>
+</ul>
+<h2>{{ @$detail->title }}</h2>
+@endsection
+
+@section('pageGeneral')
+<section class="error-page">
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-12">
+                @if(@$detail->featured_img)
+                    <img src="{{ asset(@$detail->featured_img) }}" style="width: 100%; height: 250px; object-fit: cover; margin-bottom: 10px"/>
+                @endif
+                {!! @$detail->content !!}
+            </div>
+        </div>
+    </div>
+</section>
+@endsection

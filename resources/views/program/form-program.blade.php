@@ -94,6 +94,7 @@
                         <input type="text" class="form-control" name="contact" value="{{ @$detail->contact }}">
                     </div>
                 </div>
+                <hr/>
                 <div class="mb-3 row">
                     <label class="col-sm-2 col-form-label">Kategori *</label>
                     <div class="col-sm-4">
@@ -112,11 +113,21 @@
                     </div>
                 </div>
                 <div class="mb-3 row">
+                    <label class="col-sm-2 col-form-label">Jenis Program *</label>
+                    <div class="col-sm-8">
+                        <select class="form-select" name="program_type" required>
+                            <option value="">-- Pilih --</option>
+                            <option value="donation" {{ @$detail->program_type == 'donation' ? 'selected' : '' }}>Program Donasi (Fundraising)</option>
+                            <option value="non-donation" {{ @$detail->program_type == 'non-donation' ? 'selected' : '' }}>Program Non Donasi (Layanan Amal eg. ZIS, Qurban dll.)</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="mb-3 row">
                     <label class="col-sm-2 col-form-label">Status Publish *</label>
                     <div class="col-sm-3">
                         <select class="form-select" name="status" required>
-                            <option value="draft" {{ @$detail->status_display == 'draft' ? 'selected' : '' }}>Draft</option>
-                            <option value="publish" {{ @$detail->status_display == 'publish' ? 'selected' : '' }}>Publish</option>
+                            <option value="draft" {{ @$detail->status == 'draft' ? 'selected' : '' }}>Draft</option>
+                            <option value="publish" {{ @$detail->status == 'publish' ? 'selected' : '' }}>Publish</option>
                         </select>
                     </div>
                 </div>

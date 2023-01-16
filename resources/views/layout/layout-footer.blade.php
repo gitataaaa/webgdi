@@ -1,0 +1,123 @@
+<div class="site-footer__top">
+    <div class="site-footer__shape-1 float-bob-x">
+        <img src="{{ asset('website/assets/images/shapes/site-footer-shape-1.png') }}" alt="">
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-4 col-lg-6 col-md-6 wow fadeInUp" data-wow-delay="100ms">
+                <div class="footer-widget__column footer-widget__about">
+                    <div class="footer-widget__logo">
+                        <a href="#"><img src="{{ asset('website/assets/images/custom/logo_gdi_long.png') }}" alt=""></a>
+                    </div>
+                    <div class="footer-widget__about-text-box">
+                        <p class="footer-widget__about-text">Menjadi lembaga global yang profesional untuk peduli menjaga generasi mandiri dan unggul</p>
+                    </div>
+                    <form class="footer-widget__subscribe-box">
+                        <div class="footer-widget__subscribe-input-box">
+                            <input type="email" placeholder="Email address" name="email">
+                            <button type="submit" class="footer-widget__subscribe-btn"><img
+                                    src="{{ asset('website/assets/images/icon/paper-plan.png') }}" alt=""></button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="col-xl-2 col-lg-6 col-md-6 wow fadeInUp" data-wow-delay="200ms">
+                <div class="footer-widget__column footer-widget__Explore">
+                    <div class="footer-widget__title-box">
+                        <h3 class="footer-widget__title">Quick Links</h3>
+                    </div>
+                    @php
+                        $quickLinks = App\Helper::displayFooterMenu();
+                    @endphp
+                    @if($quickLinks)
+                    <ul class="footer-widget__Explore-list list-unstyled">
+                        @foreach($quickLinks as $q)
+                            <li><a href="{{ $q->slug }}">{{ $q->title }}</a></li>
+                        @endforeach
+                    </ul>
+                    @endif
+                </div>
+            </div>
+            <div class="col-xl-2 col-lg-6 col-md-6 wow fadeInUp" data-wow-delay="300ms">
+                <div class="footer-widget__column footer-widget__Fundraising">
+                    <div class="footer-widget__title-box">
+                        <h3 class="footer-widget__title">Program</h3>
+                    </div>
+                    <ul class="footer-widget__Explore-list list-unstyled">
+                        <li><a href="about.html">Design</a></li>
+                        <li><a href="about.html">Education</a></li>
+                        <li><a href="about.html">Technology</a></li>
+                        <li><a href="about.html">Games</a></li>
+                        <li><a href="about.html">Film & Video</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-xl-4 col-lg-6 col-md-6 wow fadeInUp" data-wow-delay="400ms">
+                <div class="footer-widget__column footer-widget__Contact">
+                    <div class="footer-widget__title-box">
+                        <h3 class="footer-widget__title">Kontak</h3>
+                    </div>
+                    @php
+                        $contact = App\Helper::displayContact();
+                    @endphp
+                    <ul class="footer-widget__Contact-list list-unstyled">
+                        @if($contact['inst_telp'])
+                        <li>
+                            <div class="icon">
+                                <span class="icon-telephone"></span>
+                            </div>
+                            <div class="text">
+                                <p><a href="tel:{{ $contact['inst_telp'] }}">{{ $contact['inst_telp'] }}</a></p>
+                            </div>
+                        </li>
+                        @endif
+
+                        @if($contact['inst_email'])
+                        <li>
+                            <div class="icon">
+                                <span class="icon-email"></span>
+                            </div>
+                            <div class="text">
+                                <p><a href="mailto:{{ $contact['inst_email'] }}">{{ $contact['inst_email'] }}</a></p>
+                            </div>
+                        </li>
+                        @endif
+
+                        @if($contact['inst_addr'])
+                        <li>
+                            <div class="icon" style="position: relative; bottom: 1rem">
+                                <span class="icon-pin"></span>
+                            </div>
+                            <div class="text">
+                                <p>{{ $contact['inst_addr'] }}</p>
+                            </div>
+                        </li>
+                        @endif
+                    </ul>
+
+                    @php
+                        $socialMedia = App\Helper::displaySocialMedia();
+                    @endphp
+                    @if($socialMedia)
+                    <div class="site-footer__social">
+                        @foreach($socialMedia as $dt)
+                            <a href="{{ $dt->url }}"><i class="{{ $dt->classname }}"></i></a>
+                        @endforeach
+                    </div>
+                    @endif
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="site-footer__bottom">
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-12">
+                <div class="site-footer__bottom-inner">
+                    <p class="site-footer__bottom-text">© copyright 2022 by <a href="#">sahabatbaik.org</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

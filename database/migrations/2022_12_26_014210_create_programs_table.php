@@ -27,6 +27,7 @@ class CreateProgramsTable extends Migration
             $table->string('pic')->nullable();
             $table->string('contact')->nullable();
             $table->string('category')->nullable();
+            $table->enum('program_type', ['donation', 'non-donation'])->nullable();
             $table->string('user_verify')->nullable();
             $table->timestamps();
             $table->timestamp('deleted_at')->nullable();

@@ -13,6 +13,7 @@
         <ul class="cs-menu-dropdown-item {{ @$MetaActive ? 'mm-collapse mm-show' : ''}}">
             <li><a href="/admin/meta/social-media" class="{{ @$MetaSMActive }}">Media Sosial</a></li>
             <li><a href="/admin/meta/identitas-instansi" class="{{ @$MetaIDActive }}">Identitas Instansi</a></li>
+            <li><a href="/admin/meta/bank" class="{{ @$MetaBankActive }}">Rekening Bank</a></li>
         </ul>
     </li>
     <li><a href="/admin/message" class="{{ @$MsgActive }}"><i class="cs-menu-icon bi-envelope"></i> Pesan</a></li>
@@ -32,6 +33,6 @@
     <li class="text">Lain-lain</li>
     <li><a href="/admin/user/detail" class="{{ @$ProfileActive }}"><i class="cs-menu-icon bi-person-badge"></i> Profil Anda</a></li>
     <li><a href="#"><i class="cs-menu-icon bi-pencil-square"></i> Ubah Password</a></li>
-    <li><a href="/logout"><i class="cs-menu-icon bi-door-open-fill"></i> Logout</a></li>
+    <li><a href="/q/logout"><i class="cs-menu-icon bi-door-open-fill"></i> Logout</a></li>
 
 </ul>

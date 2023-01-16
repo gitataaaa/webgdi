@@ -13,6 +13,7 @@ use App\Http\Controllers\MessageController;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\ProgramController;
+use App\Http\Controllers\WebsiteController;
 use App\Http\Kernel;
 
 
@@ -27,9 +28,15 @@ use App\Http\Kernel;
 |
 */
 
-Route::post('/login', [AuthController::class, 'authenticate']);
-Route::get('/logout', [AuthController::class, 'logout']);
-Route::get('/login', function(){
+/* front website */
+Route::get('/', [WebsiteController::class, 'index']);
+Route::get('/{slug}', [WebsiteController::class, 'index']);
+Route::get('/program/{slug}', [WebsiteController::class, 'index_program']);
+Route::get('/program/{slug}/{detailSlug}', [WebsiteController::class, 'index_program']);
+
+Route::post('/q/login', [AuthController::class, 'authenticate']);
+Route::get('/q/logout', [AuthController::class, 'logout']);
+Route::get('/q/login', function(){
     return view('auth.login');
 })->name('login');
 

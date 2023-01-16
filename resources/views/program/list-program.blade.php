@@ -25,6 +25,7 @@
                 <th>Waktu</th>
                 <!-- hidd -->
                 <th>Date End</th>
+                <th>Tipe Program</th>
                 <th>Kontak</th>
                 <!-- ---- -->
                 <th>PIC/Kontak</th>
@@ -65,7 +66,12 @@
                             
                         }
                     },
-                    { data: 'title' },
+                    { 
+                        data: 'title',
+                        render: function(data, type, row, meta){
+                            return data+'<br/>'+(row.program_type == 'donation' ? '<span class="badge bg-info">Fundraising</span>' : '<span class="badge bg-warning">Pelayanan</span>');
+                        }
+                    },
                     { 
                         data: 'target_nominal',
                         render: function(data, type, row, meta){
@@ -84,20 +90,25 @@
                         
                     },
                     { 
+                        data: 'program_type',
+                        visible: false
+                        
+                    },
+                    { 
                         data: 'contact',
                         visible: false
                     },
                     { 
                         data: 'pic',
                         render: function(data, type, row, meta){
-                            return data +' ('+row.contact+')';
+                            return data +'<br/>('+row.contact+')';
                         }
                     },
                     { data: 'category'},
                     {
                         data: 'status',
                         render: function(data, type, row, meta){
-                            return (data == 'draft' ? 'Draft' : 'Publish');
+                            return (data == 'draft' ? '<span class="badge bg-secondary">Draft</span>' : '<span class="badge bg-primary">Publish</span>');
                         }
                     },
                     { 

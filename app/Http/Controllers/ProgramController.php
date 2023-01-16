@@ -94,6 +94,7 @@ class ProgramController extends Controller
             'date_publish' => $req->status == 'publish' ? date('Y-m-d H:i:s') : null,
             'contact' => $req->contact,
             'category' => $req->kategori_baru ? $req->kategori_baru : $req->category,
+            'program_type' => $req->program_type,
             'status' => $req->status
         ];
         if($req->file('image_upload')){
