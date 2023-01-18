@@ -37,6 +37,8 @@ Route::get('/program/{slug}/{detailSlug}', [WebsiteController::class, 'index_pro
 Route::get('/blog/{slug}', [WebsiteController::class, 'index_blog']);
 Route::get('/blog/category/{category}', [WebsiteController::class, 'index_blog_category']);
 
+Route::post('/message/send', [WebsiteController::class, 'store_message']);
+
 Route::post('/q/login', [AuthController::class, 'authenticate']);
 Route::get('/q/logout', [AuthController::class, 'logout']);
 Route::get('/q/login', function(){

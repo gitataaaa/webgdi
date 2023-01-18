@@ -17,13 +17,15 @@ class MetaController extends Controller
         $addr = Meta::where('var', 'INST_ADDR')->first();
         $telp = Meta::where('var', 'INST_TELP')->first();
         $email = Meta::where('var', 'INST_EMAIL')->first();
+        $map = Meta::where('var', 'GOO_MAP')->first();
 
         $output = [
             'instLogo' => $logo->value,
             'instName' => $name->value,
             'instAddr' => $addr->value,
             'instTelp' => $telp->value,
-            'instEmail' => $email->value
+            'instEmail' => $email->value,
+            'gooMap' => $map->value
         ];
 
         return view('meta.index-meta-setting', [
@@ -39,6 +41,7 @@ class MetaController extends Controller
         $instAddr = $req->INST_ADDR;
         $instTelp = $req->INST_TELP;
         $instEmail = $req->INST_EMAIL;
+        $gooMap = $req->GOO_MAP;
 
         if($req->file('image_upload')){
             $filename = $req->file('image_upload')->getClientOriginalName();
@@ -51,6 +54,7 @@ class MetaController extends Controller
         Meta::where('var', 'INST_TELP')->update(['value' => $instTelp]);
         Meta::where('var', 'INST_ADDR')->update(['value' => $instAddr]);
         Meta::where('var', 'INST_EMAIL')->update(['value' => $instEmail]);
+        Meta::where('var', 'GOO_MAP')->update(['value' => $gooMap]);
 
         return redirect('/admin/meta/identitas-instansi');
     }

@@ -125,10 +125,12 @@ class Helper{
         $telp = Meta::where('var', 'INST_TELP')->first()->value;
         $addr = Meta::where('var', 'INST_ADDR')->first()->value;
         $email = Meta::where('var', 'INST_EMAIL')->first()->value; 
+        $gooMap = Meta::where('var', 'GOO_MAP')->first()->value; 
         $result = [
             'inst_telp' => $telp,
             'inst_addr' => $addr,
-            'inst_email' => $email
+            'inst_email' => $email,
+            'inst_map' => $gooMap
         ];
 
         return $result;

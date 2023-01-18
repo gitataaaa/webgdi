@@ -1,5 +1,8 @@
 <div class="mobile-nav__overlay mobile-nav__toggler"></div>
     <!-- /.mobile-nav__overlay -->
+    @php
+        $contact = App\Helper::displayContact();
+    @endphp
     <div class="mobile-nav__content">
         <span class="mobile-nav__close mobile-nav__toggler"><i class="fa fa-times"></i></span>
 
@@ -14,23 +17,26 @@
         <ul class="mobile-nav__contact list-unstyled">
             <li>
                 <i class="fa fa-envelope"></i>
-                <a href="mailto:needhelp@packageName__.com">needhelp@qrowd.com</a>
+                <a href="mailto:{{ $contact['inst_email'] }}">{{ $contact['inst_email'] }}</a>
             </li>
             <li>
                 <i class="fa fa-phone-alt"></i>
-                <a href="tel:666-888-0000">666 888 0000</a>
+                <a href="tel:{{ $contact['inst_telp'] }}">{{ $contact['inst_telp'] }}</a>
             </li>
         </ul><!-- /.mobile-nav__contact -->
+        @php
+            $socialMedia = App\Helper::displaySocialMedia();
+        @endphp
+        @if($socialMedia)
         <div class="mobile-nav__top">
             <div class="mobile-nav__social">
-                <a href="#" class="fab fa-twitter"></a>
-                <a href="#" class="fab fa-facebook-square"></a>
-                <a href="#" class="fab fa-pinterest-p"></a>
-                <a href="#" class="fab fa-instagram"></a>
-            </div><!-- /.mobile-nav__social -->
-        </div><!-- /.mobile-nav__top -->
 
-
+            @foreach($socialMedia as $dt)
+                <a href="{{ $dt->url }}"><i class="{{ $dt->classname }}"></i></a>
+            @endforeach
+            </div>
+        </div>
+        @endif
 
     </div>
     <!-- /.mobile-nav__content -->

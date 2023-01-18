@@ -7,6 +7,9 @@
         max-width: 200px;
         height: 6rem;
     }
+    .google-map > iframe{
+        width: 100%;
+    }
 </style>
 @endsection
 
@@ -33,9 +36,17 @@
             <span class="section-title__tagline">Hubungi Kami</span>
             <h2 class="section-title__title">Jangan ragu untuk mengirimkan pesan kapanpun dan dimanapun</h2>
         </div>
+
+        @if(@$message == true)
+            <div class="alert alert-info" style="border-radius: 0px">
+                Terima kasih sudah mengirimkan pesan kepada kami.<br/>
+                Kami akan segera membalas pesan Anda melalui email atau nomor telepon yang Anda daftarkan.
+            </div>
+        @endif
         <div class="contact-one__form-box">
-            <form action="assets/inc/sendemail.php" class="contact-one__form contact-form-validated"
-                novalidate="novalidate">
+            <form action="/message/send" method="post" class="contact-one__form">
+                @csrf
+                <input type="hidden" name="slug" value="{{ $slug }}"/>
                 <div class="row">
                     <div class="col-xl-6">
                         <div class="contact-form__input-box">
@@ -127,9 +138,7 @@
 
 <!--Google Map Start-->
 <section class="google-map">
-    <iframe
-        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4562.753041141002!2d-118.80123790098536!3d34.152323469614075!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x80e82469c2162619%3A0xba03efb7998eef6d!2sCostco+Wholesale!5e0!3m2!1sbn!2sbd!4v1562518641290!5m2!1sbn!2sbd"
-        class="google-map__one" allowfullscreen></iframe>
+{!! $contact['inst_map'] !!}
 
 </section>
 @endsection

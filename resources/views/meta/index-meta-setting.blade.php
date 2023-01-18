@@ -49,6 +49,13 @@
                     </div>
                 </div>
                 <div class="mb-3 row">
+                    <label class="col-sm-2 col-form-label">Google Map *</label>
+                    <div class="col-sm-10">
+                        <textarea class="form-control" required name="GOO_MAP" rows="5">{{ @$detail['gooMap'] }}</textarea>
+                        <small>Embedded link google map alamat instansi</small>
+                    </div>
+                </div>
+                <div class="mb-3 row">
                     <label class="col-sm-2 col-form-label">No. Telp *</label>
                     <div class="col-sm-4">
                         <input type="text" class="form-control" required name="INST_TELP" value="{{ @$detail['instTelp'] }}">

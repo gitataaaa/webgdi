@@ -16,7 +16,7 @@ class CreateMetasTable extends Migration
         Schema::create('metas', function (Blueprint $table) {
             $table->id();
             $table->string('var');
-            $table->string('value')->nullable();
+            $table->text('value')->nullable();
             $table->string('description')->nullable();
             $table->enum('status', ['A', 'NA'])->nullable();
             $table->string('user_verify')->nullable();

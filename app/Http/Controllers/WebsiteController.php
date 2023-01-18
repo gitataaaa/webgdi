@@ -6,6 +6,7 @@ use App\Models\Menu;
 use App\Models\Program;
 use App\Models\ProgramRealisasi;
 use App\Models\Blog;
+use App\Models\Message;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\File; 
 use Illuminate\Http\Request;
@@ -73,6 +74,7 @@ class WebsiteController extends Controller
                             'pageTitle' => $detail->title,
                             'detail' => $detail,
                             'active' => ['menu'.$parentID => 'current'],
+                            'slug' => $slug
                         ]);
                         break;
                 }
@@ -196,5 +198,18 @@ class WebsiteController extends Controller
         ]);
     }
 
+    public function store_message(Request $req){
+        $dataInput = [
+            'sender' => $req->name,
+            'email' => $req->email,
+            'phone' => $req->phone,
+            'subject' => $req->subject,
+            'content' => $req->message,
+            'date_send' => date('Y-m-d H:i:s'),
+            'status' => 'new'
+        ];
 
+        Message::create($dataInput);
+        return redirect('/'.$req->slug);
+    }
 }
