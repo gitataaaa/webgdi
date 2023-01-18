@@ -81,7 +81,7 @@
                     {
                         data: 'status',
                         render: function(data, type, row, meta){
-                            return (data == 'A' ? 'Aktif' : 'Non Aktif');
+                            return (data == 'A' ? '<span class="badge bg-primary">Aktif</span>' : '<span class="badge bg-secondary">Non Aktif</span>');
                         }
                     },
                     { 

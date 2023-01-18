@@ -7,6 +7,7 @@ use App\Models\Program;
 use App\Models\ProgramRealisasi;
 use App\Models\Blog;
 use App\Models\Message;
+use App\Models\Widget;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\File; 
 use Illuminate\Http\Request;
@@ -84,8 +85,35 @@ class WebsiteController extends Controller
             }
             
         }else{
+            $slider = Widget::where([
+                'type' => 'slider',
+                'status' => 'A'
+            ])->get();
+            $program = Program::selectRaw('*, (SELECT SUM(nominal) FROM program_donasis WHERE program_id = programs.id) as donasi')->where([
+                'status' => 'publish',
+                'program_type' => 'donation'
+            ])->limit(3)->get();
+            $blog = Blog::where('status', 'publish')->orderBy('date_publish', 'desc')->limit(3)->get();
+            $ads = Widget::where([
+                'type' => 'ads',
+                'status' => 'A'
+            ])->first();
+            $info = Widget::where([
+                'type' => 'general',
+                'status' => 'A'
+            ])->first();
+            $about = Widget::where([
+                'type' => 'about',
+                'status' => 'A'
+            ])->first();
             return view('website.homepage', [
-                'pageTitle' => 'Yayasan Graha Dhuafa Indonesia'
+                'pageTitle' => 'Yayasan Graha Dhuafa Indonesia',
+                'slider' => $slider,
+                'program' => $program,
+                'blog' => $blog,
+                'ads' => $ads,
+                'info' => $info,
+                'about' => $about
             ]);
         }
         
@@ -210,6 +238,6 @@ class WebsiteController extends Controller
         ];
 
         Message::create($dataInput);
-        return redirect('/'.$req->slug);
+        return redirect('/'.$req->slug)->with('success', true);
     }
 }

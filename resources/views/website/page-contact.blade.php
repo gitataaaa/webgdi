@@ -37,7 +37,7 @@
             <h2 class="section-title__title">Jangan ragu untuk mengirimkan pesan kapanpun dan dimanapun</h2>
         </div>
 
-        @if(@$message == true)
+        @if(Session::has('success') == true)
             <div class="alert alert-info" style="border-radius: 0px">
                 Terima kasih sudah mengirimkan pesan kepada kami.<br/>
                 Kami akan segera membalas pesan Anda melalui email atau nomor telepon yang Anda daftarkan.

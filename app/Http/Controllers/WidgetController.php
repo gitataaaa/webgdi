@@ -186,8 +186,8 @@ class WidgetController extends Controller
     public function store_about(Request $req){
         $dataCheck = $req->validate([
             'title' => ['required','string'],
-            'subtitle' => ['string'],
-            'description' => ['string'],
+            //'subtitle' => ['string'],
+            //'description' => ['string'],
             'image_upload_1' => 'image|mimes:jpg,png,jpeg,gif,svg|max:2048',
             'image_upload_2' => 'image|mimes:jpg,png,jpeg,gif,svg|max:2048'
         ]);
@@ -204,6 +204,7 @@ class WidgetController extends Controller
         if($req->file('image_upload_1')){
             $filename = $req->file('image_upload_1')->getClientOriginalName();
             $path = $req->file('image_upload_1')->move('images/about', $filename);
+            $path = 'images/about/'.$filename;
             $image[] = [
                 'id' => '1',
                 'path' => $path
@@ -217,6 +218,7 @@ class WidgetController extends Controller
         if($req->file('image_upload_2')){
             $filename = $req->file('image_upload_2')->getClientOriginalName();
             $path = $req->file('image_upload_2')->move('images/about', $filename);
+            $path = 'images/about/'.$filename;
             $image[] = [
                 'id' => '2',
                 'path' => $path

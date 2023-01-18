@@ -145,7 +145,7 @@
 
         <!--Page Header Start-->
         <section class="page-header">
-            <div class="page-header-bg" style="background-image: url({{ asset('website/assets/images/backgrounds/page-header-bg.jpg') }})">
+            <div class="page-header-bg" style="background-image: url({{ asset('website/assets/images/backgrounds/page-header-bg-3.jpg') }})">
             </div>
             <div class="page-header-shape-1 float-bob-x">
                 <img src="{{ asset('website/assets/images/shapes/page-header-shape-1.png') }}" alt="">

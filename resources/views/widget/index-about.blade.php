@@ -49,6 +49,7 @@
                         $imgTemp_1 = $imgTemp_2 = '';
                         if(@$detail->image_upload){
                             $image = json_decode($detail->image_upload);
+                            //print_r($image); exit();
                             if($image){
                                 foreach($image as $im){
                                     if($im->path){
