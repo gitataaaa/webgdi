@@ -111,12 +111,14 @@
                         </div>
                     </div>
                     <p class="project-details-top__goal"><span>Target:</span> Rp. {{ number_format(@$detail->target_nominal) }}</p>
-                    @else
-                    <p class="project-details-top__text">Reward description goes here. Lorem ipsum dolor sit amet, piscing elit. Vivamus dictum congue nunc.</p>
-                    @endif
-                    
                     <p class="project-details-top__text">Donasi dapat diserahkan langsung ke kantor Yayasan Graha Dhuafa Indonesia atau dapat dilakukan melalui transfer bank.
                     </p>
+                    @else
+                    <div class="about-one__quote"><p>{{ @$detail->short_desc }}</p></div>
+                    <br/>
+                    <p class="project-details-top__text">Pembayaran dapat diserahkan langsung ke kantor Yayasan Graha Dhuafa Indonesia atau dapat dilakukan melalui transfer bank.
+                    </p>
+                    @endif
                     
                     <div class="project-details-top__quantity-btn-social">
                         <a href="project-01.html" class="thm-btn project-details-top__btn">{{ @$detail->program_type == 'donation' ? 'Donasi' : 'Tunaikan'}} Sekarang</a>
@@ -184,8 +186,7 @@
                                 <div class="project-details__rewards-img">
                                     <img src="{{ asset($dt->image_upload) }}" alt="">
                                 </div>
-                                <p class="project-details__rewards-text-1">Reward description goes here. Lorem ipsum
-                                    dolor sit amet, piscing elit. Vivamus dictum congue nunc.</p>
+                                <p class="project-details__rewards-text-1">{{ @$detail->short_desc }}</p>
                                 <div class="project-details__rewards-btn-box">
                                     <a href="/program/{{ $dt->slug }}" class="thm-btn project-details__rewards-btn">Tunaikan Sekarang</a>
                                 </div>

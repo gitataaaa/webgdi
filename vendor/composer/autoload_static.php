@@ -553,6 +553,7 @@ class ComposerStaticInitafa2e5d4203d3819da1f3c251973be66
     public static $classMap = array (
         'App\\Console\\Kernel' => __DIR__ . '/../..' . '/app/Console/Kernel.php',
         'App\\Exceptions\\Handler' => __DIR__ . '/../..' . '/app/Exceptions/Handler.php',
+        'App\\Exports\\DonaturExport' => __DIR__ . '/../..' . '/app/Exports/DonaturExport.php',
         'App\\Helper' => __DIR__ . '/../..' . '/app/Helper.php',
         'App\\Http\\Controllers\\AuthController' => __DIR__ . '/../..' . '/app/Http/Controllers/AuthController.php',
         'App\\Http\\Controllers\\BlogController' => __DIR__ . '/../..' . '/app/Http/Controllers/BlogController.php',
@@ -565,6 +566,7 @@ class ComposerStaticInitafa2e5d4203d3819da1f3c251973be66
         'App\\Http\\Controllers\\RedactorController' => __DIR__ . '/../..' . '/app/Http/Controllers/RedactorController.php',
         'App\\Http\\Controllers\\SocialMediaController' => __DIR__ . '/../..' . '/app/Http/Controllers/SocialMediaController.php',
         'App\\Http\\Controllers\\UserController' => __DIR__ . '/../..' . '/app/Http/Controllers/UserController.php',
+        'App\\Http\\Controllers\\WebsiteController' => __DIR__ . '/../..' . '/app/Http/Controllers/WebsiteController.php',
         'App\\Http\\Controllers\\WidgetController' => __DIR__ . '/../..' . '/app/Http/Controllers/WidgetController.php',
         'App\\Http\\Kernel' => __DIR__ . '/../..' . '/app/Http/Kernel.php',
         'App\\Http\\Middleware\\Authenticate' => __DIR__ . '/../..' . '/app/Http/Middleware/Authenticate.php',
@@ -575,6 +577,7 @@ class ComposerStaticInitafa2e5d4203d3819da1f3c251973be66
         'App\\Http\\Middleware\\TrustHosts' => __DIR__ . '/../..' . '/app/Http/Middleware/TrustHosts.php',
         'App\\Http\\Middleware\\TrustProxies' => __DIR__ . '/../..' . '/app/Http/Middleware/TrustProxies.php',
         'App\\Http\\Middleware\\VerifyCsrfToken' => __DIR__ . '/../..' . '/app/Http/Middleware/VerifyCsrfToken.php',
+        'App\\Models\\Bank' => __DIR__ . '/../..' . '/app/Models/Bank.php',
         'App\\Models\\Blog' => __DIR__ . '/../..' . '/app/Models/Blog.php',
         'App\\Models\\Menu' => __DIR__ . '/../..' . '/app/Models/Menu.php',
         'App\\Models\\Message' => __DIR__ . '/../..' . '/app/Models/Message.php',

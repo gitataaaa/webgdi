@@ -59,5 +59,9 @@ class MetaSeeder extends Seeder
             'var' => 'EM_PORT',
             'status' => 'A',
         ]);
+        DB::table('metas')->insert([
+            'var' => 'GOO_MAP',
+            'status' => 'A',
+        ]);
     }
 }

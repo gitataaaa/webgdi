@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Menu;
 use App\Models\Program;
 use App\Models\ProgramRealisasi;
+use App\Models\Blog;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\File; 
 use Illuminate\Http\Request;
 
 class WebsiteController extends Controller
@@ -19,7 +21,7 @@ class WebsiteController extends Controller
         if($slug){
             if($slug != 'donasi'){
                 $detail = Menu::where('slug', $slug)->first();
-                $parentID = $detail->parent_id == 0 ? $detail->id : $detail->parent_id;
+                $parentID = $detail ? ($detail->parent_id == 0 ? $detail->id : $detail->parent_id) : null;
             }
             if($detail){
                 switch($detail->page_type){
@@ -32,6 +34,15 @@ class WebsiteController extends Controller
                         break;
     
                     case 'blog_list':
+                        $kategori = Blog::selectRaw('DISTINCT(kategori) as kategori')->get();
+                        $blog = Blog::where('status', 'publish')->orderBy('date_publish', 'desc')->get();
+                        return view('website.page-blog', [
+                            'pageTitle' => $detail->title,
+                            'detail' => $detail,
+                            'blog' => $blog,
+                            'category' => $kategori,
+                            'active' => ['menu'.$parentID => 'current']
+                        ]);
                         break;
                     
                     case 'program_list':
@@ -43,18 +54,31 @@ class WebsiteController extends Controller
                             'pageTitle' => $detail->title,
                             'detail' => $detail,
                             'active' => ['menu'.$parentID => 'current'],
-                            'program' => $program
+                            'program' => $program,
                         ]);
                         break;
     
                     case 'gallery':
+                        $files = File::files(public_path('images/gallery/'));
+                        return view('website.page-gallery', [
+                            'pageTitle' => $detail->title,
+                            'detail' => $detail,
+                            'active' => ['menu'.$parentID => 'current'],
+                            'files' => $files
+                        ]);
                         break;
     
                     case 'contact':
+                        return view('website.page-contact', [
+                            'pageTitle' => $detail->title,
+                            'detail' => $detail,
+                            'active' => ['menu'.$parentID => 'current'],
+                        ]);
                         break;
                 }
             }else{
-                return redirect('/'.$slug);
+                return view('404');
+                /* return 404 */
             }
             
         }else{
@@ -129,6 +153,47 @@ class WebsiteController extends Controller
                 'programSuggest' => $programSuggest
             ]);
         }
+    }
+
+    public function index_blog($slug){
+        $menu = Menu::where([
+            'page_type' => 'blog_list',
+        ])->first();
+        $parentID = $menu->parent_id ? $menu->parent_id : $menu->id;
+
+        $detail = Blog::where('slug', $slug)->first();
+        $blog = Blog::where('id', '<>', $detail->id)->where('status', 'publish')->orderBy('date_publish', 'desc')->get();
+        $kategori = Blog::selectRaw('DISTINCT(kategori) as kategori')->get();
+        return view('website.page-blog-detail', [
+            'pageTitle' => $detail->title,
+            'parent' => $menu->title,
+            'detail' => $detail,
+            'category' => $kategori,
+            'active' => ['menu'.$parentID => 'current'],
+            'blog' => $blog
+        ]);
+    }
+
+    public function index_blog_category($category){
+        $menu = Menu::where([
+            'page_type' => 'blog_list',
+        ])->first();
+        $parentID = $menu->parent_id ? $menu->parent_id : $menu->id;
+
+        $blog = Blog::where([
+            'status' => 'publish',
+            'kategori' => $category
+        ])->get();
+        $blogLatest = Blog::where('status', 'publish')->orderBy('date_publish', 'desc')->get();
+        $kategori = Blog::selectRaw('DISTINCT(kategori) as kategori')->get();
+        return view('website.page-blog', [
+            'pageTitle' => $menu->title,
+            'category' => $kategori,
+            'active' => ['menu'.$parentID => 'current'],
+            'blog' => $blog,
+            'blogLatest' => $blogLatest,
+            'categoryKey' => $category
+        ]);
     }
 
 

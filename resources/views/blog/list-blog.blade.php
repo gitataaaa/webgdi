@@ -49,7 +49,7 @@
                     { data: 'kategori' },{
                         data: 'status',
                         render: function(data, type, row, meta){
-                            return (data == 'draft' ? 'Draft' : 'Publish');
+                            return (data == 'draft' ? '<span class="badge bg-secondary">Draft</span>' : '<span class="badge bg-primary">Publish</span>');
                         }
                     },
                     { data: 'date_publish'},

@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use DataTables;
 use App\Models\Meta;
+use App\Models\Bank;
 use Illuminate\Http\Request;
 
 class MetaController extends Controller
@@ -51,5 +53,75 @@ class MetaController extends Controller
         Meta::where('var', 'INST_EMAIL')->update(['value' => $instEmail]);
 
         return redirect('/admin/meta/identitas-instansi');
+    }
+
+    /* kelola bank & emoney */
+    public function index_bank(){
+        return view('meta.index-bank', [
+            'pageTitle' => 'Meta: Rekening Bank',
+            'active' => ['MetaActive' => 'active', 'MetaBankActive' => 'active'],
+        ]);
+    }
+
+    public function table_bank(){
+        return DataTables::eloquent(Bank::query())
+            ->addIndexColumn()
+            ->addColumn('action', function(Bank $table){
+                $button = '<a href="/admin/meta/bank/'.$table->id.'/edit" class="btn btn-sm btn-primary"><i class="bi-pencil-square"></i></a> 
+                    <button type="button" class="btn btn-sm btn-danger btn-del" data-id="'.$table->id.'"><i class="bi-trash"></i></button>';
+                return $button;
+            })
+            ->make();
+    }
+
+    public function delete_bank($id){
+        $bank = Bank::find($id);
+        $bank->delete();
+    }
+
+    public function form_bank($id=null){
+        $detail = [];
+        if($id){
+            $mode = 'Ubah Data';
+            $detail = Bank::find($id);
+        }else{
+            $mode = 'Tambah';
+        }
+        
+        return view('meta.form-bank', [
+            'pageTitle' => 'Meta: '.$mode.' Rekening Bank',
+            'active' => ['MetaActive' => 'active', 'MetaBankActive'=>'active'],
+            'mode' => $mode,
+            'detail' => $detail,
+        ]);
+    }
+
+    public function store_bank(Request $req){
+        /* nanti dilengkapi */
+        $dataCheck = $req->validate([
+            'bank_name' => ['required', 'string'],
+            'code_image' => 'image|mimes:jpg,png,jpeg,gif,svg|max:2048',
+        ]);
+        $dataInput = [
+            'type' => $req->type,
+            'bank_name' => $req->bank_name,
+            'bank_account' => $req->bank_account,
+            'bank_user' => $req->bank_user,
+            'status' => $req->status,
+        ];
+
+        if($req->file('code_image')){
+            $filename = $req->file('code_image')->getClientOriginalName();
+            $path = $req->file('code_image')->move('images/code', $filename);
+            $dataInput['code_image'] = $path;
+        }
+        
+        if($req->id){
+            Bank::where('id', $req->id)->update($dataInput);
+        }else{
+            Bank::create($dataInput);
+        }
+        
+        return redirect('/admin/meta/bank');
     }
 }

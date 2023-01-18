@@ -170,7 +170,11 @@
 
         @yield('pageProgram')
 
-        
+        @yield('pageBlog')
+
+        @yield('pageGallery')
+
+        @yield('pageContact')
 
         
 
@@ -223,6 +227,8 @@
 
     <!-- template js -->
     <script src="{{ asset('website/assets/js/qrowd.js') }}"></script>
+
+    @stack('script')
 </body>
 
 </html>

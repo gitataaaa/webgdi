@@ -17,6 +17,7 @@ class CreateProgramsTable extends Migration
             $table->id();
             $table->string('title');
             $table->text('slug')->nullable();
+            $table->string('short_desc')->nullable();
             $table->text('description')->nullable();
             $table->mediumText('image_upload')->nullable();
             $table->timestamp('date_publish')->nullable();

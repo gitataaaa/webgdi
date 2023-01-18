@@ -8,6 +8,7 @@ $baseDir = dirname($vendorDir);
 return array(
     'App\\Console\\Kernel' => $baseDir . '/app/Console/Kernel.php',
     'App\\Exceptions\\Handler' => $baseDir . '/app/Exceptions/Handler.php',
+    'App\\Exports\\DonaturExport' => $baseDir . '/app/Exports/DonaturExport.php',
     'App\\Helper' => $baseDir . '/app/Helper.php',
     'App\\Http\\Controllers\\AuthController' => $baseDir . '/app/Http/Controllers/AuthController.php',
     'App\\Http\\Controllers\\BlogController' => $baseDir . '/app/Http/Controllers/BlogController.php',
@@ -20,6 +21,7 @@ return array(
     'App\\Http\\Controllers\\RedactorController' => $baseDir . '/app/Http/Controllers/RedactorController.php',
     'App\\Http\\Controllers\\SocialMediaController' => $baseDir . '/app/Http/Controllers/SocialMediaController.php',
     'App\\Http\\Controllers\\UserController' => $baseDir . '/app/Http/Controllers/UserController.php',
+    'App\\Http\\Controllers\\WebsiteController' => $baseDir . '/app/Http/Controllers/WebsiteController.php',
     'App\\Http\\Controllers\\WidgetController' => $baseDir . '/app/Http/Controllers/WidgetController.php',
     'App\\Http\\Kernel' => $baseDir . '/app/Http/Kernel.php',
     'App\\Http\\Middleware\\Authenticate' => $baseDir . '/app/Http/Middleware/Authenticate.php',
@@ -30,6 +32,7 @@ return array(
     'App\\Http\\Middleware\\TrustHosts' => $baseDir . '/app/Http/Middleware/TrustHosts.php',
     'App\\Http\\Middleware\\TrustProxies' => $baseDir . '/app/Http/Middleware/TrustProxies.php',
     'App\\Http\\Middleware\\VerifyCsrfToken' => $baseDir . '/app/Http/Middleware/VerifyCsrfToken.php',
+    'App\\Models\\Bank' => $baseDir . '/app/Models/Bank.php',
     'App\\Models\\Blog' => $baseDir . '/app/Models/Blog.php',
     'App\\Models\\Menu' => $baseDir . '/app/Models/Menu.php',
     'App\\Models\\Message' => $baseDir . '/app/Models/Message.php',

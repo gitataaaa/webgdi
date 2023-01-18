@@ -50,6 +50,13 @@
                     </div>
                 </div>
                 <div class="mb-3 row">
+                    <label class="col-sm-2 col-form-label">Deskripsi Singkat</label>
+                    <div class="col-sm-10">
+                        <textarea class="form-control" name="short_desc" maxlength="200" rows="3">{{ @$detail->short_desc }}</textarea>
+                        <small><i>Maksmial 200 karakter</i></small>
+                    </div>
+                </div>
+                <div class="mb-3 row">
                     <label class="col-sm-2 col-form-label">Deskripsi Program *</label>
                     <div class="col-sm-10">
                         <textarea class="form-control" name="description" id="redactor" required>{{ @$detail->description }}</textarea>

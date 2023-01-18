@@ -34,6 +34,9 @@ Route::get('/{slug}', [WebsiteController::class, 'index']);
 Route::get('/program/{slug}', [WebsiteController::class, 'index_program']);
 Route::get('/program/{slug}/{detailSlug}', [WebsiteController::class, 'index_program']);
 
+Route::get('/blog/{slug}', [WebsiteController::class, 'index_blog']);
+Route::get('/blog/category/{category}', [WebsiteController::class, 'index_blog_category']);
+
 Route::post('/q/login', [AuthController::class, 'authenticate']);
 Route::get('/q/logout', [AuthController::class, 'logout']);
 Route::get('/q/login', function(){
@@ -140,6 +143,12 @@ Route::group(['prefix'=>'admin', 'middleware'=>['auth']], function(){
     /* META: IDENTITAS INSTANSI */
     Route::get('/meta/identitas-instansi', [MetaController::class, 'index']);
     Route::post('/meta/identitas-instansi/add', [MetaController::class, 'store']);
+    Route::get('/meta/bank', [MetaController::class, 'index_bank']);
+    Route::get('/meta/bank/table', [MetaController::class, 'table_bank']);
+    Route::get('/meta/bank/add', [MetaController::class, 'form_bank']);
+    Route::get('/meta/bank/{id}/edit', [MetaController::class, 'form_bank']);
+    Route::get('/meta/bank/{id}/delete', [MetaController::class, 'delete_bank']);
+    Route::post('/meta/bank/add', [MetaController::class, 'store_bank']);
 
     /* MESSAGE */
     Route::get('/message', [MessageController::class, 'index']);

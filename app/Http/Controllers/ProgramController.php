@@ -86,6 +86,7 @@ class ProgramController extends Controller
         $dataInput = [
             'title' => $req->title,
             'slug' => Str::of($req->title)->slug('-'), //$req->slug,
+            'short_desc' => $req->short_desc,
             'description' => $req->description,
             'target_nominal' => str_replace(',','',$req->target_nominal),
             'date_start' => @$dates['date_start'], //$this->_dateFormat($req->date_start),

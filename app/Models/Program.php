@@ -13,6 +13,6 @@ class Program extends Model
     protected $fillable = [
         'title', 'slug', 'description', 'image_upload', 'date_publish', 'status',
         'target_nominal', 'date_start', 'date_end', 'pic', 'contact', 'category',
-        'user_verify', 'deleted_at', 'program_type'
+        'user_verify', 'deleted_at', 'program_type', 'short_desc'
     ];
 }
