@@ -39,6 +39,8 @@ Route::get('/blog/category/{category}', [WebsiteController::class, 'index_blog_c
 
 Route::post('/message/send', [WebsiteController::class, 'store_message']);
 
+Route::get('/calc/zakat', [WebsiteController::class, 'index_calc_zakat']);
+
 Route::post('/q/login', [AuthController::class, 'authenticate']);
 Route::get('/q/logout', [AuthController::class, 'logout']);
 Route::get('/q/login', function(){

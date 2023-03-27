@@ -1,0 +1,118 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Naskh+Arabic:wght@500&family=Quicksand&display=swap');
+@import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css");
+body{
+    background: #BBD6B8;
+    color: #1A0000;
+    font-family: 'Quicksand', sans-serif;
+}
+.arabic{
+    font-family: 'Noto Naskh Arabic', serif;
+    font-size: 28px;
+}
+.oc-card{
+    background: #ffffff;
+    box-shadow: 0px 0px 5px #94AF9F;
+    height: 100%;
+    padding: 5px 0px;
+}
+.oc-card a, .oc-card a:hover, .oc-card a:focus, .oc-card a:active{
+    color: #1A0000
+} 
+.oc-card-section{
+    padding: 15px 25px;
+}
+.oc-card-section .form-group{
+    margin-bottom: 10px;
+}
+.oc-card-section .form-group label{
+    margin-bottom: 10px;
+}
+.oc-card-section .custom-input > .oc-input-group .input-group-text{
+    position: absolute;
+    background: none;
+    z-index: 6;
+    border: none;
+}
+.oc-card-section .custom-input > .oc-input-group .form-control{
+    text-align: right
+}
+.oc-card-divider{
+    border-bottom: 3px solid #DBE4C6;
+}
+.oc-card-header{
+    box-shadow: 0px 3px 7px #ddd;
+    font-weight: bold;
+}
+.oc-container{
+    background: #ededed;
+    padding: 10px 10px;
+    border-radius: .5rem;
+}
+.oc-container a{
+    color: #1A0000;
+    font-weight: bold;
+}
+.oc-container a:hover, .oc-container a:active, .oc-container a:focus{
+    color: #1A0000;
+}
+.oc-container .nav-pills .nav-link.active, .nav-pills .show>.nav-link{
+    background-color: #609966
+}
+.oc-text-header{
+    font-weight: bold;
+}
+
+.mr-5{
+    margin-right: 5px;
+}
+.ml-5{
+    margin-left: 5px;
+}
+.text-bg-outline-secondary{
+    border: 1px solid #ddd;
+    color: #1A0000
+}
+.oc-text-title{
+    font-size: 18px;
+    font-weight: bold;
+}
+.oc-radio-box{
+    padding: 5px 10px;
+    text-align: center;
+    border: 1px solid #ddd;
+    border-radius: .345rem;
+    cursor: pointer;
+}
+.oc-radio-box-active{
+    border: none;
+    background: #609966;
+    color: #fff;
+    font-weight: bold;
+}
+.oc-card .form-check-input:checked{
+    background-color: #609966;
+    border-color: #609966;
+}
+.oc-card .text-left{
+    text-align: left;
+}
+.oc-card .accordion{
+    --bs-accordion-active-color: #323232;
+    --bs-accordion-active-bg: #efefef
+}
+.oc-modal-payment{
+    min-height: 30vh;
+    overflow: auto;
+}
+.oc-card-header-other{
+    font-weight: bold;
+    background-color: #EDF1D6;
+}
+.oc-bank{
+    padding: 20px 20px;
+    cursor: pointer;
+}
+.oc-bank .oc-bank-item{
+    padding-left: 20px;
+    font-weight: bold;
+}

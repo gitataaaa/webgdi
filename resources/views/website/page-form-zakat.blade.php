@@ -1,0 +1,181 @@
+@extends('layout.payment-layout', ['title' => 'Zakat'])
+
+@section('content')
+<div class="oc-card">
+    <form>
+        <input type="hidden" name="zakat_type" value="profesi"/>
+        <input type="hidden" name="sapaan" value=""/>
+        <input type="hidden" name="payment_method" value=""/>
+        <div class="oc-card-section oc-card-header">Perhitungan Zakat</div>
+        <div class="oc-card-section">
+            <div class="form-group">
+                <label class="oc-text-title">Pilihan Zakat</label>
+
+                <div class="oc-container">
+                    <nav class="nav nav-pills nav-justified">
+                        <a class="nav-link active get-zakat-type" data-value="profesi" aria-current="page" href="#profesi">Zakat Profesi</a>
+                        <a class="nav-link get-zakat-type" data-value="maal" href="#maal">Zakat Maal</a>
+                        <a class="nav-link get-zakat-type" data-value="fitrah" href="#fitrah">Zakat Fitrah</a>
+                    </nav>
+                </div>
+            </div>
+
+            <div class="form-group custom-input">
+                <label>Nominal Zakat</label>
+                <div class="oc-input-group input-group-lg mb-3">
+                    <span class="input-group-text text-placeholder">Rp</span>
+                    <input type="text" class="form-control" name="zakat_nominal" required placeholder="Nominal zakat" >
+                </div>
+
+            </div>
+
+            <div class="alert alert-warning">
+                <div class="oc-text-header mb-3">Kalkulator Zakat</div>
+                <p>Bingung menentukan nominal zakat Anda? Gunakan kalkulator zakat untuk menentukan berapa nominal yang harus Anda tunaikan.</p>
+                <nav class="nav nav-pills flex-column flex-sm-row">
+                    <a class="flex-sm-fill text-sm-center nav-link text-bg-outline-secondary mr-5" aria-current="page" href="#"><strong>Tentang Zakat</strong></a>
+                    <a class="flex-sm-fill text-sm-center nav-link text-bg-success ml-5" href="#"><strong>Hitung Zakat</strong></a>
+                </nav>
+            </div>
+        </div>
+
+        <div class="oc-card-divider"></div>
+
+        <div class="oc-card-section">
+            <div class="form-group">
+                <label class="oc-text-title">Data Diri</label>
+            </div>
+            <div class="form-group">
+                <label>Sapaan</label>
+                <div class="row">
+                    <div class="col-3">
+                        <div class="oc-radio-box sapaan" data-value="Pak">Pak</div>
+                    </div>
+                    <div class="col-3">
+                        <div class="oc-radio-box sapaan" data-value="Bu">Bu</div>
+                    </div>
+                    <div class="col-3">
+                        <div class="oc-radio-box sapaan" data-value="Mas">Mas</div>
+                    </div>
+                    <div class="col-3">
+                        <div class="oc-radio-box sapaan" data-value="Mbak">Mbak</div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Nama Lengkap</label>
+                <input type="text" class="form-control"/>
+                <div class="form-check mt-1">
+                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                    <label class="form-check-label" for="flexCheckDefault">
+                        Sembunyikan nama saya (anonim)
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Nomor Whatsapp/Email</label>
+                <input type="text" class="form-control"/>
+            </div>
+        </div>
+
+        <div class="oc-card-divider"></div>
+
+        <div class="oc-card-section">
+            <div class="form-group">
+                <label class="oc-text-title">Metode Pembayaran</label>
+                <div class="oc-radio-box text-left payment-method-box" onclick="modalPayment()">
+                    
+                    <div class="d-flex oc-bank justify-content-between">
+                        <span id="payment-method">
+                            <img src="{{ asset('website/assets/images/custom/card-icon.png') }}" width="30px"/>
+                            <span class="oc-bank-item">Pilih Metode Pembayaran</span>
+                        </span>
+                        <span><i class="bi-chevron-down"></i> </span>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+
+        <div class="oc-card-divider"></div>
+
+        <div class="oc-card-section">
+            <div class="alert alert-success text-center niat-non-fitrah">
+                <div class="oc-text-title">Doa Niat Zakat Maal/Profesi</div>
+
+                <p class="arabic mt-3">نَوَيْتُ أَنْ اُخْرِجَ زَكَاتَ مَالِي فَرْضًا لِلَّهِ تَعَالَ</p>
+                <p><i>Nawaitu an ukhrija zakata maali fardha llillahi ta’aala.</i></p>
+                <p>"Saya berniat mengeluarkan zakat harta milikku karena Allah Ta’ala"</p>
+            </div>
+            <div class="alert alert-success text-center niat-fitrah" style="display: none">
+                <div class="oc-text-title">Doa Niat Zakat Fitrah</div>
+
+                <p class="arabic mt-3">نَوَيْتُ أَنْ اُخْرِجَ زَكَاتَلْ ِفتْرِلِنَفِْس فَرْضًا لِلَّهِ تَعَالَ</p>
+                <p><i>Nawaitu an ukhrija zakatal fitri linafsi fardha llillaahi ta’aala.</i></p>
+                <p>"Saya berniat mengeluarkan zakat fitrah untuk diri saya karena Allah Ta’ala"</p>
+            </div>
+        </div>
+
+        <div class="oc-card-divider"></div>
+
+        <div class="oc-card-section">
+            <div class="accordion" id="accordionExample">
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                        Legalitas sebagai Pengelola Zakat
+                    </button>
+                    </h2>
+                    <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
+                        <strong>This is the second item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
+                    </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="oc-card-divider"></div>
+        <div class="oc-card-section d-grid">
+            <button type="button" class="btn btn-success btn-lg">Tunaikan Sekarang</button>
+        </div>
+    </form>
+</div>
+
+{{-- modal --}}
+<div class="modal" tabindex="-1" id="payment-modal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Pilih Metode Pembayaran</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="oc-modal-payment mb-3">
+            <div class="card">
+                <div class="card-header oc-card-header-other"><i class="bi-credit-card"></i> Transfer Bank</div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item d-flex align-items-center oc-bank select-payment" data-value="bni">
+                        <img src="https://www.pinclipart.com/picdir/big/341-3413096_bni-bank-negara-indonesia-logo-clipart.png" width="60px"/>
+                        <span class="oc-bank-item">BNI</span>
+                    </li>
+                    <li class="list-group-item d-flex align-items-center oc-bank select-payment" data-value="bca">
+                        <img src="https://th.bing.com/th/id/R.d6eae25c9708399938667fea629da0cc?rik=c2f8mTUO64HEGA&riu=http%3a%2f%2flogos-download.com%2fwp-content%2fuploads%2f2017%2f03%2fBCA_logo_Bank_Central_Asia.png&ehk=EOBw9%2bqvYV27uMcsxGBTpYhSWM1E423ML4neZEgJQV0%3d&risl=&pid=ImgRaw&r=0" width="60px"/>
+                        <span class="oc-bank-item">BCA</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="d-grid">
+            <button type="button" class="btn btn-success btn-lg">Pilih Pembayaran</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+</div>
+@endsection
+
+@push('script')
+<script src="{{ asset('website/assets/js/payment.js') }}"></script>
+@endpush

@@ -1,7 +1,7 @@
 <a href="#" class="mobile-nav__toggler"><i class="fa fa-bars"></i></a>
 <ul class="main-menu__list">
     @php 
-        $menu = App\Helper::displayMenu();
+        $menu = Helper::displayMenu();
     @endphp
 
     @if($menu)
@@ -23,4 +23,8 @@
             @endif
         @endforeach
     @endif
+
+    <li class="button">
+        <button type="button" class="thm-btn" style="border: none">Zakat Sekarang</button>
+    </li>
 </ul>

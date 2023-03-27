@@ -40,7 +40,7 @@
                         <td>{{ $menu['page_type'] }}</td>
                         <td>{{ $menu['menu_type'] }}</td>
                         <td>{{ $menu['footer_display'] }}</td>
-                        <td>{!! ($menu['status_display'] == 'draft' ? '<span class="badge bg-secondary">Draft</span>' : '<span class="badge bg-primary">Publish</span>') !!}</td>
+                        <td>{!! (strtolower($menu['status_display']) == 'draft' ? '<span class="badge bg-secondary">Draft</span>' : '<span class="badge bg-primary">Publish</span>') !!}</td>
                         <td>
                             <a href="/admin/menu/{{ $menu['id'] }}/edit" class="btn btn-sm btn-primary"><i class="bi-pencil-square"></i></a> 
                             <button type="button" class="btn btn-sm btn-danger btn-del" data-id="{{ $menu['id'] }}"><i class="bi-trash"></i></button>
@@ -58,7 +58,7 @@
                             <td>{{ $pageType[$ch['page_type']] }}</td>
                             <td>{{ ucfirst($ch['menu_type']) }}</td>
                             <td>{{ $ch['footer_display'] == 'A' ? 'Ya' : 'Tidak' }}</td>
-                            <td>{!! ($ch['status_display'] == 'draft' ? '<span class="badge bg-secondary">Draft</span>' : '<span class="badge bg-primary">Publish</span>') !!}</td>
+                            <td>{!! (strtolower($ch['status_display']) == 'draft' ? '<span class="badge bg-secondary">Draft</span>' : '<span class="badge bg-primary">Publish</span>') !!}</td>
                             <td>
                                 <a href="/admin/menu/{{ $ch['id'] }}/edit" class="btn btn-sm btn-primary"><i class="bi-pencil-square"></i></a> 
                                 <button type="button" class="btn btn-sm btn-danger btn-del" data-id="{{ $ch['id'] }}"><i class="bi-trash"></i></button>

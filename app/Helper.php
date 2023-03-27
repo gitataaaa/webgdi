@@ -10,7 +10,7 @@ use Illuminate\Support\Arr;
 use Carbon\Carbon;
 
 class Helper{
-    public function dateFormat($date){
+    public static function dateFormat($date){
         $month = [
             '01' => 'Januari',
             '02' => 'Februari',
@@ -33,14 +33,14 @@ class Helper{
         return $d.' '.Arr::get($month, $m).' '.$y;
     }
 
-    public function totalDays($dateEnd){
+    public static function totalDays($dateEnd){
         $startDate = Carbon::parse(date('Y-m-d'));
         $endDate = Carbon::parse($dateEnd);
         $interval = $startDate->diffInDays($endDate, false);
         return $interval;
     }
 
-    public function displayMenu(){
+    public static function displayMenu(){
         $arrMenu = [
             [
                 'id' => 0,
@@ -111,17 +111,17 @@ class Helper{
         return $arrMenu;
     }
 
-    public function displayFooterMenu(){
+    public static function displayFooterMenu(){
         $result = Menu::where('footer_display', 'A')->get();
 
         return $result;
     }
 
-    public function displaySocialMedia(){
+    public static function displaySocialMedia(){
         return SocialMedia::where('status', 'A')->get();
     }
 
-    public function displayContact(){
+    public static function displayContact(){
         $telp = Meta::where('var', 'INST_TELP')->first()->value;
         $addr = Meta::where('var', 'INST_ADDR')->first()->value;
         $email = Meta::where('var', 'INST_EMAIL')->first()->value; 

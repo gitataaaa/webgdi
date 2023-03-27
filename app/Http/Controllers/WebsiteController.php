@@ -240,4 +240,8 @@ class WebsiteController extends Controller
         Message::create($dataInput);
         return redirect('/'.$req->slug)->with('success', true);
     }
+
+    public function index_calc_zakat(){
+        return view('website.page-form-zakat');
+    }
 }

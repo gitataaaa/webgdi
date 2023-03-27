@@ -110,7 +110,7 @@
             @php
                 $no += 100;
                 $percentage = ($pg->donasi / $pg->target_nominal) * 100;
-                $days = App\Helper::totalDays($pg->date_end);
+                $days = Helper::totalDays($pg->date_end);
             @endphp
             <!--Project One Single Start-->
             <div class="col-xl-4 col-lg-4 wow fadeInUp" data-wow-delay="{{ $no.'ms'}}">
@@ -186,7 +186,7 @@
             @foreach($blog as $dt)
             @php 
                 $no += 100;
-                $tanggal = App\Helper::dateFormat(date('Y-m-d', strtotime($dt->date_publish)));
+                $tanggal = Helper::dateFormat(date('Y-m-d', strtotime($dt->date_publish)));
             @endphp
             <div class="col-xl-4 col-lg-4 wow fadeInUp" data-wow-delay="{{ $no.'ms'}}">
                 <!--News One Single Start-->
