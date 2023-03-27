@@ -116,3 +116,14 @@ body{
     padding-left: 20px;
     font-weight: bold;
 }
+.oc-nominal-big{
+    font-weight: bold;
+    font-size: 30px;
+}
+.oc-nominal-medium{
+    font-weight: bold;
+    font-size: 20px;
+}
+.oc-cursor{
+    cursor: pointer;
+}

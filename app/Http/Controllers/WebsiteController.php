@@ -241,7 +241,13 @@ class WebsiteController extends Controller
         return redirect('/'.$req->slug)->with('success', true);
     }
 
-    public function index_calc_zakat(){
+    public function index_form_zakat(){
         return view('website.page-form-zakat');
+    }
+    public function index_inv_zakat(){
+        return view('website.page-invoice-zakat');
+    }
+    public function index_status_zakat(){
+        return view('website.page-status-zakat');
     }
 }

@@ -19,6 +19,7 @@ class CreateBanksTable extends Migration
             $table->string('bank_name')->nullable();
             $table->string('bank_account')->nullable();
             $table->string('bank_user')->nullable();
+            $table->text('bank_img')->nullable();
             $table->text('code_image')->nullable();
             $table->enum('status', ['A', 'NA'])->nullable();
             $table->timestamps();

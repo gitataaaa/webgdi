@@ -11,7 +11,7 @@ class Bank extends Model
     use HasFactory, SoftDeletes;
 
     protected $fillable = [
-        'type', 'bank_name', 'bank_account', 'bank_user', 'code_image', 'status',
+        'type', 'bank_name', 'bank_account', 'bank_user', 'bank_img', 'code_image', 'status',
         'deleted_at'
     ];
 }

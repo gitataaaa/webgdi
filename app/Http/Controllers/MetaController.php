@@ -105,6 +105,7 @@ class MetaController extends Controller
         $dataCheck = $req->validate([
             'bank_name' => ['required', 'string'],
             'code_image' => 'image|mimes:jpg,png,jpeg,gif,svg|max:2048',
+            'bank_img' => 'image|mimes:jpg,png,jpeg,gif,svg|max:2048',
         ]);
         $dataInput = [
             'type' => $req->type,
@@ -118,6 +119,11 @@ class MetaController extends Controller
             $filename = $req->file('code_image')->getClientOriginalName();
             $path = $req->file('code_image')->move('images/code', $filename);
             $dataInput['code_image'] = $path;
+        }
+        if($req->file('bank_img')){
+            $filename = $req->file('bank_img')->getClientOriginalName();
+            $path = $req->file('bank_img')->move('images/meta', $filename);
+            $dataInput['bank_img'] = $path;
         }
         
         if($req->id){

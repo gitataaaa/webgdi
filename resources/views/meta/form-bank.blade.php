@@ -27,6 +27,19 @@
                 <input type="hidden" name="id" value="{{ @$detail->id }}"/>
                 
                 <div class="mb-3 row">
+                    <label class="col-sm-2 col-form-label">Upload Logo *</label>
+                    <div class="col-sm-5">
+                        <div class="preview-slider-img" style="height: 200px">
+                            @php
+                                $logoUrl = @$detail->bank_img ? asset(@$detail->bank_img) : asset('admin/assets/img/setting/_img.jpg');
+                            @endphp
+                            <img id="bank_img" src="{{ $logoUrl }}" style="height: 200px"/>
+                        </div>
+                        <input type="file" name="bank_img" style="display: none" id="bank-img"/>
+                        <label class="btn btn-primary btn-upload" for="bank-img"><i class="bi-upload"></i> Upload</label>
+                    </div>
+                </div>
+                <div class="mb-3 row">
                     <label class="col-sm-2 col-form-label">Jenis *</label>
                     <div class="col-sm-6">
                         <select class="form-select" name="type" required>
@@ -57,7 +70,7 @@
                         <small><i>Pemilik Akun Rekening Bank/E-Money</i></small>
                     </div>
                 </div>
-                <div class="mb-3 row" id="code" {{ @$detail->code == 'emoney' ? 'style="display: none"':''}}>
+                <div class="mb-3 row" id="code" <?= @$detail->type == 'bank' ? 'style="display: none"':''?>>
                     <label class="col-sm-2 col-form-label">Upload QRCode/Barcode E-Money *</label>
                     <div class="col-sm-5">
                         <div class="preview-slider-img">
@@ -96,6 +109,12 @@
         $(document).ready(function(){
             $('input[name="code_image"]').change(function(){
                 readImageUrl(this, 'code_image', function(response){
+                    //$('input[name="picture"]').val(response);
+                });
+            });
+
+            $('input[name="bank_img"]').change(function(){
+                readImageUrl(this, 'bank_img', function(response){
                     //$('input[name="picture"]').val(response);
                 });
             });

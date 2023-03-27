@@ -20,6 +20,7 @@
             <tr>
                 <th width="5%">No.</th>
                 <th>Tipe</th>
+                <th>Logo</th>
                 <th>Nama Bank/Pelayanan</th>
                 <th>No. Rekening/No. HP</th>
                 <th>Nama Pengguna</th>
@@ -52,6 +53,12 @@
                         data: 'type',
                         render: function(data, type, row, meta){
                             return (data == 'bank' ? 'Bank' : 'E-Money');
+                        }
+                    },
+                    { 
+                        data: 'bank_img',
+                        render: function(data, type, row, meta){
+                            return data ? '<img src="/'+data+'" width="50px"/>' : '';
                         }
                     },
                     { data: 'bank_name' },
