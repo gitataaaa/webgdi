@@ -582,6 +582,7 @@ class ComposerStaticInitafa2e5d4203d3819da1f3c251973be66
         'App\\Models\\Menu' => __DIR__ . '/../..' . '/app/Models/Menu.php',
         'App\\Models\\Message' => __DIR__ . '/../..' . '/app/Models/Message.php',
         'App\\Models\\Meta' => __DIR__ . '/../..' . '/app/Models/Meta.php',
+        'App\\Models\\Payment' => __DIR__ . '/../..' . '/app/Models/Payment.php',
         'App\\Models\\Program' => __DIR__ . '/../..' . '/app/Models/Program.php',
         'App\\Models\\ProgramDonasi' => __DIR__ . '/../..' . '/app/Models/ProgramDonasi.php',
         'App\\Models\\ProgramRealisasi' => __DIR__ . '/../..' . '/app/Models/ProgramRealisasi.php',

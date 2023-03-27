@@ -37,6 +37,7 @@ return array(
     'App\\Models\\Menu' => $baseDir . '/app/Models/Menu.php',
     'App\\Models\\Message' => $baseDir . '/app/Models/Message.php',
     'App\\Models\\Meta' => $baseDir . '/app/Models/Meta.php',
+    'App\\Models\\Payment' => $baseDir . '/app/Models/Payment.php',
     'App\\Models\\Program' => $baseDir . '/app/Models/Program.php',
     'App\\Models\\ProgramDonasi' => $baseDir . '/app/Models/ProgramDonasi.php',
     'App\\Models\\ProgramRealisasi' => $baseDir . '/app/Models/ProgramRealisasi.php',
