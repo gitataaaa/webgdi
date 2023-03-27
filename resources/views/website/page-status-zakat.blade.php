@@ -9,19 +9,46 @@
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item d-flex justify-content-between align-items-center">
                         Status
-                        <span style="color: #DF2E38">Sedang Diproses</span>
+                        @php
+                            switch($detail->status){
+                                case 'pending':
+                                    echo '<span style="color: #DC8449">Menunggu Pembayaran</span>';
+                                    break;
+                                case 'on_confirm':
+                                    echo '<span style="color: #EA5455">Sedang Diproses</span>';
+                                    break;
+                                case 'complete':
+                                    echo '<span style="color: #539165">Selesai</span>';
+                                    break;
+                            }
+                        @endphp
+                        
                     </li>
                     <li class="list-group-item d-flex justify-content-between align-items-center">
                         Kode
-                        <span>2023032701987</span>
+                        <span>{{ $detail->transcode }}</span>
                     </li>
                     <li class="list-group-item d-flex justify-content-between align-items-center">
                         Tanggal
-                        <span>23 Maret 2023 16:04</span>
+                        <span>{{ $created }}</span>
                     </li>
                     <li class="list-group-item d-flex justify-content-between align-items-center">
                         Program
-                        <span>Zakat Profesi</span>
+                        <span>
+                            @php
+                                switch($detail->type){
+                                    case 'profesi':
+                                        echo 'Zakat Profesi';
+                                        break;
+                                    case 'maal':
+                                        echo 'Zakat Maal';
+                                        break;
+                                    case 'fitrah':
+                                        echo 'Zakat Fitrah';
+                                        break;
+                                }
+                            @endphp
+                        </span>
                     </li>
                 </ul>
             </div>
@@ -40,15 +67,15 @@
                     </li>
                     <li class="list-group-item d-flex justify-content-between align-items-center">
                         Nominal
-                        <span>100,000</span>
+                        <span>{{ number_format($detail->nominal) }}</span>
                     </li>
                     <li class="list-group-item d-flex justify-content-between align-items-center">
                         Kode Unik
-                        <span>897</span>
+                        <span>{{ str_pad($detail->digit, 3, '0', STR_PAD_LEFT) }}</span>
                     </li>
                     <li class="list-group-item d-flex justify-content-between align-items-center">
                         Total Donasi
-                        <span>100,897</span>
+                        <span>{{ number_format($detail->nominal + $detail->digit) }}</span>
                     </li>
                 </ul>
             </div>

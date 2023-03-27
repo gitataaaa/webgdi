@@ -62,7 +62,38 @@ $(document).ready(function(){
         payment.find('img').attr('src', img)
         payment.find('img').attr('width', '60px')
         payment.find('span').html(text)
-        $('[name=payment_method]').val(el.data('value'))
+        $('[name=bank_id]').val(el.data('value'))
         paymentModal.hide()
+    })
+
+    $('#formZakat').submit(function(e){
+        e.preventDefault();
+
+        var fr = $(this);
+        var data = fr.serializeArray();
+        var url = '/api/store/payment';
+
+        var bank = $('[name=bank_id]').val();
+        var pronoun = $('[name=sapaan]').val();
+        var status = true;
+        $('.invalid-feedback-pronoun, .invalid-feedback-payment').hide();
+        if(pronoun == '' || pronoun == null){
+            $('.invalid-feedback-pronoun').show();
+            status = false;
+        }
+        if(bank == '' || bank == null){
+            $('.invalid-feedback-payment').show();
+            status = false;
+        }
+
+        if(status == false){
+            return false;
+        }
+
+        
+
+        $.post(url, data, function(result){
+            window.location.href = '/app/zakat/iq/'+result.code
+        }, 'json');
     })
 })

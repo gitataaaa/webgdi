@@ -6,7 +6,7 @@
         <div class="oc-card-section oc-card-header"><i class="bi-arrow-left"></i> Lembar Pembayaran</div>
         <div class="oc-card-section">
             <div class="alert alert-warning">
-                Mohon tunaikan zakat Anda sebelum tanggal <strong>27 Maret 2023 Pukul 24.00</strong> atau ajuan zakat Anda akan dibatalkan
+                Mohon tunaikan zakat Anda sebelum tanggal <strong>{{ @$expire }}</strong> atau ajuan zakat Anda akan dibatalkan
             </div>
 
             <div class="form-group">
@@ -14,9 +14,12 @@
 
                 <div class="oc-container oc-bank d-flex justify-content-between align-items-center">
                     <span class="oc-nominal-big">
-                        Rp 100,987
+                        {{ 'Rp '.number_format($detail->nominal + $detail->digit)}}
                     </span>
-                    <span class="oc-cursor" title="Salin" onclick="copy('100987')"><i class="bi-clipboard"></i></span>
+                    @php
+                        $nominal = $detail->nominal + $detail->digit;
+                    @endphp
+                    <span class="oc-cursor" title="Salin" onclick="copy('{{ $nominal }}')"><i class="bi-clipboard"></i></span>
                 </div>
             </div>
             <div class="alert alert-success">
@@ -24,17 +27,31 @@
             </div>
 
             <div class="form-group">
-                <label class="oc-text-title">Nomor Rekening</label>
+                <label class="oc-text-title">{{ $bank->type == 'bank' ? 'Nomor Rekening' : 'Scan QR Code' }}</label>
 
-                <div class="d-flex oc-bank oc-container justify-content-between">
+                <div class="oc-bank oc-container <?= $bank->type == 'bank' ? 'd-flex justify-content-between' : ''?>">
+                    @if($bank->type == 'emoney')
                     <span id="payment-method">
-                        <img src="https://th.bing.com/th/id/R.d6eae25c9708399938667fea629da0cc?rik=c2f8mTUO64HEGA&riu=http%3a%2f%2flogos-download.com%2fwp-content%2fuploads%2f2017%2f03%2fBCA_logo_Bank_Central_Asia.png&ehk=EOBw9%2bqvYV27uMcsxGBTpYhSWM1E423ML4neZEgJQV0%3d&risl=&pid=ImgRaw&r=0" width="60px"/>
+                        <img src="{{ url($bank->bank_img) }}" width="100px"/>
+                    </span>
+                    <div class="oc-qr-code mt-3">
+                        <img src="{{ url($bank->code_image) }}" class="mb-3" width="100%"/>
+
+                        <div class="text">{{ $bank->bank_user }}</div>
+                    </div>
+                    @else
+                    <span id="payment-method">
+                        <img src="{{ url($bank->bank_img) }}" width="100px"/>
                         <span class="oc-text-header d-flex" style="padding-top: 10px">
-                            111 1111 111 1 111<br/>
-                            An. Yayasan Graha Dhuafa Indonesia
+                            {{$bank->bank_account}}<br/>
+                            An. {{$bank->bank_user}}
                         </span>
                     </span>
-                    <span class="oc-cursor" title="Salin" onclick="copy('1111111111111')"><i class="bi-clipboard"></i> </span>
+                    @php
+                        $bankAccount = str_replace(' ','',$bank->bank_account);
+                    @endphp
+                    <span class="oc-cursor" title="Salin" onclick="copy('{{ $bankAccount }}')"><i class="bi-clipboard"></i> </span>
+                    @endif
                 </div>
             </div>
         </div>
@@ -47,9 +64,9 @@
 
                 <div class="d-flex oc-bank oc-container justify-content-between align-items-center">
                     <span class="oc-nominal-medium">
-                        #2023032701987
+                        {{ '#'.$detail->transcode }}
                     </span>
-                    <span class="oc-cursor" title="Salin" onclick="copy('2023032701987')"><i class="bi-clipboard"></i></span>
+                    <span class="oc-cursor" title="Salin" onclick="copy('{{ '#'.$detail->transcode }}')"><i class="bi-clipboard"></i></span>
                 </div>
             </div>
             <div class="accordion" id="accordionExample">
@@ -63,37 +80,53 @@
                         <div class="accordion-body">
                             <div class="form-group">
                                 <label>Nama Lengkap</label>
-                                <p class="oc-text-header">Ocha Iskandar *<br/><small>Anda memutuskan untuk Anonim</small></p>
+                                <p class="oc-text-header">{{ $detail->name }} 
+                                    {!! ($detail->anonim == true ? '*<br/><small>Anda memutuskan untuk Anonim</small>' : '') !!}
+                                </p>
                             </div>
                             <div class="form-group">
                                 <label>Nomor Whatsapp/Email</label>
-                                <p class="oc-text-header">rosafloriananda@gmail.com</p>
+                                <p class="oc-text-header">{{ $detail->email ? $detail->email : $detail->notelp }}</p>
                             </div>
                             <div class="form-group">
                                 <label>Jenis Zakat</label>
-                                <p class="oc-text-header">Zakat Maal</p>
+                                <p class="oc-text-header">
+                                    @php
+                                        switch($detail->type){
+                                            case 'profesi':
+                                                echo 'Zakat Profesi';
+                                                break;
+                                            case 'maal':
+                                                echo 'Zakat Maal';
+                                                break;
+                                            case 'fitrah':
+                                                echo 'Zakat Fitrah';
+                                                break;
+                                        }
+                                    @endphp
+                                </p>
                             </div>
                             <div class="form-group">
                                 <label>Nominal Zakat</label>
-                                <p class="oc-text-header">Rp 100,000</p>
+                                <p class="oc-text-header">Rp {{ number_format($nominal) }}</p>
                             </div>
                             <div class="form-group">
                                 <label>Waktu</label>
-                                <p class="oc-text-header">27 Maret 2023 Pukul 15.45</p>
+                                <p class="oc-text-header">{{ $created }}</p>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
             
-            <div class="alert alert-success text-center niat-non-fitrah mt-3">
+            <div class="alert alert-success text-center niat-non-fitrah mt-3" <?= $detail->type == 'fitrah' ? 'style="display: none"' : ''?>>
                 <div class="oc-text-title">Doa Niat Zakat Maal/Profesi</div>
 
                 <p class="arabic mt-3">نَوَيْتُ أَنْ اُخْرِجَ زَكَاتَ مَالِي فَرْضًا لِلَّهِ تَعَالَ</p>
                 <p><i>Nawaitu an ukhrija zakata maali fardha llillahi ta’aala.</i></p>
                 <p>"Saya berniat mengeluarkan zakat harta milikku karena Allah Ta’ala"</p>
             </div>
-            <div class="alert alert-success text-center niat-fitrah mt-3" style="display: none">
+            <div class="alert alert-success text-center niat-fitrah mt-3" <?= $detail->type == 'fitrah' ? '' : 'style="display: none"'?>>
                 <div class="oc-text-title">Doa Niat Zakat Fitrah</div>
 
                 <p class="arabic mt-3">نَوَيْتُ أَنْ اُخْرِجَ زَكَاتَلْ ِفتْرِلِنَفِْس فَرْضًا لِلَّهِ تَعَالَ</p>
@@ -105,7 +138,7 @@
         <div class="oc-card-divider"></div>
 
         <div class="oc-card-section d-grid">
-            <button type="button" class="btn btn-success btn-lg">Konfirmasi Pembayaran</button>
+            <button type="button" class="btn btn-success btn-lg btn-confirm" onclick="next('{{ $detail->transcode }}')">Konfirmasi Pembayaran</button>
         </div>
     </form>
 </div>
@@ -116,6 +149,10 @@
     function copy(value){
         document.execCommand(value);
         navigator.clipboard.writeText(value)
+    }
+
+    function next(code){
+        window.location.href = '/app/zakat/'+code
     }
 </script>
 @endpush

@@ -2,11 +2,12 @@
 
 @section('content')
 <div class="oc-card">
-    <form>
+    <form id="formZakat">
         <input type="hidden" name="zakat_type" value="profesi"/>
-        <input type="hidden" name="sapaan" value=""/>
-        <input type="hidden" name="payment_method" value=""/>
-        <div class="oc-card-section oc-card-header">Perhitungan Zakat</div>
+        <input type="hidden" name="sapaan" required value=""/>
+        <input type="hidden" name="payment_method" value="transfer bank"/>
+        <input type="hidden" name="bank_id" required value=""/>
+        <div class="oc-card-section oc-card-header">Pembayaran Zakat</div>
         <div class="oc-card-section">
             <div class="form-group">
                 <label class="oc-text-title">Pilihan Zakat</label>
@@ -45,8 +46,9 @@
             <div class="form-group">
                 <label class="oc-text-title">Data Diri</label>
             </div>
-            <div class="form-group">
+            <div class="form-group" id="sectionSapaan">
                 <label>Sapaan</label>
+                <div class="invalid-feedback-pronoun">Pilih salah satu</div>
                 <div class="row">
                     <div class="col-3">
                         <div class="oc-radio-box sapaan" data-value="Pak">Pak</div>
@@ -64,9 +66,9 @@
             </div>
             <div class="form-group">
                 <label>Nama Lengkap</label>
-                <input type="text" class="form-control"/>
+                <input type="text" class="form-control" required name="name"/>
                 <div class="form-check mt-1">
-                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                    <input class="form-check-input" type="checkbox" value="1" name="anonim" id="flexCheckDefault">
                     <label class="form-check-label" for="flexCheckDefault">
                         Sembunyikan nama saya (anonim)
                     </label>
@@ -74,7 +76,7 @@
             </div>
             <div class="form-group">
                 <label>Nomor Whatsapp/Email</label>
-                <input type="text" class="form-control"/>
+                <input type="text" class="form-control" required name="email_phone"/>
             </div>
         </div>
 
@@ -83,6 +85,7 @@
         <div class="oc-card-section">
             <div class="form-group">
                 <label class="oc-text-title">Metode Pembayaran</label>
+                <div class="invalid-feedback-payment">Pilih Metode Pembayaran</div>
                 <div class="oc-radio-box text-left payment-method-box" onclick="modalPayment()">
                     
                     <div class="d-flex oc-bank justify-content-between">
@@ -137,7 +140,7 @@
 
         <div class="oc-card-divider"></div>
         <div class="oc-card-section d-grid">
-            <button type="button" class="btn btn-success btn-lg">Tunaikan Sekarang</button>
+            <button type="submit" class="btn btn-success btn-lg">Tunaikan Sekarang</button>
         </div>
     </form>
 </div>
@@ -152,18 +155,49 @@
       </div>
       <div class="modal-body">
         <div class="oc-modal-payment mb-3">
+            @php
+                $emoney = [];
+            @endphp
             <div class="card">
                 <div class="card-header oc-card-header-other"><i class="bi-credit-card"></i> Transfer Bank</div>
+                @if(@$bank)
                 <ul class="list-group list-group-flush">
-                    <li class="list-group-item d-flex align-items-center oc-bank select-payment" data-value="bni">
-                        <img src="https://www.pinclipart.com/picdir/big/341-3413096_bni-bank-negara-indonesia-logo-clipart.png" width="60px"/>
-                        <span class="oc-bank-item">BNI</span>
+                    @foreach($bank as $dt)
+                    @if($dt->type == 'bank')
+                    <li class="list-group-item d-flex align-items-center oc-bank select-payment" data-value="{{$dt->id}}">
+                        <img src="{{ url($dt->bank_img) }}" width="60px"/>
+                        <span class="oc-bank-item">{{ $dt->bank_name }}</span>
                     </li>
+                    @else
+                        @php
+                            $emoney[] = [
+                                'id' => $dt->id,
+                                'img' => $dt->bank_img,
+                                'name' => $dt->bank_name,
+                                'code' => $dt->code_image 
+                            ];
+                        @endphp
+                    @endif
+                    @endforeach
+                    <!--
                     <li class="list-group-item d-flex align-items-center oc-bank select-payment" data-value="bca">
                         <img src="https://th.bing.com/th/id/R.d6eae25c9708399938667fea629da0cc?rik=c2f8mTUO64HEGA&riu=http%3a%2f%2flogos-download.com%2fwp-content%2fuploads%2f2017%2f03%2fBCA_logo_Bank_Central_Asia.png&ehk=EOBw9%2bqvYV27uMcsxGBTpYhSWM1E423ML4neZEgJQV0%3d&risl=&pid=ImgRaw&r=0" width="60px"/>
                         <span class="oc-bank-item">BCA</span>
-                    </li>
+                    </li>-->
                 </ul>
+                @else
+                    Daftar rekening tidak ditemukan.
+                @endif
+                
+                @if($emoney)
+                <div class="card-header oc-card-header-other"><i class="bi-qr-code-scan"></i> E-Money/E-Wallet</div>
+                @foreach($emoney as $dt)
+                    <li class="list-group-item d-flex align-items-center oc-bank select-payment" data-value="{{$dt['id'] }}">
+                        <img src="{{ url($dt['img']) }}" width="60px"/>
+                        <span class="oc-bank-item">{{ $dt['name'] }}</span>
+                    </li>
+                @endforeach
+                @endif
             </div>
         </div>
         <div class="d-grid">

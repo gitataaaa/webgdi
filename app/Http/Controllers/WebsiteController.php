@@ -8,14 +8,32 @@ use App\Models\ProgramRealisasi;
 use App\Models\Blog;
 use App\Models\Message;
 use App\Models\Widget;
+use App\Models\Bank;
+use App\Models\Payment;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\File; 
+use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
 
 class WebsiteController extends Controller
 {
-    public function __construct(){
+    protected $bulan = [
+        '01' => 'Januari',
+        '02' => 'Februari',
+        '03' => 'Maret',
+        '04' => 'April',
+        '05' => 'Mei',
+        '06' => 'Juni',
+        '07' => 'Juli',
+        '08' => 'Agustus',
+        '09' => 'September',
+        '10' => 'Oktober',
+        '11' => 'November',
+        '12' => 'Desember'
+    ];
 
+    public function __construct(){
+        
     }
 
     public function index($slug=null){
@@ -242,12 +260,43 @@ class WebsiteController extends Controller
     }
 
     public function index_form_zakat(){
-        return view('website.page-form-zakat');
+        $bank = Bank::where([
+            'status' => 'A'
+        ])->get();
+        return view('website.page-form-zakat', [
+            'bank' => $bank
+        ]);
     }
-    public function index_inv_zakat(){
-        return view('website.page-invoice-zakat');
+    public function index_inv_zakat($code){
+        $detail = Payment::where('transcode', $code)->first();
+        $bank = Bank::find($detail->bank_id);
+        $exp_date = date('d', strtotime($detail->exp_at)).' '.Arr::get($this->bulan, date('m', strtotime($detail->exp_at))).' '.date('Y', strtotime($detail->exp_at)).' Pukul '.date('H:i', strtotime($detail->exp_at));
+        $created_date = date('d', strtotime($detail->created_at)).' '.Arr::get($this->bulan, date('m', strtotime($detail->created_at))).' '.date('Y', strtotime($detail->created_at)).' Pukul '.date('H:i', strtotime($detail->created_at));
+        return view('website.page-invoice-zakat', [
+            'detail' => $detail,
+            'bank' => $bank,
+            'expire' => $exp_date,
+            'created' => $created_date
+        ]);
     }
-    public function index_status_zakat(){
-        return view('website.page-status-zakat');
+    public function index_status_zakat($code){
+        $check = Payment::where('transcode', $code)->first();
+        if($check->status == 'pending'){
+            $dataInput = [
+                'status' => 'on_confirm'
+            ];
+            Payment::where('transcode', $code)->update($dataInput);
+        }
+        
+        $detail = Payment::where('transcode', $code)->first();
+        $bank = Bank::find($detail->bank_id);
+        $exp_date = date('d', strtotime($detail->exp_at)).' '.Arr::get($this->bulan, date('m', strtotime($detail->exp_at))).' '.date('Y', strtotime($detail->exp_at)).' Pukul '.date('H:i', strtotime($detail->exp_at));
+        $created_date = date('d', strtotime($detail->created_at)).' '.Arr::get($this->bulan, date('m', strtotime($detail->created_at))).' '.date('Y', strtotime($detail->created_at)).' Pukul '.date('H:i', strtotime($detail->created_at));
+        return view('website.page-status-zakat', [
+            'detail' => $detail,
+            'bank' => $bank,
+            'expire' => $exp_date,
+            'created' => $created_date
+        ]);
     }
 }

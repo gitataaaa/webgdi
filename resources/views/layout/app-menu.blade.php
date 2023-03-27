@@ -26,6 +26,8 @@
         </ul>
     </li>
 
+    <li class="text">Transaksi</li>
+    <li><a href="/admin/zakat" class="{{ @$PayActive }}"><i class="cs-menu-icon bi-grid"></i> Zakat</a></li>
 
     <li class="text">Pengaturan</li>
     <li><a href="/admin/user" class="{{ @$UserActive }}"><i class="cs-menu-icon bi-file-person-fill"></i> Kelola User</a></li>

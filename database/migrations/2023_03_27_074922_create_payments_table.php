@@ -22,6 +22,7 @@ class CreatePaymentsTable extends Migration
             $table->boolean('anonim')->nullable();
             $table->string('notelp', 50)->nullable();
             $table->text('email')->nullable();
+            $table->float('nominal', 10, 2)->nullable();
             $table->string('payment_method', 100)->nullable();
             $table->string('bank_type', 100)->nullable();
             $table->integer('bank_id')->nullable();

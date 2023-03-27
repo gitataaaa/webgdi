@@ -127,3 +127,18 @@ body{
 .oc-cursor{
     cursor: pointer;
 }
+.invalid-feedback-pronoun, .invalid-feedback-payment{
+    color: #DF2E38;
+    display: none;
+}
+
+.oc-qr-code{
+    border: 5px solid #fff;
+    border-radius: 10px;
+    padding: 20px
+}
+.oc-qr-code .text{
+    text-align: center;
+    font-weight: bold;
+    text-transform: uppercase;
+}

@@ -25,6 +25,12 @@
     @endif
 
     <li class="button">
-        <button type="button" class="thm-btn" style="border: none">Zakat Sekarang</button>
+        <button type="button" class="thm-btn" style="border: none" onclick="zakat()">Zakat Sekarang</button>
     </li>
 </ul>
+
+<script>
+    function zakat(){
+        window.location.href = '/app/zakat';
+    }
+</script>

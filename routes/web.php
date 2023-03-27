@@ -14,6 +14,7 @@ use App\Http\Controllers\BlogController;
 use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\ProgramController;
 use App\Http\Controllers\WebsiteController;
+use App\Http\Controllers\PaymentController;
 use App\Http\Kernel;
 
 
@@ -40,8 +41,8 @@ Route::get('/blog/category/{category}', [WebsiteController::class, 'index_blog_c
 Route::post('/message/send', [WebsiteController::class, 'store_message']);
 
 Route::get('/app/zakat', [WebsiteController::class, 'index_form_zakat']);
-Route::get('/app/zakat/iq', [WebsiteController::class, 'index_inv_zakat']);
-Route::get('/app/zakat/status', [WebsiteController::class, 'index_status_zakat']);
+Route::get('/app/zakat/iq/{code}', [WebsiteController::class, 'index_inv_zakat']);
+Route::get('/app/zakat/{code}', [WebsiteController::class, 'index_status_zakat']);
 
 Route::post('/q/login', [AuthController::class, 'authenticate']);
 Route::get('/q/logout', [AuthController::class, 'logout']);
@@ -110,6 +111,11 @@ Route::group(['prefix'=>'admin', 'middleware'=>['auth']], function(){
     Route::post('/program/rekapitulasi/donatur/table', [ProgramController::class, 'table_recap_donatur']);
     Route::get('/program/rekapitulasi/donatur/export/excel/{program}/{dateStart}/{dateEnd}', [ProgramController::class, 'exportExcel']);
     Route::get('/program/rekapitulasi/donatur/export/excel', [ProgramController::class, 'exportExcel']);
+
+    /* PAYMENT/MUZAKI */
+    Route::get('/zakat', [PaymentController::class, 'index']);
+    Route::post('/zakat/table', [PaymentController::class, 'table']);
+    Route::get('/zakat/{id}/update', [PaymentController::class, 'update_status']);
     /* ---- */
 
     /* BAGIAN PA ANDRI */
