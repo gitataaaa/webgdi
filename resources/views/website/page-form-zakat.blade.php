@@ -35,7 +35,7 @@
                 <p>Bingung menentukan nominal zakat Anda? Gunakan kalkulator zakat untuk menentukan berapa nominal yang harus Anda tunaikan.</p>
                 <nav class="nav nav-pills flex-column flex-sm-row">
                     <a class="flex-sm-fill text-sm-center nav-link text-bg-outline-secondary mr-5" aria-current="page" href="#"><strong>Tentang Zakat</strong></a>
-                    <a class="flex-sm-fill text-sm-center nav-link text-bg-success ml-5" href="#"><strong>Hitung Zakat</strong></a>
+                    <a class="flex-sm-fill text-sm-center nav-link text-bg-success ml-5" href="/app/zakat/kalkulator"><strong>Hitung Zakat</strong></a>
                 </nav>
             </div>
         </div>

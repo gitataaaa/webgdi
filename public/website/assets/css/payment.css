@@ -36,6 +36,16 @@ body{
 .oc-card-section .custom-input > .oc-input-group .form-control{
     text-align: right
 }
+.oc-card-section .custom-input > .oc-input-group-sm .input-group-text{
+    position: absolute;
+    background: none;
+    z-index: 6;
+    border: none;
+}
+.oc-card-section .custom-input > .oc-input-group-sm .form-control{
+    text-align: left;
+    padding-left: 3rem;
+}
 .oc-card-divider{
     border-bottom: 3px solid #DBE4C6;
 }
@@ -75,6 +85,14 @@ body{
 .oc-text-title{
     font-size: 18px;
     font-weight: bold;
+}
+.oc-text-big{
+    font-size: 20px;
+    font-weight: bold;
+}
+.oc-text-grey{
+    font-size: 14px;
+    color: #666;
 }
 .oc-radio-box{
     padding: 5px 10px;

@@ -152,7 +152,7 @@
     }
 
     function next(code){
-        window.location.href = '/app/zakat/'+code
+        window.location.href = '/app/zakat/detail/'+code
     }
 </script>
 @endpush

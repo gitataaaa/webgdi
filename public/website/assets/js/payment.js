@@ -32,11 +32,28 @@ $(document).ready(function(){
             $('.niat-fitrah').show()
             $('.niat-non-fitrah').hide()
         }else{
+            if(value == 'profesi'){
+                $('.nishab-profesi').show()
+                $('.nishab-maal').hide()
+                $('.desc-profesi').show()
+                $('.desc-maal').hide()
+            }else{
+                $('.nishab-profesi').hide()
+                $('.nishab-maal').show()
+                $('.desc-profesi').hide()
+                $('.desc-maal').show()
+            }
             $('.niat-fitrah').hide()
             $('.niat-non-fitrah').show()
         }
     })
 
+    $('.money').keyup(function(){
+        var el = $(this);
+        var value = el.val().replace(',','').toString();
+        console.log(value)
+        el.val(moneyMask(el.val()));
+    })
     $('[name=zakat_nominal]').keyup(function(){
         var el = $(this);
         var value = el.val().replace(',','').toString();

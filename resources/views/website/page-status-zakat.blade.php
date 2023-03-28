@@ -12,13 +12,13 @@
                         @php
                             switch($detail->status){
                                 case 'pending':
-                                    echo '<span style="color: #DC8449">Menunggu Pembayaran</span>';
+                                    echo '<span style="color: #DC8449" class="oc-text-header">Menunggu Pembayaran</span>';
                                     break;
                                 case 'on_confirm':
-                                    echo '<span style="color: #EA5455">Sedang Diproses</span>';
+                                    echo '<span style="color: #EA5455" class="oc-text-header">Sedang Diproses</span>';
                                     break;
                                 case 'complete':
-                                    echo '<span style="color: #539165">Selesai</span>';
+                                    echo '<span style="color: #539165" class="oc-text-header">Selesai</span>';
                                     break;
                             }
                         @endphp
@@ -26,15 +26,15 @@
                     </li>
                     <li class="list-group-item d-flex justify-content-between align-items-center">
                         Kode
-                        <span>{{ $detail->transcode }}</span>
+                        <span class="oc-text-header">{{ $detail->transcode }}</span>
                     </li>
                     <li class="list-group-item d-flex justify-content-between align-items-center">
                         Tanggal
-                        <span>{{ $created }}</span>
+                        <span class="oc-text-header">{{ $created }}</span>
                     </li>
                     <li class="list-group-item d-flex justify-content-between align-items-center">
                         Program
-                        <span>
+                        <span class="oc-text-header">
                             @php
                                 switch($detail->type){
                                     case 'profesi':
@@ -63,19 +63,19 @@
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item d-flex justify-content-between align-items-center">
                         Metode Pembayaran
-                        <span>Transfer Bank</span>
+                        <span class="oc-text-header">Transfer Bank</span>
                     </li>
                     <li class="list-group-item d-flex justify-content-between align-items-center">
                         Nominal
-                        <span>{{ number_format($detail->nominal) }}</span>
+                        <span class="oc-text-header">{{ number_format($detail->nominal) }}</span>
                     </li>
                     <li class="list-group-item d-flex justify-content-between align-items-center">
                         Kode Unik
-                        <span>{{ str_pad($detail->digit, 3, '0', STR_PAD_LEFT) }}</span>
+                        <span class="oc-text-header">{{ str_pad($detail->digit, 3, '0', STR_PAD_LEFT) }}</span>
                     </li>
                     <li class="list-group-item d-flex justify-content-between align-items-center">
                         Total Donasi
-                        <span>{{ number_format($detail->nominal + $detail->digit) }}</span>
+                        <span class="oc-text-header">{{ number_format($detail->nominal + $detail->digit) }}</span>
                     </li>
                 </ul>
             </div>

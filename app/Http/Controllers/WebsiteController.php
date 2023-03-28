@@ -299,4 +299,7 @@ class WebsiteController extends Controller
             'created' => $created_date
         ]);
     }
+    public function index_calc_zakat(){
+        return view('website.page-calc-zakat');
+    }
 }
