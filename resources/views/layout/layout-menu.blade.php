@@ -25,7 +25,7 @@
     @endif
 
     <li class="button">
-        <button type="button" class="thm-btn" style="border: none" onclick="zakat()">Zakat Sekarang</button>
+        <button type="button" class="thm-btn main-slider-two__btn" style="border: none" onclick="zakat()">Zakat Sekarang</button>
     </li>
 </ul>
 

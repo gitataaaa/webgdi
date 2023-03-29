@@ -12,7 +12,7 @@
                     <div class="footer-widget__about-text-box">
                         <p class="footer-widget__about-text">Menjadi lembaga global yang profesional untuk peduli menjaga generasi mandiri dan unggul</p>
                     </div>
-                    <a href="{{ url('app/zakat') }}" class="thm-btn">Zakat Sekarang</a>
+                    <a href="{{ url('app/zakat') }}" class="thm-btn main-slider-two__btn">Zakat Sekarang</a>
                     <!--
                     <form class="footer-widget__subscribe-box">
                         <div class="footer-widget__subscribe-input-box">
