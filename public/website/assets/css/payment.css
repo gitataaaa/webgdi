@@ -160,3 +160,13 @@ body{
     font-weight: bold;
     text-transform: uppercase;
 }
+.text-justified{
+    text-align: justify
+}
+.text-right{
+    text-align: right;
+}
+.highlight span{
+    font-weight: bold;
+    color: #FE6244
+}

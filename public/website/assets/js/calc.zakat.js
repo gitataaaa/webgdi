@@ -2,6 +2,9 @@ $(function(){
     maskMoney = function(value){
         return new Intl.NumberFormat('en-US').format(value)
     }
+    unmaskMoney = function(value){
+        return value ? value.replace('.', '').replace(',', '').replace(/\D/g, '') : 0
+    }
     nisab_emas = function(){
         var fHarga = $('#harga_emas')
         var fNisab = $('#nisab')
@@ -10,17 +13,27 @@ $(function(){
 
         fHarga.attr('data-value', harga)
         fNisab.attr('data-value', nisab)
+        $('#nisab_float').val(nisab)
         fNisab.val(maskMoney(nisab))
     }
 
-    zakat_profesi = function(){
-        var nisab = $('#nisab').data('value')
-        var income = $('[name=value_income]').val().replace('.', '').replace(',', '').replace(/\D/g, '')
-        var bonus = $('[name=value_bonus]').val().replace('.', '').replace(',', '').replace(/\D/g, '')
-        var debt = $('[name=value_debt]').val().replace('.', '').replace(',', '').replace(/\D/g, '')
+    hitung_zakat = function(){
+        var jenis = $('[name=zakat_type]').val()
+        var nisab = $('#nisab_float').val()
 
-        selisih = (parseFloat(income) + parseFloat(bonus)) - debt
-        console.log(selisih)
+        if(jenis == 'maal'){
+            var income = unmaskMoney($('[name=value_treasure_gold]').val())
+            var bonus = unmaskMoney($('[name=value_treasure_saving]').val())
+            var other = unmaskMoney($('[name=value_treasure_other]').val())
+            var debt = unmaskMoney($('[name=value_treasure_debt]').val())
+            selisih = parseFloat(income) + parseFloat(bonus) + parseFloat(other) - debt
+        }else{
+            var income = unmaskMoney($('[name=value_income]').val())
+            var bonus = unmaskMoney($('[name=value_bonus]').val())
+            var debt = unmaskMoney($('[name=value_debt]').val())
+            selisih = parseFloat(income) + parseFloat(bonus) - debt
+        }
+        //console.log(selisih)
         if(selisih >= nisab){
             zakat = 0.025 * selisih
             $('#zakat-alert').html('<div class="alert alert-info">Harta SUDAH mencapai nishab. Dikenakan KEWAJIBAN ZAKAT</div>')
@@ -32,4 +45,5 @@ $(function(){
         $('#zakat-total').html('Rp '+maskMoney(zakat))
         $('#zakat-total').attr('data-value', zakat)
     }
+
 })

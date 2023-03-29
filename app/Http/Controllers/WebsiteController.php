@@ -259,12 +259,17 @@ class WebsiteController extends Controller
         return redirect('/'.$req->slug)->with('success', true);
     }
 
-    public function index_form_zakat(){
+    public function index_form_zakat(Request $request){
+        $nominal = $request->nominal;
+        $jenis = $request->jenis;
+        
         $bank = Bank::where([
             'status' => 'A'
         ])->get();
         return view('website.page-form-zakat', [
-            'bank' => $bank
+            'bank' => $bank,
+            'jenis' => $jenis,
+            'nominal' => $nominal
         ]);
     }
     public function index_inv_zakat($code){
@@ -298,6 +303,9 @@ class WebsiteController extends Controller
             'expire' => $exp_date,
             'created' => $created_date
         ]);
+    }
+    public function index_about_zakat(){
+        return view('website.page-about-zakat');
     }
     public function index_calc_zakat(){
         return view('website.page-calc-zakat');

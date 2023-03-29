@@ -41,9 +41,11 @@ Route::get('/blog/category/{category}', [WebsiteController::class, 'index_blog_c
 Route::post('/message/send', [WebsiteController::class, 'store_message']);
 
 Route::get('/app/zakat', [WebsiteController::class, 'index_form_zakat']);
+Route::get('/app/zakat/tunaikan', [WebsiteController::class, 'index_form_zakat']);
 Route::get('/app/zakat/iq/{code}', [WebsiteController::class, 'index_inv_zakat']);
 Route::get('/app/zakat/detail/{code}', [WebsiteController::class, 'index_status_zakat']);
 Route::get('/app/zakat/kalkulator', [WebsiteController::class, 'index_calc_zakat']);
+Route::get('/app/zakat/informasi', [WebsiteController::class, 'index_about_zakat']);
 
 Route::post('/q/login', [AuthController::class, 'authenticate']);
 Route::get('/q/logout', [AuthController::class, 'logout']);

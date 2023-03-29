@@ -30,6 +30,11 @@ $(document).ready(function(){
             $('.niat-fitrah').show()
             $('.niat-non-fitrah').hide()
         }else{
+            $('.form-maal').find('input').val("")
+            $('.form-profesi').find('input').val("")
+            $('#zakat-alert').empty()
+            $('#zakat-total').html('Rp')
+            $('#zakat-total').attr('data-value', 0)
             if(value == 'profesi'){
                 $('.nishab-profesi').show()
                 $('.nishab-maal').hide()
@@ -52,8 +57,6 @@ $(document).ready(function(){
 
     $('.money').keyup(function(){
         var el = $(this);
-        var value = el.val().replace(',','').toString();
-        console.log(value)
         el.val(moneyMask(el.val()));
     })
     $('[name=zakat_nominal]').keyup(function(){

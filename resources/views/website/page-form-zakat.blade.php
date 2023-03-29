@@ -3,7 +3,7 @@
 @section('content')
 <div class="oc-card">
     <form id="formZakat">
-        <input type="hidden" name="zakat_type" value="profesi"/>
+        <input type="hidden" name="zakat_type" value="{{ @$jenis ? $jenis : 'profesi'}}"/>
         <input type="hidden" name="sapaan" required value=""/>
         <input type="hidden" name="payment_method" value="transfer bank"/>
         <input type="hidden" name="bank_id" required value=""/>
@@ -14,9 +14,9 @@
 
                 <div class="oc-container">
                     <nav class="nav nav-pills nav-justified">
-                        <a class="nav-link active get-zakat-type" data-value="profesi" aria-current="page" href="#profesi">Zakat Profesi</a>
-                        <a class="nav-link get-zakat-type" data-value="maal" href="#maal">Zakat Maal</a>
-                        <a class="nav-link get-zakat-type" data-value="fitrah" href="#fitrah">Zakat Fitrah</a>
+                        <a class="nav-link {{ @$jenis == 'profesi' ? 'active' : '' }} get-zakat-type" data-value="profesi" aria-current="page" href="#profesi">Zakat Profesi</a>
+                        <a class="nav-link {{ @$jenis == 'maal' ? 'active' : '' }} get-zakat-type" data-value="maal" href="#maal">Zakat Maal</a>
+                        <a class="nav-link {{ @$jenis == 'fitrah' ? 'active' : '' }} get-zakat-type" data-value="fitrah" href="#fitrah">Zakat Fitrah</a>
                     </nav>
                 </div>
             </div>
@@ -25,7 +25,7 @@
                 <label>Nominal Zakat</label>
                 <div class="oc-input-group input-group-lg mb-3">
                     <span class="input-group-text text-placeholder">Rp</span>
-                    <input type="text" class="form-control" name="zakat_nominal" required placeholder="Nominal zakat" >
+                    <input type="text" class="form-control" name="zakat_nominal" required placeholder="Nominal zakat" value="{{ @$nominal ? number_format($nominal) : ''}}">
                 </div>
 
             </div>
@@ -34,7 +34,7 @@
                 <div class="oc-text-header mb-3">Kalkulator Zakat</div>
                 <p>Bingung menentukan nominal zakat Anda? Gunakan kalkulator zakat untuk menentukan berapa nominal yang harus Anda tunaikan.</p>
                 <nav class="nav nav-pills flex-column flex-sm-row">
-                    <a class="flex-sm-fill text-sm-center nav-link text-bg-outline-secondary mr-5" aria-current="page" href="#"><strong>Tentang Zakat</strong></a>
+                    <a class="flex-sm-fill text-sm-center nav-link text-bg-outline-secondary mr-5" aria-current="page" href="/app/zakat/informasi"><strong>Tentang Zakat</strong></a>
                     <a class="flex-sm-fill text-sm-center nav-link text-bg-success ml-5" href="/app/zakat/kalkulator"><strong>Hitung Zakat</strong></a>
                 </nav>
             </div>
@@ -103,14 +103,14 @@
         <div class="oc-card-divider"></div>
 
         <div class="oc-card-section">
-            <div class="alert alert-success text-center niat-non-fitrah">
+            <div class="alert alert-success text-center niat-non-fitrah" <?= @$jenis == 'fitrah' ? 'style="display: none"' : ''?>>
                 <div class="oc-text-title">Doa Niat Zakat Maal/Profesi</div>
 
                 <p class="arabic mt-3">نَوَيْتُ أَنْ اُخْرِجَ زَكَاتَ مَالِي فَرْضًا لِلَّهِ تَعَالَ</p>
                 <p><i>Nawaitu an ukhrija zakata maali fardha llillahi ta’aala.</i></p>
                 <p>"Saya berniat mengeluarkan zakat harta milikku karena Allah Ta’ala"</p>
             </div>
-            <div class="alert alert-success text-center niat-fitrah" style="display: none">
+            <div class="alert alert-success text-center niat-fitrah" <?= @$jenis == 'fitrah' ? '' : 'style="display: none"'?>>
                 <div class="oc-text-title">Doa Niat Zakat Fitrah</div>
 
                 <p class="arabic mt-3">نَوَيْتُ أَنْ اُخْرِجَ زَكَاتَلْ ِفتْرِلِنَفِْس فَرْضًا لِلَّهِ تَعَالَ</p>
