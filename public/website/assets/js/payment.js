@@ -6,8 +6,6 @@ const moneyMask = (value) => {
       parseFloat(value)
     )
   
-    console.log(result)
-  
     return result
 }
 
@@ -37,11 +35,15 @@ $(document).ready(function(){
                 $('.nishab-maal').hide()
                 $('.desc-profesi').show()
                 $('.desc-maal').hide()
+                $('.form-profesi').show()
+                $('.form-maal').hide()
             }else{
                 $('.nishab-profesi').hide()
                 $('.nishab-maal').show()
                 $('.desc-profesi').hide()
                 $('.desc-maal').show()
+                $('.form-profesi').hide()
+                $('.form-maal').show()
             }
             $('.niat-fitrah').hide()
             $('.niat-non-fitrah').show()

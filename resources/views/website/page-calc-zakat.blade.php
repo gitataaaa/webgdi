@@ -4,6 +4,7 @@
 <div class="oc-card">
     <form>
         <input type="hidden" name="zakat_type" value="profesi"/>
+        <input type="hidden" id="opsi_nisab" value="emas"/>
         <div class="oc-card-section oc-card-header"><i class="bi-arrow-left"></i> Kalkulator Zakat</div>
         <div class="oc-card-section">
             <div class="form-group">
@@ -43,14 +44,15 @@
                     <label class="oc-text-grey">Harga Emas per Gram saat ini</label>
                     <div class="oc-input-group-sm mb-3">
                         <span class="input-group-text text-placeholder">Rp</span>
-                        <input type="text" class="form-control money" name="gold_price" required placeholder="0" >
+                        <input type="text" class="form-control money" id="harga_emas" data-value="" onkeyup="nisab_emas()" name="gold_price" required placeholder="0" >
                     </div>
                 </div>
                 <div class="form-group custom-input">
                     <label class="oc-text-grey">Nilai Nishab</label>
                     <div class="oc-input-group-sm mb-3">
                         <span class="input-group-text text-placeholder">Rp</span>
-                        <input type="text" class="form-control money disabled" readonly name="nilai_nishab" required placeholder="0" >
+                        <input type="text" class="form-control money disabled" data-value="" id="nisab" readonly name="nilai_nishab" required placeholder="0" >
+                        <input type="hidden" id="nisab_float" value="" />
                     </div>
                     <small><i>Perhitungan nishab per bulan</i></small>
                 </div>
@@ -65,32 +67,58 @@
                 <p class="desc-profesi">Zakat profesi yang dikeluarkan dihitung dari 2,5% dari penghasilan yang sudah mencapai nishab</p>
                 <p class="desc-maal" style="display: none">Zakat maal yang dikeluarkan dihitung dari 2,5% dari penghasilan yang sudah mencapai nishab dan haul</p>
                 
-                <div class="form-group custom-input">
-                    <label class="oc-text-grey">Nilai harta dalam bentuk emas</label>
-                    <div class="oc-input-group-sm mb-3">
-                        <span class="input-group-text text-placeholder">Rp</span>
-                        <input type="text" class="form-control money" name="value_treasure_gold" required placeholder="0" >
+                <div class="form-maal" style="display: none">
+                    <div class="form-group custom-input">
+                        <label class="oc-text-grey">Nilai harta dalam bentuk emas</label>
+                        <div class="oc-input-group-sm mb-3">
+                            <span class="input-group-text text-placeholder">Rp</span>
+                            <input type="text" class="form-control money" name="value_treasure_gold" required placeholder="0" >
+                        </div>
+                    </div>
+                    <div class="form-group custom-input">
+                        <label class="oc-text-grey">Nilai harta dalam bentuk tabungan</label>
+                        <div class="oc-input-group-sm mb-3">
+                            <span class="input-group-text text-placeholder">Rp</span>
+                            <input type="text" class="form-control money" name="value_treasure_saving" required placeholder="0" >
+                        </div>
+                    </div>
+                    <div class="form-group custom-input">
+                        <label class="oc-text-grey">Nilai harta dalam bentuk lainnya (properti, kendaraan, koleksi)</label>
+                        <div class="oc-input-group-sm mb-3">
+                            <span class="input-group-text text-placeholder">Rp</span>
+                            <input type="text" class="form-control money" name="value_treasure_other" required placeholder="0" >
+                        </div>
+                    </div>
+                    <div class="form-group custom-input">
+                        <label class="oc-text-grey">Nilai hutang/cicilan jatuh tempo saat membayar zakat</label>
+                        <div class="oc-input-group-sm mb-3">
+                            <span class="input-group-text text-placeholder">Rp</span>
+                            <input type="text" class="form-control money" name="value_treasure_debt" required placeholder="0" >
+                        </div>
                     </div>
                 </div>
-                <div class="form-group custom-input">
-                    <label class="oc-text-grey">Nilai harta dalam bentuk tabungan</label>
-                    <div class="oc-input-group-sm mb-3">
-                        <span class="input-group-text text-placeholder">Rp</span>
-                        <input type="text" class="form-control money" name="value_treasure_saving" required placeholder="0" >
+
+                <div class="form-profesi">
+                    <div class="form-group custom-input">
+                        <label class="oc-text-grey">Penghasilan per Bulan</label>
+                        <div class="oc-input-group-sm mb-3">
+                            <span class="input-group-text text-placeholder">Rp</span>
+                            <input type="text" class="form-control money" name="value_income" onkeyup="zakat_profesi()" data-value="" required placeholder="0" >
+                        </div>
                     </div>
-                </div>
-                <div class="form-group custom-input">
-                    <label class="oc-text-grey">Nilai harta dalam bentuk lainnya (properti, kendaraan, koleksi)</label>
-                    <div class="oc-input-group-sm mb-3">
-                        <span class="input-group-text text-placeholder">Rp</span>
-                        <input type="text" class="form-control money" name="value_treasure_other" required placeholder="0" >
+                    <div class="form-group custom-input">
+                        <label class="oc-text-grey">Penghasilan Tambahan (Bonus, Lain-lain)</label>
+                        <div class="oc-input-group-sm mb-3">
+                            <span class="input-group-text text-placeholder">Rp</span>
+                            <input type="text" class="form-control money" name="value_bonus" onkeyup="zakat_profesi()" data-value="" required placeholder="0" >
+                        </div>
                     </div>
-                </div>
-                <div class="form-group custom-input">
-                    <label class="oc-text-grey">Nilai hutang/cicilan jatuh tempo saat membayar zakat</label>
-                    <div class="oc-input-group-sm mb-3">
-                        <span class="input-group-text text-placeholder">Rp</span>
-                        <input type="text" class="form-control money" name="value_treasure_debt" required placeholder="0" >
+                    <div class="form-group custom-input">
+                        <label class="oc-text-grey">Cicilan/Hutang</label>
+                        <div class="oc-input-group-sm mb-3">
+                            <span class="input-group-text text-placeholder">Rp</span>
+                            <input type="text" class="form-control money" name="value_debt" onkeyup="zakat_profesi()" data-value="" required placeholder="0" >
+                        </div>
                     </div>
                 </div>
             </div>
@@ -99,9 +127,10 @@
         <div class="oc-card-divider"></div>
 
         <div class="oc-card-section">
+            <div id="zakat-alert"></div>
             <div class="alert alert-success">
                 <div class="mb-3">Kewajiban Anda membayar zakat sebesar</div>
-                <div class="oc-text-big">Rp </div>
+                <div class="oc-text-big" id="zakat-total" data-value="">Rp </div>
             </div>
         </div>
         
@@ -116,7 +145,13 @@
 @endsection
 
 @push('script')
+<!--
+<script src="{{ asset('website/assets/vendors/calcZakat/elsyifa.js') }}"></script>
+<script src="{{ asset('website/assets/vendors/calcZakat/main.js') }}"></script>
+-->
+
 <script src="{{ asset('website/assets/js/payment.js') }}"></script>
+<script src="{{ asset('website/assets/js/calc.zakat.js') }}"></script>
 <script>
     function next(){
         window.location.href = '/app/zakat'
