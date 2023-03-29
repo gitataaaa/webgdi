@@ -12,13 +12,15 @@
                     <div class="footer-widget__about-text-box">
                         <p class="footer-widget__about-text">Menjadi lembaga global yang profesional untuk peduli menjaga generasi mandiri dan unggul</p>
                     </div>
+                    <a href="{{ url('app/zakat') }}" class="thm-btn">Zakat Sekarang</a>
+                    <!--
                     <form class="footer-widget__subscribe-box">
                         <div class="footer-widget__subscribe-input-box">
                             <input type="email" placeholder="Email address" name="email">
                             <button type="submit" class="footer-widget__subscribe-btn"><img
                                     src="{{ asset('website/assets/images/icon/paper-plan.png') }}" alt=""></button>
                         </div>
-                    </form>
+                    </form>-->
                 </div>
             </div>
             <div class="col-xl-2 col-lg-6 col-md-6 wow fadeInUp" data-wow-delay="200ms">
@@ -44,11 +46,9 @@
                         <h3 class="footer-widget__title">Program</h3>
                     </div>
                     <ul class="footer-widget__Explore-list list-unstyled">
-                        <li><a href="about.html">Design</a></li>
-                        <li><a href="about.html">Education</a></li>
-                        <li><a href="about.html">Technology</a></li>
-                        <li><a href="about.html">Games</a></li>
-                        <li><a href="about.html">Film & Video</a></li>
+                        <li><a href="{{ url('budaya') }}">Budaya</a></li>
+                        <li><a href="{{ url('cinta') }}">Cinta</a></li>
+                        <li><a href="{{ url('senyum') }}">Senyum</a></li>
                     </ul>
                 </div>
             </div>

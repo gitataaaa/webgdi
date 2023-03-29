@@ -2,6 +2,7 @@
 @section('title', $pageTitle)
 
 @section('style')
+<link rel="stylesheet" href="{{ asset('website/assets/css/custom.css') }}">
 <style>
     .section-desc p{
         color: #fff;
@@ -92,6 +93,7 @@
 @endsection
 
 @section('homeProgram')
+<!--
 <section class="project-two">
     <div class="project-two-shape-1 float-bob-x">
         <img src="{{ asset('website/assets/images/shapes/project-two-shape-1.png') }}" alt="">
@@ -112,7 +114,6 @@
                 $percentage = ($pg->donasi / $pg->target_nominal) * 100;
                 $days = Helper::totalDays($pg->date_end);
             @endphp
-            <!--Project One Single Start-->
             <div class="col-xl-4 col-lg-4 wow fadeInUp" data-wow-delay="{{ $no.'ms'}}">
                 <div class="project-one__single">
                     <div class="project-one__img-box">
@@ -137,7 +138,6 @@
                             </div>
                         </div>
                         <div class="progress-levels">
-                            <!--Skill Box-->
                             <div class="progress-box">
                                 <div class="inner count-box">
                                     <div class="text">Target</div>
@@ -163,10 +163,70 @@
                     </div>
                 </div>
             </div>
-            <!--Project One Single End-->
             @endforeach
         </div>
         @endif
+    </div>
+</section>
+-->
+<section class="faq-one">
+    <div class="project-two-shape-1 float-bob-x">
+        <img src="{{ asset('website/assets/images/shapes/project-two-shape-1.png') }}" alt="">
+    </div>
+    <div class="container">
+        <div class="section-title text-center">
+            <span class="section-title__tagline">Program Yayasan</span>
+            <h2 class="section-title__title">Telusuri Program Graha Dhuafa</h2>
+        </div>
+        <div class="categories-two__bottom">
+            <div class="categories-two__bottom-inner">
+                <div class="row">
+                    <div class="col-xl-4 col-lg-4 col-md-4 wow fadeInLeft" data-wow-delay="100ms">
+                        <div class="categories-two__single program-three" data-url="budaya" onclick="link('/budaya')">
+                            <div class="categories-two__icon">
+                                <!--<span class="icon-online"></span>-->
+                                <img src="{{ asset('website/assets/images/custom/budaya.png') }}" width="100%"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-4 col-lg-4 col-md-4 wow fadeInLeft" data-wow-delay="200ms">
+                        <div class="categories-two__single program-three" data-url="senyum" onclick="link('/senyum')">
+                            <div class="categories-two__icon">
+                                <!--<span class="icon-online"></span>-->
+                                <img src="{{ asset('website/assets/images/custom/senyum.png') }}" width="100%"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-4 col-lg-4 col-md-4 wow fadeInLeft" data-wow-delay="300ms">
+                        <div class="categories-two__single program-three" data-url="cinta" onclick="link('/cinta')">
+                            <div class="categories-two__icon">
+                                <!--<span class="icon-online"></span>-->
+                                <img src="{{ asset('website/assets/images/custom/cinta.png') }}" width="100%"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="faq-one">
+    <div class="faq-one-bg" style="background-image: url('website/assets/images/backgrounds/faq-one-bg.png')"></div>
+    <div class="container">
+        <div class="section-title text-center">
+            <span class="section-title__tagline">Peta Sebaran</span>
+            <h2 class="section-title__title">Program Graha Dhuafa</h2>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <img src="{{ asset('website/assets/images/custom/peta_sebaran.svg') }}" width="100%"/>
+
+                <div class="mt-5 text-center">
+                    <p>Wilayah Sebaran Manfaat Graha Dhuafa Indonesia</p>
+                    <h4>Jakarta, Jawa Barat, Jawa Tengah, Jawa Timur, NTB, NTT,<br/>Sulawesi Barat, Sumatra Barat, Bali, Kalimantan Selatan</h4>
+                </div>
+            </div>
+        </div>
     </div>
 </section>
 @endsection
@@ -374,4 +434,10 @@
     </div>
 </section>
 @endif
+
+<script>
+    function link(link){
+        window.location.href = link
+    }
+</script>
 @endsection

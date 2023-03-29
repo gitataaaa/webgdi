@@ -44,7 +44,7 @@
     <!-- template styles -->
     <link rel="stylesheet" href="{{ asset('website/assets/css/qrowd.css') }}" />
     <link rel="stylesheet" href="{{ asset('website/assets/css/qrowd-responsive.css') }}" />
-
+    
     @yield('style')
 </head>
 

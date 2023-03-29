@@ -130,9 +130,13 @@
                     </button>
                     </h2>
                     <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
-                    <div class="accordion-body">
-                        <strong>This is the second item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
-                    </div>
+                        <div class="accordion-body">
+                            <p>Graha Dhuafa Indonesia berdiri pada tahun 2016 dan bergerak dalam bidang sosial, kemanusiaan dan keagamaan dengan 
+                            akta pendirian Endang Sosilowati SH. Nomor 01 tanggal 03 Oktober 2016 tentang pendirian Yayasan Graha Dhuafa Indonesia, serta 
+                            mendapatkan izin operasional kantor lembaga amil zakat LAZ Graha Dhuafa Indonesia berdasarkan Nomor: 1913 tahun 2022 tanggal 
+                            03 Oktober 2022.
+                            </p>
+                        </div>
                     </div>
                 </div>
             </div>

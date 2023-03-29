@@ -145,7 +145,7 @@
 
         <!--Page Header Start-->
         <section class="page-header">
-            <div class="page-header-bg" style="background-image: url({{ asset('website/assets/images/backgrounds/page-header-bg-3.jpg') }})">
+            <div class="page-header-bg" style="background-image: url({{ asset('website/assets/images/backgrounds/page-header-bg-3.jpeg') }})">
             </div>
             <div class="page-header-shape-1 float-bob-x">
                 <img src="{{ asset('website/assets/images/shapes/page-header-shape-1.png') }}" alt="">
@@ -177,7 +177,30 @@
         @yield('pageContact')
 
         
-
+        <section class="ready-one">
+            <div class="container">
+                <div class="ready-one__inner" style="background-image: url('website/assets/images/backgrounds/banner2.jpeg'); background-size: cover">
+                    <div class="ready-one-shape-1 float-bob-x">
+                        <img src="{{ asset('website/assets/images/shapes/ready-one-shape-1.png') }}" alt="">
+                    </div>
+                    <div class="ready-one__big-icon float-bob-y-2">
+                        <span class="icon-fundraiser"></span>
+                    </div>
+                    <div class="ready-one__left">
+                        <div class="icon">
+                            <span class="icon-fundraiser"></span>
+                        </div>
+                        <div class="content">
+                            <p>Zakat Infaq Shodaqoh</p>
+                            <h3>Graha Dhuafa Indonesia senantiasa berkomitmen untuk terus ambil peran dalam menjaga generasi pelanjut.</h3>
+                        </div>
+                    </div>
+                    <div class="ready-one__right">
+                        <a href="{{ url('app/zakat') }}" class="thm-btn ready-one__btn">Tunaikan</a>
+                    </div>
+                </div>
+            </div>
+        </section>
 
         <!--Site Footer Start-->
         <footer class="site-footer">
