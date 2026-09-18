@@ -139,7 +139,12 @@ ul {
   margin: 0 auto;
   width: 100%;
   min-width: 300px;
+  /* overflow: hidden -> clip: efek clipping sama, TETAPI position:sticky
+     pada elemen anak (mis. sidebar Popular posts) tetap berfungsi.
+     overflow:hidden membuat elemen jadi scroll container sehingga
+     sticky anak tidak pernah aktif. Browser lama akan memakai hidden. */
   overflow: hidden;
+  overflow: clip;
 }
 
 .container {

@@ -33,6 +33,12 @@ use App\Http\Controllers\Website\BlogFrontController;
 
 /* front website */
 Route::get('/', [WebsiteController::class, 'index']);
+
+/* ROUTE BLOG FRONT — HARUS SEBELUM /{slug} (catch-all), agar /blog tidak tertelan 404 */
+Route::get('/blog', [BlogFrontController::class, 'index'])->name('website.blog');
+Route::get('/blog/category/{kategori}', [BlogFrontController::class, 'index'])->name('website.blog.category');
+Route::get('/blog/{slug}', [BlogFrontController::class, 'detail'])->name('website.blog.detail');
+
 Route::get('/{slug}', [WebsiteController::class, 'index']);
 Route::get('/program/{slug}', [WebsiteController::class, 'index_program']);
 Route::get('/program/{slug}/{detailSlug}', [WebsiteController::class, 'index_program']);
@@ -191,10 +197,7 @@ Route::group(['prefix'=>'admin', 'middleware'=>['auth']], function(){
 
 
 });
-// ✅ ROUTE BLOG YANG BENAR (TARUH DI LUAR MIDDLEWARE AUTH)
-Route::get('/blog', [BlogFrontController::class, 'index'])->name('website.blog');
-Route::get('/blog/category/{kategori}', [BlogFrontController::class, 'index'])->name('website.blog.category');
-Route::get('/blog/{slug}', [BlogFrontController::class, 'detail'])->name('website.blog.detail');
+
 
 
 

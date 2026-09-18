@@ -119,7 +119,7 @@
                             </div>
                         </div>
                         <div class="main-menu__main-menu-box">
-                            @include('layout.layout-menu', @$active)
+                            @include('layout.layout-menu', @$active ?? [])
                         </div>
                         <div class="main-menu__right">
                             <!--

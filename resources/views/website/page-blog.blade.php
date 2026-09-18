@@ -257,6 +257,18 @@
         color: white;
         border-color: #1ab69d;
     }
+    
+    .pagination-wrapper .disabled {
+        opacity: 0.45;
+        pointer-events: none;
+    }
+    
+    .pagination-wrapper .dots {
+        display: flex;
+        align-items: center;
+        color: #666;
+        font-weight: 600;
+    }
 </style>
 @endsection
 
@@ -309,12 +321,38 @@
                     </div>
                     
                     <div class="pagination-wrapper">
-                        <a href="#"><i class="fas fa-chevron-left"></i></a>
-                        <span class="active">1</span>
-                        <a href="#">2</a>
-                        <a href="#">3</a>
-                        <a href="#">4</a>
-                        <a href="#"><i class="fas fa-chevron-right"></i></a>
+                        {{-- Pagination asli dari Laravel paginator --}}
+                        @if($blog instanceof \Illuminate\Contracts\Pagination\LengthAwarePaginator && $blog->lastPage() > 1)
+                            @php
+                                $qs = $_GET; $qs['page'] = null;
+                                $urlPage = function ($p) use ($qs) {
+                                    $q = array_filter($qs); $q['page'] = $p;
+                                    return '?' . http_build_query($q);
+                                };
+                                $mulai = max(1, $blog->currentPage() - 2);
+                                $akhir = min($blog->lastPage(), $mulai + 4);
+                                $mulai = max(1, $akhir - 4);
+                            @endphp
+                            <a href="{{ $urlPage($blog->currentPage() - 1) }}"
+                               class="{{ $blog->onFirstPage() ? 'disabled' : '' }}" aria-label="Sebelumnya">&laquo;</a>
+                            @if($mulai > 1)
+                                <a href="{{ $urlPage(1) }}">1</a>
+                                <span class="dots">...</span>
+                            @endif
+                            @for($p = $mulai; $p <= $akhir; $p++)
+                                @if($p == $blog->currentPage())
+                                    <span class="active">{{ $p }}</span>
+                                @else
+                                    <a href="{{ $urlPage($p) }}">{{ $p }}</a>
+                                @endif
+                            @endfor
+                            @if($akhir < $blog->lastPage())
+                                <span class="dots">...</span>
+                                <a href="{{ $urlPage($blog->lastPage()) }}">{{ $blog->lastPage() }}</a>
+                            @endif
+                            <a href="{{ $urlPage($blog->currentPage() + 1) }}"
+                               class="{{ $blog->hasMorePages() ? '' : 'disabled' }}" aria-label="Berikutnya">&raquo;</a>
+                        @endif
                     </div>
                 @else
                     <div class="alert alert-warning">Kategori tidak ditemukan</div>

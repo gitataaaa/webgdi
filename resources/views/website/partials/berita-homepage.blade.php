@@ -1,7 +1,7 @@
 {{-- ============================================================ --}}
 {{-- Section Berita / Blog Homepage                                --}}
-{{-- Grid kartu berita (kiri) + sidebar Popular posts (kanan, sticky + scroll independen) --}}
-{{-- Tombol "Lihat Berita Selanjutnya" di bawah grid (load more 6 kartu per klik) --}}
+{{-- Grid kartu berita (kiri) + sidebar Popular posts (kanan, sticky) --}}
+{{-- Pagination (Prev / nomor halaman / Next) di bawah grid --}}
 {{-- ============================================================ --}}
 
 @php
@@ -114,14 +114,20 @@
     ]);
 
     /* ---- Semua berita: DB (terbaru) + demo, total maksimal 10 kartu ----
-       Tampil bertahap: 4 kartu awal (2 baris) + 6 kartu per klik tombol
-       "Lihat Berita Selanjutnya" (3 baris tambahan per klik). */
+       Pagination "berkurang": halaman 1 tampil SEMUA berita, tiap klik Next
+       tampilannya berkurang 4 kartu (10 → 6 → 2); Prev menambah kembali.
+       Berita teratas (terbaru) selalu tetap tampil. */
     $semuaBerita = collect(@$blogHome ?? [])->take(10)->values();
     if ($semuaBerita->count() < 10) {
         $semuaBerita = $semuaBerita->merge($beritaDemo->take(10 - $semuaBerita->count()));
     }
-    $tampilkanAwal = 4;    /* awal: 4 kartu (2 kolom x 2 baris) */
-    $tampilkanPerKlik = 6; /* per klik: 6 kartu (2 kolom x 3 baris) */
+    $perHalaman = 4;  /* jumlah kartu yang dikurangi per klik Next */
+    $totalBerita = $semuaBerita->count();
+    $totalHalaman = max(1, (int) ceil($totalBerita / $perHalaman));
+    $halamanAktif = (int) (@$_GET['halaman'] ?? 1);
+    $halamanAktif = min(max(1, $halamanAktif), $totalHalaman);
+    /* Jumlah kartu yang tampil pada halaman aktif */
+    $tampilSekarang = max(0, $totalBerita - (($halamanAktif - 1) * $perHalaman));
 
     /* ---- Sidebar: Popular posts (fallback ke data demo bila DB kosong) ---- */
     $beritaPopuler = collect(@$blogHomePopular ?? (@$blogHome ?? []));
@@ -147,19 +153,19 @@
         <!-- Layout: Kiri (grid berita) + Kanan (sidebar Popular posts) -->
         <div class="blog-layout">
             <!-- ======= Bagian Kiri: Grid kartu berita besar (2 kolom per baris) =======
-                 Wrapper sticky + scroll internal: saat halaman/sidebar di-scroll,
-                 grid berita di kiri tetap terkunci di posisinya. -->
+                 Mengalir normal mengikuti scroll halaman (natural flow). -->
             <div class="blog-layout__main">
                 <div class="blog-layout__main-sticky">
                     <div class="news-grid" id="news-grid">
                     @foreach($semuaBerita as $dt)
                         @php
-                            $index = $loop->index;
                             $urlDetail = !empty($dt->slug) ? '/blog/' . $dt->slug : '/blog';
                             $excerpt = $potongExcerpt($dt->content ?? '');
+                            $idxBerita = $loop->index;
+                            /* Kartu di luar jumlah tampil saat ini disembunyikan (ditampilkan via JS saat Prev) */
+                            $diLuarHalaman = $idxBerita >= $tampilSekarang;
                         @endphp
-                        <article class="news-card{{ $index >= $tampilkanAwal ? ' news-card--hidden' : '' }}"
-                                 data-news-index="{{ $index }}">
+                        <article class="news-card{{ $diLuarHalaman ? ' news-card--hidden' : '' }}" data-news-index="{{ $idxBerita }}">
                             <a href="{{ $urlDetail }}" class="news-card__image">
                                 <img src="{{ asset($dt->featured_img) }}" alt="{{ $dt->title }}" loading="lazy">
                             </a>
@@ -183,16 +189,54 @@
                     @endforeach
                     </div>
 
-                    <!-- Tombol: Lihat Berita Selanjutnya (menampilkan 6 kartu / 3 baris per klik) -->
-                    @if($semuaBerita->count() > $tampilkanAwal)
-                        <div class="blog-loadmore">
-                            <button type="button" class="blog-loadmore__btn" id="btn-load-more"
-                                    data-initial="{{ $tampilkanAwal }}"
-                                    data-step="{{ $tampilkanPerKlik }}"
-                                    data-total="{{ $semuaBerita->count() }}">
-                                Lihat Berita Selanjutnya
-                            </button>
-                        </div>
+                    <!-- Penghitung jumlah berita tampil (berubah tiap Next/Prev) -->
+                    <p class="news-counter" id="news-counter">Menampilkan <strong>{{ $tampilSekarang }}</strong> dari {{ $totalBerita }} berita</p>
+
+                    <!-- Pagination: Prev / nomor halaman / Next -->
+                    @if($totalHalaman > 1)
+                        @php
+                            /* Kumpulan query string saat ini (mis. ?search=...) agar tetap terbawa saat pindah halaman */
+                            $qs = array_merge($_GET, []);
+                            $urlHalaman = function ($no) use ($qs) {
+                                $qs['halaman'] = $no;
+                                /* #berita-blog-homepage: setelah pindah halaman, halaman langsung
+                                   diposisikan ke section berita (bukan kembali ke atas) */
+                                return '?' . http_build_query($qs) . '#berita-blog-homepage';
+                            };
+                            /* Jendela nomor halaman: maksimal 5 nomor, selalu memuat halaman aktif */
+                            $mulai = max(1, $halamanAktif - 2);
+                            $akhir = min($totalHalaman, $mulai + 4);
+                            $mulai = max(1, $akhir - 4);
+                        @endphp
+                        <nav class="blog-pagination" aria-label="Navigasi halaman berita">
+                            <ul class="blog-pagination__list">
+                                <li class="blog-pagination__item{{ $halamanAktif <= 1 ? ' blog-pagination__item--disabled' : '' }}">
+                                    <a class="blog-pagination__link" href="{{ $urlHalaman($halamanAktif - 1) }}"
+                                       aria-label="Halaman sebelumnya"{{ $halamanAktif <= 1 ? ' tabindex="-1"' : '' }}>&#10094; Prev</a>
+                                </li>
+                                @if($mulai > 1)
+                                    <li class="blog-pagination__item">
+                                        <a class="blog-pagination__link" href="{{ $urlHalaman(1) }}">1</a>
+                                    </li>
+                                    <li class="blog-pagination__item blog-pagination__item--gap"><span>...</span></li>
+                                @endif
+                                @for($no = $mulai; $no <= $akhir; $no++)
+                                    <li class="blog-pagination__item{{ $no === $halamanAktif ? ' blog-pagination__item--active' : '' }}">
+                                        <a class="blog-pagination__link" href="{{ $urlHalaman($no) }}"{{ $no === $halamanAktif ? ' aria-current="page"' : '' }}>{{ $no }}</a>
+                                    </li>
+                                @endfor
+                                @if($akhir < $totalHalaman)
+                                    <li class="blog-pagination__item blog-pagination__item--gap"><span>...</span></li>
+                                    <li class="blog-pagination__item">
+                                        <a class="blog-pagination__link" href="{{ $urlHalaman($totalHalaman) }}">{{ $totalHalaman }}</a>
+                                    </li>
+                                @endif
+                                <li class="blog-pagination__item{{ $halamanAktif >= $totalHalaman ? ' blog-pagination__item--disabled' : '' }}">
+                                    <a class="blog-pagination__link" href="{{ $urlHalaman($halamanAktif + 1) }}"
+                                       aria-label="Halaman berikutnya"{{ $halamanAktif >= $totalHalaman ? ' tabindex="-1"' : '' }}>Next &#10095;</a>
+                                </li>
+                            </ul>
+                        </nav>
                     @endif
                 </div>
             </div>
@@ -226,11 +270,93 @@
     </div>
 </section>
 
+<script>
+/* ===== Pagination tanpa reload (mode "berkurang") =====
+   Semua kartu sudah ada di DOM. Halaman 1 = tampil semua; tiap klik Next
+   menyembunyikan 4 kartu dari bawah (jumlah tampil berkurang); Prev
+   menambahkannya kembali. Posisi scroll halaman TIDAK bergerak. */
+(function () {
+    var grid = document.getElementById('news-grid');
+    var nav = document.querySelector('.blog-pagination');
+    if (!grid || !nav) return;
+
+    var perHalaman = {{ $perHalaman }};
+    var total = grid.querySelectorAll('.news-card').length;
+    var totalHalaman = Math.max(1, Math.ceil(total / perHalaman));
+    var counter = document.getElementById('news-counter');
+
+    function tampilHalaman(no) {
+        no = Math.min(Math.max(1, no), totalHalaman);
+        /* Mode berkurang: halaman 1 = semua, tiap Next mengurangi perHalaman kartu */
+        var tampilJumlah = Math.max(0, total - (no - 1) * perHalaman);
+
+        grid.querySelectorAll('.news-card').forEach(function (card) {
+            var idx = parseInt(card.getAttribute('data-news-index'), 10);
+            var tampil = idx < tampilJumlah;
+            card.classList.toggle('news-card--hidden', !tampil);
+            /* Animasi fade-in untuk kartu yang baru muncul */
+            card.classList.remove('news-card--show');
+            if (tampil) {
+                void card.offsetWidth; /* restart animasi CSS */
+                card.classList.add('news-card--show');
+            }
+        });
+
+        /* Perbarui penghitung "Menampilkan X dari Y berita" */
+        if (counter) {
+            counter.innerHTML = 'Menampilkan <strong>' + tampilJumlah + '</strong> dari ' + total + ' berita';
+        }
+
+        /* Perbarui nomor halaman aktif */
+        nav.querySelectorAll('.blog-pagination__item').forEach(function (li) {
+            var a = li.querySelector('a');
+            if (!a) return;
+            var m = a.getAttribute('href').match(/halaman=(\d+)/);
+            var aktif = m && parseInt(m[1], 10) === no;
+            li.classList.toggle('blog-pagination__item--active', aktif);
+            if (aktif) a.setAttribute('aria-current', 'page');
+            else a.removeAttribute('aria-current');
+        });
+
+        /* Prev/Next nonaktif di ujung */
+        var prev = nav.querySelector('[aria-label="Halaman sebelumnya"]');
+        var next = nav.querySelector('[aria-label="Halaman berikutnya"]');
+        if (prev) prev.parentElement.classList.toggle('blog-pagination__item--disabled', no <= 1);
+        if (next) next.parentElement.classList.toggle('blog-pagination__item--disabled', no >= totalHalaman);
+
+        /* Perbarui URL tanpa reload (?halaman=N) */
+        if (window.history && history.pushState) {
+            var url = new URL(window.location.href);
+            url.searchParams.set('halaman', no);
+            history.pushState({}, '', url);
+        }
+    }
+
+    nav.addEventListener('click', function (e) {
+        var a = e.target.closest('a.blog-pagination__link');
+        if (!a) return;
+        if (a.parentElement.classList.contains('blog-pagination__item--disabled')) return;
+        var m = a.getAttribute('href').match(/halaman=(\d+)/);
+        if (!m) return;
+        e.preventDefault(); /* cegah lompat/lompatan anchor & reload */
+        tampilHalaman(parseInt(m[1], 10));
+    });
+
+    /* Dukung tombol back/forward browser */
+    window.addEventListener('popstate', function () {
+        var m = window.location.search.match(/halaman=(\d+)/);
+        tampilHalaman(m ? parseInt(m[1], 10) : 1);
+    });
+})();
+</script>
+
 <style>
 /* ===== Section ===== */
 .blog-section {
     padding: 70px 0 90px;
     background-color: #f7f7f7;
+    /* Offset saat lompat anchor (#berita-blog-homepage) agar tidak tertutup header */
+    scroll-margin-top: 90px;
 }
 
 .blog-section__heading {
@@ -263,80 +389,33 @@
     margin: 0 auto;
 }
 
-/* ===== Layout utama: kiri (grid) + kanan (sidebar) =====
-   align-items: stretch membuat kedua kolom setinggi container grid,
-   sehingga masing-masing bisa sticky dan punya scroll internal sendiri. */
+/* ===== Layout utama: kiri (grid) + kanan (sidebar) ===== */
 .blog-layout {
     display: grid;
     grid-template-columns: minmax(0, 1fr) 330px;
     gap: 40px;
-    align-items: stretch;
+    align-items: start;
 }
 
-/* Kolom kiri: tetap mengisi tinggi penuh container grid (menentukan
-   tinggi baris). Kontennya dibungkus wrapper sticky di bawah ini. */
+/* Kolom kiri: mengalir NORMAL mengikuti scroll halaman (tanpa sticky,
+   tanpa scroll internal) supaya scroll terasa natural seperti section lain. */
 .blog-layout__main {
     min-width: 0;
-    min-height: 100%;
 }
 
-/* Wrapper isi kolom kiri: sticky + area scroll sendiri.
-   Saat halaman di-scroll ke bawah, grid berita di kiri TIDAK ikut bergeser
-   (tetap terkunci di posisinya); isinya di-scroll di dalam wrapper ini.
-   Catatan: TANPA overscroll-behavior, sehingga saat scroll internal sudah
-   mencapai ujung atas/bawah, scroll berlanjut natural ke halaman —
-   halaman tetap bisa naik/turun walau kursor berada di atas kolom. */
+/* Wrapper isi kolom kiri: tanpa perilaku khusus — hanya penanda struktur.
+   (Dulu sticky + scroll internal, kini normal agar scroll halaman mengalir.) */
 .blog-layout__main-sticky {
-    position: sticky;
-    top: 24px;
-    max-height: calc(100vh - 48px);
-    overflow-y: auto;
-    padding: 4px 14px 20px 4px;
-    scrollbar-width: thin;
-    scrollbar-color: #1e2a3a #e8eef3;
+    /* natural flow */
 }
 
-.blog-layout__main-sticky::-webkit-scrollbar {
-    width: 6px;
-}
-
-.blog-layout__main-sticky::-webkit-scrollbar-track {
-    background: #e8eef3;
-    border-radius: 8px;
-}
-
-.blog-layout__main-sticky::-webkit-scrollbar-thumb {
-    background: #1e2a3a;
-    border-radius: 8px;
-}
-
-/* Sidebar: sticky + area scroll independen (overflow-y: auto).
-   Kedua kolom (kiri & kanan) scroll di dalam areanya masing-masing,
-   sehingga berita di kiri tidak bergeser saat sidebar di-scroll.
-   Scroll chaining dibiarkan aktif agar halaman tetap bisa digulir
-   saat scroll internal mencapai ujung. */
+/* Sidebar: menempel (sticky) DIAM di tempat saat halaman di-scroll.
+   top: 120px = jarak aman di bawah navbar; berganti ke 90px saat scroll
+   (navbar homepage mengecil). Angka harus lebih kecil dari tinggi viewport
+   dikurangi tinggi sidebar agar sticky punya ruang bergerak. */
 .blog-layout__sidebar {
     position: sticky;
-    top: 24px;
-    max-height: calc(100vh - 48px);
-    overflow-y: auto;
-    padding-right: 8px;
-    scrollbar-width: thin;
-    scrollbar-color: #00C89D #e8eef3;
-}
-
-.blog-layout__sidebar::-webkit-scrollbar {
-    width: 6px;
-}
-
-.blog-layout__sidebar::-webkit-scrollbar-track {
-    background: #e8eef3;
-    border-radius: 8px;
-}
-
-.blog-layout__sidebar::-webkit-scrollbar-thumb {
-    background: #00C89D;
-    border-radius: 8px;
+    top: 120px;
 }
 
 /* ===== Grid berita 2 kolom ===== */
@@ -346,9 +425,40 @@
     gap: 30px;
 }
 
-/* Kartu yang belum ditampilkan ( disembunyikan sampai tombol "Lihat Berita Selanjutnya" diklik) */
+/* Kartu di luar halaman pagination aktif disembunyikan (ditampilkan via JS).
+   !important WAJIB: rule .news-card (display:flex) ditulis setelah rule ini,
+   tanpa !important dia akan menimpa display:none-nya (specificity sama). */
 .news-card--hidden {
-    display: none;
+    display: none !important;
+}
+
+/* Penghitung jumlah berita tampil */
+.news-counter {
+    text-align: center;
+    color: #6b7280;
+    font-size: 0.9rem;
+    margin-top: 28px;
+    margin-bottom: 4px;
+}
+
+.news-counter strong {
+    color: #00C89D;
+}
+
+/* Animasi halus saat kartu muncul ketika berpindah halaman pagination */
+.news-card--show {
+    animation: newsCardFadeIn 0.45s ease both;
+}
+
+@keyframes newsCardFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(16px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 /* ===== Kartu berita ===== */
@@ -362,21 +472,6 @@
     display: flex;
     flex-direction: column;
     opacity: 1;
-}
-
-.news-card--show {
-    animation: newsCardFadeIn 0.45s ease both;
-}
-
-@keyframes newsCardFadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(18px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
 }
 
 .news-card:hover {
@@ -481,38 +576,62 @@
     color: #fff;
 }
 
-/* ===== Tombol "Lihat Berita Selanjutnya" ===== */
-.blog-loadmore {
-    text-align: center;
+/* ===== Pagination (Prev / nomor halaman / Next) ===== */
+.blog-pagination {
     margin-top: 44px;
 }
 
-.blog-loadmore__btn {
+.blog-pagination__list {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.blog-pagination__link {
     display: inline-flex;
     align-items: center;
-    gap: 10px;
-    padding: 13px 34px;
+    justify-content: center;
+    min-width: 40px;
+    height: 40px;
+    padding: 0 14px;
     background: #fff;
     border: 1px solid #1e2a3a;
     border-radius: 30px;
     color: #1e2a3a;
-    font-size: 0.95rem;
+    font-size: 0.9rem;
     font-weight: 700;
-    cursor: pointer;
+    text-decoration: none;
     transition: all 0.3s ease;
 }
 
-.blog-loadmore__btn:hover {
+.blog-pagination__link:hover {
     background: #00C89D;
     border-color: #00C89D;
     color: #fff;
     box-shadow: 0 10px 24px rgba(0, 200, 157, 0.35);
 }
 
-.blog-loadmore__btn:disabled {
-    opacity: 0.55;
-    cursor: not-allowed;
-    box-shadow: none;
+.blog-pagination__item--active .blog-pagination__link {
+    background: #00C89D;
+    border-color: #00C89D;
+    color: #fff;
+}
+
+.blog-pagination__item--disabled .blog-pagination__link {
+    opacity: 0.45;
+    pointer-events: none;
+}
+
+.blog-pagination__item--gap span {
+    display: inline-block;
+    padding: 0 4px;
+    color: #8a94a6;
+    font-weight: 700;
 }
 
 /* ===== Sidebar box (Popular posts) ===== */
@@ -610,20 +729,9 @@
         gap: 36px;
     }
 
-    /* Nonaktifkan sticky + scroll independen di layar kecil
-       (grid & sidebar menumpuk normal mengikuti scroll halaman) */
-    .blog-layout__main-sticky {
-        position: static;
-        max-height: none;
-        overflow: visible;
-        padding: 0;
-    }
-
+    /* Sidebar tidak menempel di layar kecil (menumpuk normal) */
     .blog-layout__sidebar {
         position: static;
-        max-height: none;
-        overflow: visible;
-        padding-right: 0;
     }
 
     .news-grid {
@@ -642,49 +750,3 @@
     }
 }
 </style>
-
-<script>
-/* ===== Load More: "Lihat Berita Selanjutnya" =====
-   Menampilkan 6 kartu (3 baris) tambahan per klik tanpa reload.
-   Karena kartu diminta sejak awal (hanya disembunyikan), kartu yang
-   sudah muncul tidak bergeser sedikit pun saat kartu baru ditambahkan. */
-(function () {
-    var btn = document.getElementById('btn-load-more');
-    if (!btn) return;
-
-    var initial = parseInt(btn.getAttribute('data-initial'), 10) || 4;
-    var step = parseInt(btn.getAttribute('data-step'), 10) || 6;
-    var total = parseInt(btn.getAttribute('data-total'), 10) || 0;
-    var shown = initial;
-
-    btn.addEventListener('click', function () {
-        var berikutnya = Math.min(shown + step, total);
-        var terbuka = 0;
-
-        document.querySelectorAll('#news-grid .news-card--hidden').forEach(function (card) {
-            var idx = parseInt(card.getAttribute('data-news-index'), 10);
-            if (idx >= shown && idx < berikutnya) {
-                card.classList.remove('news-card--hidden');
-                card.classList.add('news-card--show');
-                terbuka++;
-            }
-        });
-
-        shown = berikutnya;
-
-        /* Gulir area internal kolom kiri ke bawah agar baris baru terlihat
-           (hanya menggeser scroll internal, tidak menggeser halaman). */
-        if (terbuka > 0) {
-            var wrap = document.querySelector('.blog-layout__main-sticky');
-            if (wrap && wrap.scrollTo) {
-                wrap.scrollTo({ top: wrap.scrollHeight, behavior: 'smooth' });
-            }
-        }
-
-        if (shown >= total) {
-            btn.disabled = true;
-            btn.textContent = 'Semua Berita Sudah Tampil';
-        }
-    });
-})();
-</script>

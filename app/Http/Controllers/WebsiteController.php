@@ -56,7 +56,7 @@ class WebsiteController extends Controller
     
                     case 'blog_list':
                         $kategori = Blog::selectRaw('DISTINCT(kategori) as kategori')->get();
-                        $blog = Blog::where('status', 'publish')->orderBy('date_publish', 'desc')->get();
+                        $blog = Blog::where('status', 'publish')->orderBy('date_publish', 'desc')->paginate(9);
                         return view('website.page-blog', [
                             'pageTitle' => $detail->title,
                             'detail' => $detail,
