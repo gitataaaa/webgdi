@@ -7,6 +7,10 @@
         max-width: 200px;
         height: 6rem;
     }
+    .address__text_branch{
+        max-width: 400px;
+        height: 7rem;
+    }
     .google-map > iframe{
         width: 100%;
     }
@@ -29,12 +33,13 @@
 @section('pageContact')
 @php
     $contact = App\Helper::displayContact();
+    $branch = App\Helper::displayBranch();
 @endphp
 <section class="contact-one">
     <div class="container">
         <div class="section-title text-center">
             <span class="section-title__tagline">Hubungi Kami</span>
-            <h2 class="section-title__title">Jangan ragu untuk mengirimkan pesan kapanpun dan dimanapun</h2>
+            <h2 class="section-title__title">Konsultasikan perihal zakat, infaq, shodaqoh Anda pada kami</h2>
         </div>
 
         @if(Session::has('success') == true)
@@ -139,6 +144,35 @@
 <!--Google Map Start-->
 <section class="google-map">
 {!! $contact['inst_map'] !!}
-
 </section>
+
+@if($branch)
+<section class="address about-one">
+    <div class="container">
+        <div class="section-title text-center">
+            <span class="section-title__tagline">Kantor Cabang</span>
+        </div>
+        
+        <div class="row">
+            @foreach($branch as $dt)
+            <div class="col-xl-6 col-lg-6">
+                <div class="address__single">
+                    <div class="address__title-box">
+                        <h4 class="address__title">{{ $dt['name'] }}</h4>
+                        <div class="address__icon">
+                            <span class="icon-location"></span>
+                        </div>
+                    </div>
+                    <p class="address__text_branch">
+                        {{ $dt['address'] }}
+                        <br/>
+                        Telp. {{ $dt['phone'] }}
+                    </p>
+                </div>
+            </div>
+            @endforeach
+        </div>
+    </div>
+</section>
+@endif
 @endsection

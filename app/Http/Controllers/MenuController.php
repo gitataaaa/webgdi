@@ -29,7 +29,7 @@ class MenuController extends Controller
                 $menu[] = [
                     'id' => $par->id,
                     'title' => $par->title,
-                    'page_type' => $this->pageType[$par->page_type],
+                    'page_type' => $this->pageType[$par->page_type] ?? ($par->page_type ? ucfirst($par->page_type) : '-'),
                     'menu_type' => ucfirst($par->menu_type),
                     'footer_display' => $par->footer_display == 'A' ? 'Ya' : 'Tidak',
                     'status_display' => ucfirst($par->status_display),
@@ -90,6 +90,7 @@ class MenuController extends Controller
         ]);
         $dataInput = [
             'title' => $req->title,
+            'subtitle' => $req->subtitle,
             'parent_id' => $req->parent_id,
             'slug' => $req->slug,
             'menu_type' => $req->menu_type,

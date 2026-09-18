@@ -5,7 +5,7 @@
     <form>
         <input type="hidden" name="zakat_type" value="profesi"/>
         <input type="hidden" id="opsi_nisab" value="emas"/>
-        <div class="oc-card-section oc-card-header"><i class="bi-arrow-left"></i> Kalkulator Zakat</div>
+        <div class="oc-card-section oc-card-header oc-back oc-cursor" data-url="{{ url('app/zakat') }}"><i class="bi-arrow-left"></i> Kalkulator Zakat</div>
         <div class="oc-card-section">
             <div class="form-group">
                 <label class="oc-text-title">Pilihan Zakat</label>
@@ -44,17 +44,17 @@
                     <label class="oc-text-grey">Harga Emas per Gram saat ini</label>
                     <div class="oc-input-group-sm mb-3">
                         <span class="input-group-text text-placeholder">Rp</span>
-                        <input type="text" class="form-control money" id="harga_emas" data-value="" onkeyup="nisab_emas(); hitung_zakat()" name="gold_price" required placeholder="0" >
+                        <input type="text" class="form-control money" inputmode="numeric" id="harga_emas" data-value="" onkeyup="nisab_emas(); hitung_zakat()" name="gold_price" required placeholder="0" >
                     </div>
                 </div>
                 <div class="form-group custom-input">
                     <label class="oc-text-grey">Nilai Nishab</label>
                     <div class="oc-input-group-sm mb-3">
                         <span class="input-group-text text-placeholder">Rp</span>
-                        <input type="text" class="form-control money disabled" data-value="" id="nisab" readonly name="nilai_nishab" required placeholder="0" >
+                        <input type="text" class="form-control money disabled" inputmode="numeric" data-value="" id="nisab" readonly name="nilai_nishab" required placeholder="0" >
                         <input type="hidden" id="nisab_float" value="" />
                     </div>
-                    <small><i>Perhitungan nishab per bulan</i></small>
+                    <small><i>Perhitungan nishab per tahun</i></small>
                 </div>
             </div>
         </div>
@@ -72,28 +72,28 @@
                         <label class="oc-text-grey">Nilai harta dalam bentuk emas</label>
                         <div class="oc-input-group-sm mb-3">
                             <span class="input-group-text text-placeholder">Rp</span>
-                            <input type="text" class="form-control money" name="value_treasure_gold" onkeyup="hitung_zakat()" data-value="" required placeholder="0" >
+                            <input type="text" class="form-control money" inputmode="numeric" name="value_treasure_gold" onkeyup="hitung_zakat()" data-value="" required placeholder="0" >
                         </div>
                     </div>
                     <div class="form-group custom-input">
                         <label class="oc-text-grey">Nilai harta dalam bentuk tabungan</label>
                         <div class="oc-input-group-sm mb-3">
                             <span class="input-group-text text-placeholder">Rp</span>
-                            <input type="text" class="form-control money" name="value_treasure_saving" onkeyup="hitung_zakat()" data-value="" required placeholder="0" >
+                            <input type="text" class="form-control money" inputmode="numeric" name="value_treasure_saving" onkeyup="hitung_zakat()" data-value="" required placeholder="0" >
                         </div>
                     </div>
                     <div class="form-group custom-input">
                         <label class="oc-text-grey">Nilai harta dalam bentuk lainnya (properti, kendaraan, koleksi)</label>
                         <div class="oc-input-group-sm mb-3">
                             <span class="input-group-text text-placeholder">Rp</span>
-                            <input type="text" class="form-control money" name="value_treasure_other" onkeyup="hitung_zakat()" data-value="" required placeholder="0" >
+                            <input type="text" class="form-control money" inputmode="numeric" name="value_treasure_other" onkeyup="hitung_zakat()" data-value="" required placeholder="0" >
                         </div>
                     </div>
                     <div class="form-group custom-input">
                         <label class="oc-text-grey">Nilai hutang/cicilan jatuh tempo saat membayar zakat</label>
                         <div class="oc-input-group-sm mb-3">
                             <span class="input-group-text text-placeholder">Rp</span>
-                            <input type="text" class="form-control money" name="value_treasure_debt" onkeyup="hitung_zakat()" data-value="" required placeholder="0" >
+                            <input type="text" class="form-control money" inputmode="numeric" name="value_treasure_debt" onkeyup="hitung_zakat()" data-value="" required placeholder="0" >
                         </div>
                     </div>
                 </div>
@@ -103,21 +103,21 @@
                         <label class="oc-text-grey">Penghasilan per Bulan</label>
                         <div class="oc-input-group-sm mb-3">
                             <span class="input-group-text text-placeholder">Rp</span>
-                            <input type="text" class="form-control money" name="value_income" onkeyup="hitung_zakat()" data-value="" required placeholder="0" >
+                            <input type="text" class="form-control money" inputmode="numeric" name="value_income" onkeyup="hitung_zakat()" data-value="" required placeholder="0" >
                         </div>
                     </div>
                     <div class="form-group custom-input">
                         <label class="oc-text-grey">Penghasilan Tambahan (Bonus, Lain-lain)</label>
                         <div class="oc-input-group-sm mb-3">
                             <span class="input-group-text text-placeholder">Rp</span>
-                            <input type="text" class="form-control money" name="value_bonus" onkeyup="hitung_zakat()" data-value="" required placeholder="0" >
+                            <input type="text" class="form-control money" inputmode="numeric" name="value_bonus" onkeyup="hitung_zakat()" data-value="" required placeholder="0" >
                         </div>
                     </div>
                     <div class="form-group custom-input">
                         <label class="oc-text-grey">Cicilan/Hutang</label>
                         <div class="oc-input-group-sm mb-3">
                             <span class="input-group-text text-placeholder">Rp</span>
-                            <input type="text" class="form-control money" name="value_debt" onkeyup="hitung_zakat()" data-value="" required placeholder="0" >
+                            <input type="text" class="form-control money" inputmode="numeric" name="value_debt" onkeyup="hitung_zakat()" data-value="" required placeholder="0" >
                         </div>
                     </div>
                 </div>
@@ -158,5 +158,11 @@
         var zakat = document.getElementById('zakat-total').dataset.value
         window.location.href = '/app/zakat/tunaikan?jenis='+jenis+'&nominal='+zakat
     }
+    
+    $(function(){
+        $('.oc-back').click(function(){
+            window.location.href = $(this).data('url')
+        })
+    })
 </script>
 @endpush

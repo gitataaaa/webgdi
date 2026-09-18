@@ -18,6 +18,7 @@ class Payment extends Model
         'anonim',
         'notelp',
         'email',
+        'nominal',
         'payment_method',
         'bank_type',
         'bank_id',

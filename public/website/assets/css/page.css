@@ -1,0 +1,10 @@
+.error-page p{
+    padding: 20px 0; 
+}
+figure > img{
+    width: 100%
+}
+.subtitle{
+    font-size: 40px;
+    font-style: italic;
+}

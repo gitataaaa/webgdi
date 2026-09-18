@@ -16,6 +16,8 @@ use App\Http\Controllers\ProgramController;
 use App\Http\Controllers\WebsiteController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Kernel;
+use App\Http\Controllers\Widget\ProgramLazController;
+use App\Http\Controllers\Website\BlogFrontController;
 
 
 /*
@@ -35,8 +37,7 @@ Route::get('/{slug}', [WebsiteController::class, 'index']);
 Route::get('/program/{slug}', [WebsiteController::class, 'index_program']);
 Route::get('/program/{slug}/{detailSlug}', [WebsiteController::class, 'index_program']);
 
-Route::get('/blog/{slug}', [WebsiteController::class, 'index_blog']);
-Route::get('/blog/category/{category}', [WebsiteController::class, 'index_blog_category']);
+
 
 Route::post('/message/send', [WebsiteController::class, 'store_message']);
 
@@ -172,6 +173,30 @@ Route::group(['prefix'=>'admin', 'middleware'=>['auth']], function(){
     Route::get('/message/{id}/detail', [MessageController::class, 'detail']);
 
 
+     
+
+
+
+
+ /* WIDGET: PROGRAM LAZ */
+    Route::prefix('widget')->group(function () {
+        Route::get('/programlaz', [ProgramLazController::class, 'index'])->name('admin.widget.programlaz.index');
+        Route::get('/programlaz/create', [ProgramLazController::class, 'create'])->name('admin.widget.programlaz.create');
+        Route::post('/programlaz', [ProgramLazController::class, 'store'])->name('admin.widget.programlaz.store');
+        Route::get('/programlaz/{id}/edit', [ProgramLazController::class, 'edit'])->name('admin.widget.programlaz.edit');
+        Route::put('/programlaz/{id}', [ProgramLazController::class, 'update'])->name('admin.widget.programlaz.update');
+        Route::delete('/programlaz/{id}', [ProgramLazController::class, 'destroy'])->name('admin.widget.programlaz.delete');
+    });
     /* ---- */
 
+
 });
+// ✅ ROUTE BLOG YANG BENAR (TARUH DI LUAR MIDDLEWARE AUTH)
+Route::get('/blog', [BlogFrontController::class, 'index'])->name('website.blog');
+Route::get('/blog/category/{kategori}', [BlogFrontController::class, 'index'])->name('website.blog.category');
+Route::get('/blog/{slug}', [BlogFrontController::class, 'detail'])->name('website.blog.detail');
+
+
+
+
+

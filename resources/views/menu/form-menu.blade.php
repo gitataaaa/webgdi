@@ -32,6 +32,12 @@
                     </div>
                 </div>
                 <div class="mb-3 row">
+                    <label class="col-sm-2 col-form-label">Keterangan Menu</label>
+                    <div class="col-sm-6">
+                        <input type="text" class="form-control" name="subtitle" value="{{ @$detail->subtitle }}">
+                    </div>
+                </div>
+                <div class="mb-3 row">
                     <label class="col-sm-2 col-form-label">Menu Parent *</label>
                     <div class="col-sm-6">
                         <select class="form-select" name="parent_id" required>

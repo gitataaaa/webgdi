@@ -7,6 +7,8 @@
             <li><a href="/admin/widget/ads" class="{{ @$WidAdsActive }}">Slot Iklan</a></li>
             <li><a href="/admin/widget/about" class="{{ @$WidAboutActive }}">Selayang Pandang</a></li>
             <li><a href="/admin/widget/desc" class="{{ @$WidDescActive }}">Deskripsi Singkat</a></li>
+            <li><a href="{{ route('admin.widget.programlaz.index') }}" class="{{ @$WidDescActive }}">Program LAZ</a></li>
+
         </ul>
     </li>
     <li><a href="#" class="cs-menu-dropdown has-arrow {{ @$MetaActive }}" aria-expanded="true"><i class="cs-menu-icon bi-gear-fill"></i> Meta</a>

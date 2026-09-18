@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="oc-card">
-    <div class="oc-card-section oc-card-header"><i class="bi-arrow-left"></i> Tentang Zakat</div>
+    <div class="oc-card-section oc-card-header oc-cursor oc-back" data-url="{{ url('app/zakat') }}"><i class="bi-arrow-left"></i> Tentang Zakat</div>
 
     <div class="oc-card-section">
         <label class="oc-text-title">Zakat</label>
@@ -117,3 +117,13 @@
     </div>
 </div>
 @endsection
+
+@push('script')
+<script>
+    $(function(){
+        $('.oc-back').click(function(){
+            window.location.href = $(this).data('url');
+        })
+    })
+</script>
+@endpush

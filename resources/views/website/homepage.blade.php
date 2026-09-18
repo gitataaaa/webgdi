@@ -1,4 +1,5 @@
 @extends('layout.layout')
+
 @section('title', $pageTitle)
 
 @section('style')
@@ -10,6 +11,25 @@
     }
     .about-one__text > p{
         margin-bottom: 20px
+    }
+
+    /* Nonaktifkan sticky header agar tidak menimpa konten saat scroll */
+    .stricky-header {
+        display: none !important;
+    }
+
+    /* Jarak agar foto hero & kartu slider program turun dan tidak tertutup navbar */
+    .main-slider-two {
+        margin-top: 100px;
+    }
+
+    /* Rapikan jarak section informasi/berita: padding bawaan template terlalu besar (120px/90px) */
+    .news-one {
+        padding: 45px 0 20px;
+    }
+
+    .news-one .section-title {
+        margin-bottom: 35px;
     }
 </style>
 @endsection
@@ -39,7 +59,7 @@
                     @endphp
                         <div class="image-layer-two"
                             
-                            style="background-image: url({{ $url }});"></div>
+                         style="background-image: url('{{ $url }}');"></div>
                         <!-- /.image-layer -->
 
                         <div class="main-slider-two__shape-1">
@@ -169,47 +189,86 @@
     </div>
 </section>
 -->
-<section class="faq-one">
-    <div class="project-two-shape-1 float-bob-x">
-        <img src="{{ asset('website/assets/images/shapes/project-two-shape-1.png') }}" alt="">
+@include('website.partials.slider-pilar')
+
+    
+
+
+<section class="program-yayasan">
+  <div class="container">
+    <!-- Judul -->
+    <div class="program-yayasan__title text-center">
+      <p class="subtitle">PROGRAM YAYASAN</p>
+      <h2>Telusuri Program Graha Dhuafa Indonesia</h2>
     </div>
-    <div class="container">
-        <div class="section-title text-center">
-            <span class="section-title__tagline">Program Yayasan</span>
-            <h2 class="section-title__title">Telusuri Program Graha Dhuafa</h2>
+
+    <!-- Isi Program -->
+    <div class="row justify-content-center">
+      <div class="col-xl-4 col-lg-4 col-md-6 mb-4">
+        <div class="program-card" onclick="link('/budaya')">
+          <img src="{{ asset('website/assets/images/custom/budaya.png') }}" alt="Budaya"/>
         </div>
-        <div class="categories-two__bottom">
-            <div class="categories-two__bottom-inner">
-                <div class="row">
-                    <div class="col-xl-4 col-lg-4 col-md-4 wow fadeInLeft" data-wow-delay="100ms">
-                        <div class="categories-two__single program-three" data-url="budaya" onclick="link('/budaya')">
-                            <div class="categories-two__icon">
-                                <!--<span class="icon-online"></span>-->
-                                <img src="{{ asset('website/assets/images/custom/budaya.png') }}" width="100%"/>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-4 col-lg-4 col-md-4 wow fadeInLeft" data-wow-delay="200ms">
-                        <div class="categories-two__single program-three" data-url="senyum" onclick="link('/senyum')">
-                            <div class="categories-two__icon">
-                                <!--<span class="icon-online"></span>-->
-                                <img src="{{ asset('website/assets/images/custom/senyum.png') }}" width="100%"/>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-4 col-lg-4 col-md-4 wow fadeInLeft" data-wow-delay="300ms">
-                        <div class="categories-two__single program-three" data-url="cinta" onclick="link('/cinta')">
-                            <div class="categories-two__icon">
-                                <!--<span class="icon-online"></span>-->
-                                <img src="{{ asset('website/assets/images/custom/cinta.png') }}" width="100%"/>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+      </div>
+      <div class="col-xl-4 col-lg-4 col-md-6 mb-4">
+        <div class="program-card" onclick="link('/senyum')">
+          <img src="{{ asset('website/assets/images/custom/senyum.png') }}" alt="Senyum"/>
         </div>
+      </div>
+      <div class="col-xl-4 col-lg-4 col-md-6 mb-4">
+        <div class="program-card" onclick="link('/cinta')">
+          <img src="{{ asset('website/assets/images/custom/cinta.png') }}" alt="Cinta"/>
+        </div>
+      </div>
     </div>
+  </div>
 </section>
+<style>
+.program-yayasan {
+  padding: 60px 0;
+  text-align: center;
+}
+
+.program-yayasan__title .subtitle {
+  color: #ff6600; /* warna oranye mirip di ss */
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.program-yayasan__title h2 {
+  font-size: 28px;
+  font-weight: 700;
+  color: #1a8b4c; /* hijau utama */
+  margin-bottom: 40px;
+}
+
+.program-card {
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.program-card img {
+  width: 80%;         /* biar gak full 100% dan lebih proporsional */
+  max-width: 280px;   /* batas maksimal biar gak terlalu gede */
+  margin: auto;
+  display: block;
+}
+
+.program-card:hover {
+  transform: scale(1.05);
+}
+</style>
+
+
+
+
+@include('website.partials.program-unggulan')
+
+
+
+    
+    
+
+
 <section class="faq-one">
     <div class="faq-one-bg" style="background-image: url('website/assets/images/backgrounds/faq-one-bg.png')"></div>
     <div class="container">
@@ -229,6 +288,10 @@
         </div>
     </div>
 </section>
+
+{{-- Section: Berdampak Lebih Luas (statistik donasi + peta oranye) --}}
+@include('website.partials.peta-dampak')
+
 @endsection
 
 @section('homeBlog')
@@ -293,7 +356,17 @@
         @endif
     </div>
 </section>
+
+{{-- Section Berita Baru --}}
+@include('website.partials.berita')
 @endsection
+
+
+
+
+
+
+
 
 @section('homeAds')
 @if(@$ads)
@@ -440,4 +513,6 @@
         window.location.href = link
     }
 </script>
+
 @endsection
+

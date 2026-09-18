@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
 
+
 class WebsiteController extends Controller
 {
     protected $bulan = [
@@ -112,6 +113,14 @@ class WebsiteController extends Controller
                 'program_type' => 'donation'
             ])->limit(3)->get();
             $blog = Blog::where('status', 'publish')->orderBy('date_publish', 'desc')->limit(3)->get();
+            $blogHome = Blog::where('status', 'publish')->orderBy('date_publish', 'desc')->limit(6)->get();
+            $blogHomeCategory = Blog::select('kategori')
+                ->selectRaw('COUNT(*) as total')
+                ->where('status', 'publish')
+                ->groupBy('kategori')
+                ->orderByDesc('total')
+                ->get();
+            $blogHomePopular = Blog::where('status', 'publish')->orderBy('date_publish', 'desc')->limit(5)->get();
             $ads = Widget::where([
                 'type' => 'ads',
                 'status' => 'A'
@@ -129,6 +138,9 @@ class WebsiteController extends Controller
                 'slider' => $slider,
                 'program' => $program,
                 'blog' => $blog,
+                'blogHome' => $blogHome,
+                'blogHomeCategory' => $blogHomeCategory,
+                'blogHomePopular' => $blogHomePopular,
                 'ads' => $ads,
                 'info' => $info,
                 'about' => $about

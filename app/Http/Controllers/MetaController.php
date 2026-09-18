@@ -18,6 +18,7 @@ class MetaController extends Controller
         $telp = Meta::where('var', 'INST_TELP')->first();
         $email = Meta::where('var', 'INST_EMAIL')->first();
         $map = Meta::where('var', 'GOO_MAP')->first();
+        $branch = Meta::where('var', 'BRANCH')->first();
 
         $output = [
             'instLogo' => $logo->value,
@@ -25,7 +26,8 @@ class MetaController extends Controller
             'instAddr' => $addr->value,
             'instTelp' => $telp->value,
             'instEmail' => $email->value,
-            'gooMap' => $map->value
+            'gooMap' => $map->value,
+            'branch' => $branch->value
         ];
 
         return view('meta.index-meta-setting', [
@@ -48,6 +50,7 @@ class MetaController extends Controller
             $path = $req->file('image_upload')->move('images/meta', $filename);
             $instLogo = $path;
         }
+        
 
         Meta::where('var', 'INST_LOGO')->update(['value' => $instLogo]);
         Meta::where('var', 'INST_NAME')->update(['value' => $instName]);
@@ -55,6 +58,22 @@ class MetaController extends Controller
         Meta::where('var', 'INST_ADDR')->update(['value' => $instAddr]);
         Meta::where('var', 'INST_EMAIL')->update(['value' => $instEmail]);
         Meta::where('var', 'GOO_MAP')->update(['value' => $gooMap]);
+
+        /* branch office */
+        $brTotal = count($req->br_name);
+        if($brTotal > 0){
+            $arrayBranch = [];
+            foreach($req->br_name as $key=>$val){
+                $arrayBranch[] = [
+                    'name' => $val,
+                    'address' => $req->br_addr[$key],
+                    'phone' => $req->br_phone[$key]
+                ];
+            }
+
+            $json = json_encode($arrayBranch);
+            Meta::where('var', 'BRANCH')->update(['value' => $json]);
+        }
 
         return redirect('/admin/meta/identitas-instansi');
     }

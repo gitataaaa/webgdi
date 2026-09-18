@@ -58,7 +58,7 @@ class ApiController extends Controller
             'status' => 'pending',
             'exp_at' => $exp_date
         ];
-
+        
         Payment::create($dataInput);
 
         return response()->json([

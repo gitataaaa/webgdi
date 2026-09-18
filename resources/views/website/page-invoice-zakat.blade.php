@@ -3,7 +3,7 @@
 @section('content')
 <div class="oc-card">
     <form>
-        <div class="oc-card-section oc-card-header"><i class="bi-arrow-left"></i> Lembar Pembayaran</div>
+        <div class="oc-card-section oc-card-header oc-cursor oc-back" data-url="{{ url('app/zakat') }}"><i class="bi-arrow-left"></i> Lembar Pembayaran</div>
         <div class="oc-card-section">
             <div class="alert alert-warning">
                 Mohon tunaikan zakat Anda sebelum tanggal <strong>{{ @$expire }}</strong> atau ajuan zakat Anda akan dibatalkan
@@ -154,5 +154,12 @@
     function next(code){
         window.location.href = '/app/zakat/detail/'+code
     }
+    
+    $(function(){
+        $('.oc-back').click(function(){
+            window.location.href = $(this).data('url')
+        })
+    })
 </script>
 @endpush
+

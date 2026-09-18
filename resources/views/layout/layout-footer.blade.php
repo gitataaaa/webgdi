@@ -1,10 +1,79 @@
+<style>
+    /* Perkecil tinggi area hijau footer (override padding default template) */
+    .site-footer__top {
+        padding: 40px 0 32px;
+    }
+
+    /* Perkecil tinggi bar copyright yang gelap */
+    .site-footer__bottom {
+        padding: 18px 0 20px;
+    }
+
+    /* Perkecil teks copyright */
+    .site-footer__bottom-text {
+        font-size: 14px;
+        line-height: 22px;
+    }
+
+    /* Copyright rata kiri (pojok kiri) */
+    .site-footer__bottom-inner {
+        text-align: left !important;
+    }
+
+    /* Rapikan kolom footer: normalisasi padding kolom & sebar rata selebar container
+       agar teks tidak terdorong/numpuk di tengah */
+    .site-footer__top .row {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        margin-right: -15px;
+        margin-left: -15px;
+    }
+
+    .site-footer__top .row > [class*="col-"] {
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+
+    /* Hilangkan margin-right bawaan template yang membuat jarak antar kolom tidak merata */
+    .site-footer__top .footer-widget__about,
+    .site-footer__top .footer-widget__Explore,
+    .site-footer__top .footer-widget__Fundraising,
+    .site-footer__top .footer-widget__Contact {
+        margin-right: 0;
+    }
+
+    /* Kontak: ikon sejajar dengan baris pertama teks (alamat panjang tetap rapi) */
+    .site-footer__top .footer-widget__Contact-list li {
+        align-items: flex-start;
+    }
+
+    .site-footer__top .footer-widget__Contact-list li .icon {
+        margin-top: 7px;
+    }
+
+    /* Jarak antar item daftar lebih longgar agar mudah dibaca */
+    .site-footer__top .footer-widget__Explore-list li+li,
+    .site-footer__top .footer-widget__Contact-list li+li {
+        margin-top: 12px;
+    }
+
+    /* Jarak judul kolom ke isi lebih ringkas */
+    .site-footer__top .footer-widget__title-box {
+        margin-bottom: 22px;
+    }
+</style>
 <div class="site-footer__top">
     <div class="site-footer__shape-1 float-bob-x">
         <img src="{{ asset('website/assets/images/shapes/site-footer-shape-1.png') }}" alt="">
     </div>
+    @php
+        $quickLinks = App\Helper::displayFooterMenu();
+        $hasQuickLinks = $quickLinks && count($quickLinks) > 0;
+    @endphp
     <div class="container">
         <div class="row">
-            <div class="col-xl-4 col-lg-6 col-md-6 wow fadeInUp" data-wow-delay="100ms">
+            <div class="col-xl-5 col-lg-6 col-md-6 wow fadeInUp" data-wow-delay="100ms">
                 <div class="footer-widget__column footer-widget__about">
                     <div class="footer-widget__logo">
                         <a href="#"><img src="{{ asset('website/assets/images/custom/logo_gdi_long.png') }}" alt=""></a>
@@ -23,24 +92,21 @@
                     </form>-->
                 </div>
             </div>
+            @if($hasQuickLinks)
             <div class="col-xl-2 col-lg-6 col-md-6 wow fadeInUp" data-wow-delay="200ms">
                 <div class="footer-widget__column footer-widget__Explore">
                     <div class="footer-widget__title-box">
                         <h3 class="footer-widget__title">Quick Links</h3>
                     </div>
-                    @php
-                        $quickLinks = App\Helper::displayFooterMenu();
-                    @endphp
-                    @if($quickLinks)
                     <ul class="footer-widget__Explore-list list-unstyled">
                         @foreach($quickLinks as $q)
                             <li><a href="{{ $q->slug }}">{{ $q->title }}</a></li>
                         @endforeach
                     </ul>
-                    @endif
                 </div>
             </div>
-            <div class="col-xl-2 col-lg-6 col-md-6 wow fadeInUp" data-wow-delay="300ms">
+            @endif
+            <div class="col-xl-{{ $hasQuickLinks ? 2 : 3 }} col-lg-6 col-md-6 wow fadeInUp" data-wow-delay="300ms">
                 <div class="footer-widget__column footer-widget__Fundraising">
                     <div class="footer-widget__title-box">
                         <h3 class="footer-widget__title">Program</h3>
@@ -52,7 +118,7 @@
                     </ul>
                 </div>
             </div>
-            <div class="col-xl-4 col-lg-6 col-md-6 wow fadeInUp" data-wow-delay="400ms">
+            <div class="col-xl-{{ $hasQuickLinks ? 3 : 4 }} col-lg-6 col-md-6 wow fadeInUp" data-wow-delay="400ms">
                 <div class="footer-widget__column footer-widget__Contact">
                     <div class="footer-widget__title-box">
                         <h3 class="footer-widget__title">Kontak</h3>
@@ -85,7 +151,7 @@
 
                         @if($contact['inst_addr'])
                         <li>
-                            <div class="icon" style="position: relative; bottom: 1rem">
+                            <div class="icon">
                                 <span class="icon-pin"></span>
                             </div>
                             <div class="text">
@@ -115,7 +181,7 @@
         <div class="row">
             <div class="col-xl-12">
                 <div class="site-footer__bottom-inner">
-                    <p class="site-footer__bottom-text">© copyright 2022 by <a href="#">sahabatbaik.org</a></p>
+                    <p class="site-footer__bottom-text">© copyright 2022 by <a href="#">Yayasan Graha Dhuafa Indonesia</a></p>
                 </div>
             </div>
         </div>

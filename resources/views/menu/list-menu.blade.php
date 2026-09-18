@@ -55,7 +55,7 @@
                         <tr>
                             <td>{{ $no++ }}</td>
                             <td><span style="padding-right: 10px"><i class="bi-arrow-right"></i></span> {{ $ch['title'] }}</td>
-                            <td>{{ $pageType[$ch['page_type']] }}</td>
+                            <td>{{ $pageType[$ch['page_type']] ?? ($ch['page_type'] ? ucfirst($ch['page_type']) : '-') }}</td>
                             <td>{{ ucfirst($ch['menu_type']) }}</td>
                             <td>{{ $ch['footer_display'] == 'A' ? 'Ya' : 'Tidak' }}</td>
                             <td>{!! (strtolower($ch['status_display']) == 'draft' ? '<span class="badge bg-secondary">Draft</span>' : '<span class="badge bg-primary">Publish</span>') !!}</td>

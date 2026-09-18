@@ -71,7 +71,7 @@
                     <div class="col-sm-10">
                         <div class="preview-slider-img">
                             @php
-                                $imgUrl = @$detail->featured_img ? asset(str_replace('public', 'storage', @$detail->featured_img)) : asset('admin/assets/img/setting/_img.jpg');
+                                $imgUrl = @$detail->featured_img ? asset(str_replace('public', 'storage', @$detail->featured_img)) : asset('admin/assets/img/setting/sample-logo-1.png');
                             @endphp
                             <img id="featured_img" src="{{ $imgUrl }}"/>
                         </div>
@@ -80,7 +80,17 @@
                     </div>
                 </div>
                 <hr/>
-                
+                <div class="mb-3 row">
+    <label class="col-sm-2 col-form-label">Jenis *</label>
+    <div class="col-sm-3">
+        <select class="form-select" name="kategori" required>   
+            <option value="salam" {{ @$detail->kategori == 'salam' ? 'selected' : '' }}>Salam</option>
+            <option value="kegiatan" {{ @$detail->kategori == 'kegiatan' ? 'selected' : '' }}>Kegiatan</option>
+            <option value="journey" {{ @$detail->kategori == 'journey' ? 'selected' : '' }}>Journey</option>
+        </select>
+    </div>
+</div>
+<div class="mb-3 row"></div>
                 <div class="mb-3 row">
                     <label class="col-sm-2 col-form-label">Kategori *</label>
                     <div class="col-sm-4">

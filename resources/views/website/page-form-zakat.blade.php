@@ -25,7 +25,7 @@
                 <label>Nominal Zakat</label>
                 <div class="oc-input-group input-group-lg mb-3">
                     <span class="input-group-text text-placeholder">Rp</span>
-                    <input type="text" class="form-control" name="zakat_nominal" required placeholder="Nominal zakat" value="{{ @$nominal ? number_format($nominal) : ''}}">
+                    <input type="text" class="form-control money" inputmode="numeric" name="zakat_nominal" required placeholder="Nominal zakat" value="{{ @$nominal ? number_format($nominal) : ''}}">
                 </div>
 
             </div>

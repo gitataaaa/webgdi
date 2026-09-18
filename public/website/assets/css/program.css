@@ -1,0 +1,30 @@
+/* ===== Program Section Styles ===== */
+#program-section {
+  position: relative;
+  z-index: 1;
+  margin-top: 60px;
+}
+
+#program-section .card img {
+  height: 180px;
+  object-fit: cover;
+  border-top-left-radius: .5rem;
+  border-top-right-radius: .5rem;
+}
+
+#program-section .card {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+#program-section .card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+}
+
+#program-section h3 {
+  font-weight: bold;
+}
+
+#program-section p.text-muted {
+  color: #6c757d;
+}

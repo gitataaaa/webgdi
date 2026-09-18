@@ -135,4 +135,10 @@ class Helper{
 
         return $result;
     }
+
+    public static function displayBranch(){
+        $branch = Meta::where('var', 'BRANCH')->first()->value;
+
+        return json_decode($branch, TRUE);
+    }
 }

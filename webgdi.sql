@@ -11,7 +11,7 @@
  Target Server Version : 50740
  File Encoding         : 65001
 
- Date: 18/01/2023 21:26:05
+ Date: 30/03/2023 12:52:43
 */
 
 SET NAMES utf8mb4;
@@ -27,22 +27,24 @@ CREATE TABLE `banks`  (
   `bank_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
   `bank_account` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
   `bank_user` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `bank_img` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL,
   `code_image` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
   `status` enum('A','NA') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 6 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = MyISAM AUTO_INCREMENT = 7 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of banks
 -- ----------------------------
-INSERT INTO `banks` VALUES (1, 'bank', 'BSI (Bank Syariah Indonesia)', '711 411 4116', 'Yayasan Graha Dhuafa Indonesia', NULL, '2023-01-18 02:04:38', '2023-01-18 02:04:38', NULL, 'A');
-INSERT INTO `banks` VALUES (2, 'bank', 'BCA', '639 596 9793', 'Yayasan Graha Dhuafa Indonesia', NULL, '2023-01-18 02:05:22', '2023-01-18 02:05:22', NULL, 'A');
-INSERT INTO `banks` VALUES (3, 'bank', 'Bank Muamalat', '318 000 8411', 'Yayasan Graha Dhuafa Indonesia', NULL, '2023-01-18 02:05:55', '2023-01-18 02:05:55', NULL, 'A');
-INSERT INTO `banks` VALUES (4, 'bank', 'BRI', '1107 01 000326 56 0', 'Yayasan Graha Dhuafa Indonesia', NULL, '2023-01-18 02:06:35', '2023-01-18 02:06:35', NULL, 'A');
-INSERT INTO `banks` VALUES (5, 'emoney', 'QRIS', '-', 'Yayasan Graha Dhuafa Indonesia', 'images/code\\qris.png', '2023-01-18 02:08:24', '2023-01-18 02:10:48', NULL, 'A');
+INSERT INTO `banks` VALUES (1, 'bank', 'BSI (Bank Syariah Indonesia)', '711 411 4116', 'Yayasan Graha Dhuafa Indonesia', 'images/meta\\bsi2-removebg-preview.png', NULL, '2023-01-18 02:04:38', '2023-03-27 14:44:45', NULL, 'A');
+INSERT INTO `banks` VALUES (2, 'bank', 'BCA', '639 596 9793', 'Yayasan Graha Dhuafa Indonesia', 'images/meta\\bca2-removebg-preview.png', NULL, '2023-01-18 02:05:22', '2023-03-27 14:44:28', NULL, 'A');
+INSERT INTO `banks` VALUES (3, 'bank', 'Bank Muamalat', '318 000 8411', 'Yayasan Graha Dhuafa Indonesia', 'images/meta\\muamalat2-removebg-preview.png', NULL, '2023-01-18 02:05:55', '2023-03-27 14:44:11', NULL, 'A');
+INSERT INTO `banks` VALUES (4, 'bank', 'BRI', '1107 01 000326 56 0', 'Yayasan Graha Dhuafa Indonesia', 'images/meta\\bri2-removebg-preview.png', NULL, '2023-01-18 02:06:35', '2023-03-27 14:43:54', NULL, 'A');
+INSERT INTO `banks` VALUES (5, 'emoney', 'QRIS', '-', 'Yayasan Graha Dhuafa Indonesia', 'images/meta\\qris2-removebg-preview.png', 'images/code\\qris.png', '2023-01-18 02:08:24', '2023-03-27 14:41:18', NULL, 'A');
+INSERT INTO `banks` VALUES (6, 'bank', 'BNI', '118 963 961 3', 'Yayasan Graha Dhuafa Indonesia', 'images/meta\\bni2-removebg-preview.png', NULL, '2023-03-27 14:45:48', '2023-03-27 14:45:48', NULL, 'A');
 
 -- ----------------------------
 -- Table structure for blogs
@@ -66,7 +68,7 @@ CREATE TABLE `blogs`  (
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = MyISAM AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of blogs
@@ -96,16 +98,31 @@ CREATE TABLE `menus`  (
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 6 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = MyISAM AUTO_INCREMENT = 21 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of menus
 -- ----------------------------
-INSERT INTO `menus` VALUES (1, 'Program', 0, 'page', 'program_list', NULL, 'program', NULL, 'publish', NULL, 'A', NULL, NULL, '2023-01-15 04:46:29', '2023-01-15 15:24:50', NULL);
-INSERT INTO `menus` VALUES (2, 'Blog', 0, 'page', 'blog_list', NULL, 'blog', NULL, 'publish', NULL, 'A', NULL, NULL, '2023-01-15 04:46:56', '2023-01-15 15:25:45', NULL);
-INSERT INTO `menus` VALUES (3, 'Galeri', 0, 'page', 'gallery', NULL, 'galeri', NULL, 'publish', NULL, 'A', NULL, NULL, '2023-01-15 15:26:07', '2023-01-15 15:26:07', NULL);
-INSERT INTO `menus` VALUES (4, 'Tentang Yayasan', 0, 'page', 'general', '<h2>\r\n    <b>LATAR BELAKANG</b>\r\n</h2>\r\n<p>\r\n    Saat ini kondisi lingkungan indonesia yang masih tinggi tingkat kesenjangan sosial, pergaulan bebas, angka kematian ibu dan bayi, serta berbagai fenomena negatif lainnya, menunjukan bahwa tingkat kesejahteraan masyarakat indonesia masih rendah. Hal ini disebabkan oleh beberapa faktor diantaranya yaitu rendahnya ilmu, iman, ekonomi dan lainnya.\r\n</p>\r\n<p>\r\n    Masyarakat yang berkekurangan di bidang ilmu, iman, ekonomi, sosial dan lain-lain termasuk dalam kategori dhuafa. Berdasarkan pada UU no 11 Tahun 2009 tentang kesejahteraan sosial dan Sila ke 5 keadilan sosial bagi seluruh rakyat Indonesia, maka kami peduli dan terdorong untuk membangun kesejahteraan Masyarakat Indonesia dengan memberikan motivasi, wawasan, serta skill yang menunjukan pengembangan SDM dan kemajuan Bangsa melalui program-program yang diselenggarakan oleh Graha Dhuafa Indonesia.\r\n</p>\r\n<p></p>\r\n<p>\r\n    VISI\r\n</p>\r\n<div class=\"about-one__quote\">\r\n<p>\r\n    Menjadi lembaga global yang profesional untuk peduli menjaga generasi mandiri dan unggul\r\n</p>\r\n</div>', 'tentang-yayasan', NULL, 'publish', NULL, 'A', NULL, NULL, '2023-01-15 15:29:27', '2023-01-15 15:29:27', NULL);
-INSERT INTO `menus` VALUES (5, 'Kontak', 0, 'page', 'contact', NULL, 'kontak', NULL, 'publish', NULL, 'A', NULL, NULL, '2023-01-15 15:30:02', '2023-01-15 16:56:24', NULL);
+INSERT INTO `menus` VALUES (1, 'Program', 0, 'page', 'general', NULL, 'program', NULL, 'publish', NULL, 'NA', NULL, NULL, '2023-01-15 04:46:29', '2023-03-23 09:12:29', NULL);
+INSERT INTO `menus` VALUES (2, 'Blog', 0, 'page', 'blog_list', NULL, 'blog', NULL, 'publish', NULL, 'A', NULL, NULL, '2023-01-15 04:46:56', '2023-03-23 08:54:56', '2023-03-23 08:54:56');
+INSERT INTO `menus` VALUES (3, 'Galeri', 0, 'page', 'gallery', NULL, 'galeri', NULL, 'publish', NULL, 'A', NULL, NULL, '2023-01-15 15:26:07', '2023-03-23 08:54:51', '2023-03-23 08:54:51');
+INSERT INTO `menus` VALUES (4, 'Tentang Yayasan', 0, 'page', 'general', '<h2>\r\n    <b>LATAR BELAKANG</b>\r\n</h2>\r\n<p>\r\n    Saat ini kondisi lingkungan indonesia yang masih tinggi tingkat kesenjangan sosial, pergaulan bebas, angka kematian ibu dan bayi, serta berbagai fenomena negatif lainnya, menunjukan bahwa tingkat kesejahteraan masyarakat indonesia masih rendah. Hal ini disebabkan oleh beberapa faktor diantaranya yaitu rendahnya ilmu, iman, ekonomi dan lainnya.\r\n</p>\r\n<p>\r\n    Masyarakat yang berkekurangan di bidang ilmu, iman, ekonomi, sosial dan lain-lain termasuk dalam kategori dhuafa. Berdasarkan pada UU no 11 Tahun 2009 tentang kesejahteraan sosial dan Sila ke 5 keadilan sosial bagi seluruh rakyat Indonesia, maka kami peduli dan terdorong untuk membangun kesejahteraan Masyarakat Indonesia dengan memberikan motivasi, wawasan, serta skill yang menunjukan pengembangan SDM dan kemajuan Bangsa melalui program-program yang diselenggarakan oleh Graha Dhuafa Indonesia.\r\n</p>\r\n<p></p>\r\n<p>\r\n    VISI\r\n</p>\r\n<div class=\"about-one__quote\">\r\n<p>\r\n    Menjadi lembaga global yang profesional untuk peduli menjaga generasi mandiri dan unggul\r\n</p>\r\n</div>', 'tentang-yayasan', NULL, 'publish', NULL, 'A', NULL, NULL, '2023-01-15 15:29:27', '2023-03-23 08:54:46', '2023-03-23 08:54:46');
+INSERT INTO `menus` VALUES (5, 'Kontak', 0, 'page', 'contact', NULL, 'kontak', NULL, 'publish', NULL, 'A', NULL, NULL, '2023-01-15 15:30:02', '2023-03-23 08:54:34', '2023-03-23 08:54:34');
+INSERT INTO `menus` VALUES (6, 'Program', 0, 'page', 'general', NULL, 'program', NULL, 'publish', NULL, 'NA', NULL, NULL, '2023-03-23 08:29:23', '2023-03-23 08:54:10', '2023-03-23 08:54:10');
+INSERT INTO `menus` VALUES (7, 'Zakat', 0, 'page', 'general', NULL, 'zakat', NULL, 'publish', NULL, 'NA', NULL, NULL, '2023-03-23 08:56:23', '2023-03-23 08:56:32', NULL);
+INSERT INTO `menus` VALUES (8, 'Tentang Zakat', 7, 'page', 'general', NULL, 'tentang-zakat', NULL, 'publish', NULL, 'A', NULL, NULL, '2023-03-23 09:02:15', '2023-03-23 09:02:15', NULL);
+INSERT INTO `menus` VALUES (9, 'Nishab Zakat', 7, 'page', 'general', NULL, 'nishab-zakat', NULL, 'publish', NULL, 'NA', NULL, NULL, '2023-03-23 09:03:01', '2023-03-23 09:03:11', NULL);
+INSERT INTO `menus` VALUES (10, 'Layanan', 0, 'page', 'general', NULL, 'layanan', NULL, 'publish', NULL, 'NA', NULL, NULL, '2023-03-23 09:04:51', '2023-03-23 09:04:51', NULL);
+INSERT INTO `menus` VALUES (11, 'Zakat Online', 10, 'page', 'general', NULL, 'zakat-online', NULL, 'publish', NULL, 'NA', NULL, NULL, '2023-03-23 09:07:32', '2023-03-23 09:07:32', NULL);
+INSERT INTO `menus` VALUES (12, 'Kalkulator Zakat', 10, 'page', 'general', NULL, 'kalkulator-zakat', NULL, 'publish', NULL, 'NA', NULL, NULL, '2023-03-23 09:07:49', '2023-03-23 09:07:49', NULL);
+INSERT INTO `menus` VALUES (13, 'Program Donasi', 10, 'page', 'program_list', NULL, 'program-donasi', NULL, 'publish', NULL, 'A', NULL, NULL, '2023-03-23 09:08:38', '2023-03-23 09:08:38', NULL);
+INSERT INTO `menus` VALUES (14, 'Rekening Donasi', 10, 'page', 'general', '<figure><img src=\"http://localhost:8000/images/general\\REKENING GDI 2.svg\" id=\"REKENING GDI 2.svg\" data-image=\"REKENING GDI 2.svg\"></figure>', 'rekening-donasi', NULL, 'publish', NULL, 'NA', NULL, NULL, '2023-03-23 09:10:57', '2023-03-26 15:49:41', NULL);
+INSERT INTO `menus` VALUES (15, 'Konsultasi Zakat', 10, 'page', 'contact', NULL, 'konsultasi-zakat', NULL, 'publish', NULL, 'NA', NULL, NULL, '2023-03-23 09:11:17', '2023-03-23 09:11:17', NULL);
+INSERT INTO `menus` VALUES (16, 'Budaya', 1, 'page', 'general', NULL, 'budaya', NULL, 'publish', NULL, 'NA', NULL, NULL, '2023-03-23 09:13:10', '2023-03-23 09:13:10', NULL);
+INSERT INTO `menus` VALUES (17, 'Cinta', 1, 'page', 'general', NULL, 'cinta', NULL, 'publish', NULL, 'NA', NULL, NULL, '2023-03-23 09:13:23', '2023-03-23 09:13:23', NULL);
+INSERT INTO `menus` VALUES (18, 'Senyum', 1, 'page', 'general', NULL, 'senyum', NULL, 'publish', NULL, 'NA', NULL, NULL, '2023-03-23 09:13:36', '2023-03-23 09:13:36', NULL);
+INSERT INTO `menus` VALUES (19, 'Blog', 0, 'page', 'blog_list', NULL, 'blog', NULL, 'publish', NULL, 'NA', NULL, NULL, '2023-03-23 09:14:04', '2023-03-23 09:14:04', NULL);
+INSERT INTO `menus` VALUES (20, 'LAZGDI', 0, 'page', 'general', NULL, 'lazgdi', NULL, 'publish', NULL, 'A', NULL, NULL, '2023-03-23 09:14:17', '2023-03-26 15:48:59', NULL);
 
 -- ----------------------------
 -- Table structure for messages
@@ -125,7 +142,7 @@ CREATE TABLE `messages`  (
   `deleted_at` timestamp NULL DEFAULT NULL,
   `phone` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 7 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = MyISAM AUTO_INCREMENT = 7 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of messages
@@ -152,7 +169,7 @@ CREATE TABLE `metas`  (
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 13 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = MyISAM AUTO_INCREMENT = 13 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of metas
@@ -179,7 +196,7 @@ CREATE TABLE `migrations`  (
   `migration` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `batch` int(11) NOT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 16 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = MyISAM AUTO_INCREMENT = 17 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of migrations
@@ -193,6 +210,7 @@ INSERT INTO `migrations` VALUES (12, '2022_12_18_135850_website_menu', 6);
 INSERT INTO `migrations` VALUES (13, '2022_12_29_161113_create_program_realisasis_table', 7);
 INSERT INTO `migrations` VALUES (14, '2023_01_14_162859_create_program_donasis_table', 8);
 INSERT INTO `migrations` VALUES (15, '2023_01_18_013038_create_banks_table', 9);
+INSERT INTO `migrations` VALUES (16, '2023_03_27_074922_create_payments_table', 10);
 
 -- ----------------------------
 -- Table structure for password_resets
@@ -202,11 +220,42 @@ CREATE TABLE `password_resets`  (
   `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `token` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL
-) ENGINE = MyISAM CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = MyISAM CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of password_resets
 -- ----------------------------
+
+-- ----------------------------
+-- Table structure for payments
+-- ----------------------------
+DROP TABLE IF EXISTS `payments`;
+CREATE TABLE `payments`  (
+  `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `type` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `transcode` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `name` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `pronoun` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `anonim` tinyint(1) NULL DEFAULT NULL,
+  `notelp` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `email` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL,
+  `nominal` float(10, 2) NULL DEFAULT NULL,
+  `payment_method` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `bank_type` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `bank_id` int(11) NULL DEFAULT NULL,
+  `digit` varchar(5) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `status` enum('pending','on_confirm','complete') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `exp_at` timestamp NULL DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = MyISAM AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of payments
+-- ----------------------------
+INSERT INTO `payments` VALUES (1, 'profesi', '23032785010001', 'Rosa Floriananda', 'Bu', NULL, NULL, 'rosafloriananda@gmail.com', 100000.00, 'transfer bank', NULL, 5, '85', 'on_confirm', '2023-03-28 16:28:45', '2023-03-27 16:28:45', '2023-03-27 23:56:35', NULL);
 
 -- ----------------------------
 -- Table structure for personal_access_tokens
@@ -223,7 +272,7 @@ CREATE TABLE `personal_access_tokens`  (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = MyISAM AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of personal_access_tokens
@@ -251,7 +300,7 @@ CREATE TABLE `program_donasis`  (
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = MyISAM AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of program_donasis
@@ -278,7 +327,7 @@ CREATE TABLE `program_realisasis`  (
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = MyISAM AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of program_realisasis
@@ -311,7 +360,7 @@ CREATE TABLE `programs`  (
   `program_type` enum('donation','non-donation') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
   `short_desc` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = MyISAM AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of programs
@@ -337,7 +386,7 @@ CREATE TABLE `social_media`  (
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 5 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = MyISAM AUTO_INCREMENT = 5 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of social_media
@@ -366,12 +415,12 @@ CREATE TABLE `users`  (
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = MyISAM AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of users
 -- ----------------------------
-INSERT INTO `users` VALUES (1, 'Administrator', 'admin@gmail.com', 'admin', 1, 'A', '2023-01-18 09:51:51', NULL, '$2y$10$hy.IiL1/F0fsdklfv0sUqeDSeL628f7jZ/agdj/NuZeAjFxEldlPy', NULL, NULL, '2023-01-18 09:51:51', NULL);
+INSERT INTO `users` VALUES (1, 'Administrator', 'admin@gmail.com', 'admin', 1, 'A', '2023-03-29 19:01:22', NULL, '$2y$10$hy.IiL1/F0fsdklfv0sUqeDSeL628f7jZ/agdj/NuZeAjFxEldlPy', NULL, NULL, '2023-03-29 19:01:22', NULL);
 INSERT INTO `users` VALUES (2, 'Ocha Iskandar', 'ochaiskandar@gmail.com', 'ocha', 2, 'A', NULL, NULL, '$2y$10$CcLioEQp2cXsvXwRpenL3.nZCaUoOmBJRxPsAwLJdSt4fqtdzJYO6', NULL, '2022-12-18 13:33:51', '2022-12-18 13:33:51', NULL);
 INSERT INTO `users` VALUES (3, 'Floriananda Rosa', 'ochaiskandar@gmail.com', 'tehocha', 2, 'NA', NULL, NULL, '$2y$10$L/REeDKd.9yJ9zH7EkWCk.IAtGolk4shTKbpZqGxkJZvOBLkrnsWq', NULL, '2022-12-18 13:34:35', '2022-12-18 13:46:59', NULL);
 
@@ -395,16 +444,16 @@ CREATE TABLE `widgets`  (
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 7 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = MyISAM AUTO_INCREMENT = 7 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of widgets
 -- ----------------------------
-INSERT INTO `widgets` VALUES (1, 'Bangun Peradaban Berakhlak dan Berkarya', 'Yayasan Graha Dhuafa Indonesia', NULL, 'images/slider\\6.jpg', NULL, 'slider', NULL, '[{\"text\":\"Donasi Sekarang\",\"url\":\"\\/program\\/donasi\",\"classname\":null}]', 'A', NULL, '2023-01-18 11:55:53', '2023-01-18 11:59:49', NULL);
-INSERT INTO `widgets` VALUES (2, 'Sedekah Anak Yatim Dhuafa Mandiri', 'Yayasan Graha Dhuafa Indonesia', NULL, 'images/slider\\5.jpg', NULL, 'slider', NULL, '[{\"text\":\"Donasi Sekarang\",\"url\":\"\\/program\\/donasi\",\"classname\":null}]', 'A', NULL, '2023-01-18 11:56:38', '2023-01-18 12:00:08', NULL);
-INSERT INTO `widgets` VALUES (3, 'Siapkah diri Anda untuk menjadi volunteer selanjutnya?', 'Yayasan Graha Dhuafa Indonesia', NULL, 'images/slider\\4.jpg', NULL, 'slider', NULL, NULL, 'A', NULL, '2023-01-18 11:57:18', '2023-01-18 11:58:49', NULL);
-INSERT INTO `widgets` VALUES (4, 'Zakat Infaq Shodaqoh', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt', NULL, 'images/ads\\banner_ads.jpg', NULL, 'ads', NULL, '[{\"text\":\"Tunaikan\",\"url\":\"\\/program\\/zakat-infaq-shodaqoh\",\"classname\":null}]', 'A', NULL, '2023-01-18 13:16:27', '2023-01-18 13:27:57', NULL);
-INSERT INTO `widgets` VALUES (5, 'Zakat Infaq Shodaqoh', 'Quis nostrud exercitation ullamco laboris nisi', '<p>Sed ullamcorper morbi tincidunt. Vitae congue mauris rhoncus aenean vel elit. Erat nam at lectus urna duis convallis convallis tellus. In iaculis nunc sed augue lacus. Pharetra convallis posuere morbi leo. Maecenas ultricies mi eget mauris pharetra.&nbsp;</p>\r\n<p>Tellus elementum sagittis vitae et leo duis ut diam. Arcu felis bibendum ut tristique et egestas quis ipsum suspendisse. Volutpat odio facilisis mauris sit </p>', 'images/widget\\5.jpg', NULL, 'general', NULL, '[{\"text\":\"Info Selanjutnya\",\"url\":null,\"classname\":null}]', 'A', NULL, '2023-01-18 13:29:38', '2023-01-18 13:38:41', NULL);
-INSERT INTO `widgets` VALUES (6, 'Yayasan Graha Dhuafa Indonesia', NULL, '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Vestibulum mattis ullamcorper velit sed ullamcorper morbi tincidunt.&nbsp;</p>\r\n<div class=\"about-one__quote\">\r\n<p>\r\n    Menjadi lembaga global yang profesional untuk peduli menjaga generasi mandiri dan unggul\r\n</p>\r\n</div>', '[{\"id\":\"1\",\"path\":\"images\\/about\\/3f73479facb5693968865c35a5c00880.jpg\"},{\"id\":\"2\",\"path\":\"images\\/about\\/391118724f60be7ad4d5d990070c9e89.jpg\"}]', NULL, 'about', NULL, NULL, 'A', NULL, '2023-01-18 14:02:34', '2023-01-18 14:12:40', NULL);
+INSERT INTO `widgets` VALUES (1, 'Bangun Peradaban Berakhlak dan Berkarya', 'Yayasan Graha Dhuafa Indonesia', NULL, 'images/slider\\slider1.jpeg', NULL, 'slider', NULL, '[{\"text\":\"Tunaikan Sekarang\",\"url\":\"\\/app\\/zakat\",\"classname\":null}]', 'A', NULL, '2023-01-18 11:55:53', '2023-03-29 19:35:54', NULL);
+INSERT INTO `widgets` VALUES (2, 'Sedekah Anak Yatim Dhuafa Mandiri', 'Yayasan Graha Dhuafa Indonesia', NULL, 'images/slider\\slider2.jpeg', NULL, 'slider', NULL, '[{\"text\":\"Tunaikan Sekarang\",\"url\":\"\\/app\\/zakat\",\"classname\":null}]', 'A', NULL, '2023-01-18 11:56:38', '2023-03-29 19:36:18', NULL);
+INSERT INTO `widgets` VALUES (3, 'Siapkah diri Anda untuk menjadi volunteer selanjutnya?', 'Yayasan Graha Dhuafa Indonesia', NULL, 'images/slider\\slider3.jpeg', NULL, 'slider', NULL, NULL, 'A', NULL, '2023-01-18 11:57:18', '2023-03-29 19:02:50', NULL);
+INSERT INTO `widgets` VALUES (4, 'Zakat Infaq Shodaqoh', 'Graha Dhuafa Indonesia senantiasa berkomitmen untuk  terus ambil peran dalam menjaga generasi pelanjut. #PeduliMenjagaGenerasi', NULL, 'images/ads\\banner_ads.jpg', NULL, 'ads', NULL, '[{\"text\":\"Tunaikan\",\"url\":\"\\/app\\/zakat\",\"classname\":null}]', 'A', NULL, '2023-01-18 13:16:27', '2023-03-29 19:21:24', NULL);
+INSERT INTO `widgets` VALUES (5, 'Zakat Infaq Shodaqoh', 'Quis nostrud exercitation ullamco laboris nisi', '<p>Sed ullamcorper morbi tincidunt. Vitae congue mauris rhoncus aenean vel elit. Erat nam at lectus urna duis convallis convallis tellus. In iaculis nunc sed augue lacus. Pharetra convallis posuere morbi leo. Maecenas ultricies mi eget mauris pharetra.&nbsp;</p>\r\n<p>Tellus elementum sagittis vitae et leo duis ut diam. Arcu felis bibendum ut tristique et egestas quis ipsum suspendisse. Volutpat odio facilisis mauris sit </p>', 'images/widget\\5.jpg', NULL, 'general', NULL, '[{\"text\":\"Info Selanjutnya\",\"url\":null,\"classname\":null}]', 'NA', NULL, '2023-01-18 13:29:38', '2023-03-23 19:15:12', NULL);
+INSERT INTO `widgets` VALUES (6, 'Yayasan Graha Dhuafa Indonesia', NULL, '<p>\r\n    Graha Dhuafa Indonesia berdiri pada tahun 2016 dan bergerak dalam bidang sosial, kemanusiaan dan keagamaan.<br>\r\n</p>\r\n<div class=\"about-one__quote\">\r\n    <p>\r\n    Dari Komunitas Sosial, Kini menjadi Lembaga Profesional untuk Umat\r\n    </p>\r\n</div>\r\n<p class=\"mt-3\">\r\n    Perjalanan dimulai pada 2013 berawal dari komunitas sosial dan pendidikan yang di inisiasi oleh salah satu dosen UNIKOM dan STT Telkom kami konsen pada kegiatan berbagi dan mengajar anak-anak dhuafa, ada keinginan kegiatannya dapat semakin banyak dan berdampak untuk masyarakat sampai pada akhirnya tahun 2016 resmi menjadi yayasan dengan harapan hadirnya Graha Dhuafa Indonesia berdampak untuk masyarakat, semakin meluaskan manfaat, menjadi lembaga yang amanah dan bertumbuh memakmurkan negeri.\r\n</p>', '[{\"id\":\"1\",\"path\":\"images\\/about\\/about1.jpeg\"},{\"id\":\"2\",\"path\":\"images\\/about\\/about2.jpeg\"}]', NULL, 'about', NULL, NULL, 'A', NULL, '2023-01-18 14:02:34', '2023-03-29 19:17:36', NULL);
 
 SET FOREIGN_KEY_CHECKS = 1;

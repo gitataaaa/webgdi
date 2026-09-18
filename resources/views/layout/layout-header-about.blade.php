@@ -45,28 +45,57 @@
 </div>
 <nav class="main-menu main-menu-two">
     <div class="main-menu-two__wrapper">
-        <div class="main-menu-two__wrapper-inner">
+        <div class="main-menu-two__wrapper-inner d-flex justify-content-between align-items-center">
+            <!-- Logo Graha Dhuafa Indonesia: pojok kiri -->
             <div class="main-menu-two__left">
                 <div class="main-menu-two__logo">
-                    <a href="index.html"><img src="{{ asset('website/assets/images/custom/logo_gdi_long.png') }}" alt=""></a>
+                    <a href="{{ url('/') }}"><img src="{{ asset('website/assets/images/custom/logo_gdi_long.png') }}" alt=""></a>
                 </div>
             </div>
-            <div class="main-menu-two__main-menu-box">
+            <!-- Menu nav + tombol Zakat Sekarang: pojok kanan, sejajar tengah -->
+            <div class="main-menu-two__main-menu-box ms-auto d-flex align-items-center">
                 @include('layout.layout-menu');
-            </div>
-            <div class="main-menu-two__right">
-                <!--
-                <div class="main-menu-two__search-btn-box">
-                    <div class="main-menu-two__search-box">
-                        <a href="#" class="main-menu-two__search search-toggler icon-magnifying-glass"></a>
-                    </div>
-                    <div class="main-menu-two__btn-box">
-                        <a href="project-details.html" class="thm-btn main-menu-two__btn"><i
-                                class="icon-plus-symbol"></i>Add a Project</a>
-                    </div>
-                </div>
-                -->
             </div>
         </div>
     </div>
 </nav>
+
+<style>
+    /* === LAZ GDI Custom: unifikasi warna header, topbar & sidebar hijau === */
+    .main-header-two__top,
+    .main-menu-two,
+    .stricky-header.main-menu-two,
+    .mobile-nav__content {
+        background-color: #00875A;
+    }
+
+    /* === LAZ GDI Custom: header lebih ramping agar tidak menutupi konten === */
+    .main-header-two__top-inner {
+        padding: 5px 40px;
+    }
+    .main-menu-two__wrapper-inner {
+        padding: 6px 40px;
+    }
+    .main-menu-two__logo {
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+    .main-menu-two .main-menu__list > li,
+    .stricky-header .main-menu__list > li {
+        padding-top: 8px;
+        padding-bottom: 8px;
+    }
+    .main-menu-two .main-menu__list > li + li,
+    .stricky-header .main-menu__list > li + li {
+        margin-left: 32px;
+    }
+    .main-menu-two .main-menu__list > li.button .thm-btn {
+        padding: 10px 24px;
+        font-size: 13px;
+    }
+    .main-menu-two__main-menu-box {
+        margin-left: auto;
+        display: flex;
+        align-items: center;
+    }
+</style>

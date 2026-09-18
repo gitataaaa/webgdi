@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Laporan Donasi — Berdampak Lebih Luas</title>
+<style>
+  /* ====== Design tokens ====== */
+  :root {
+    --ink: #2b3a4a;          /* judul & angka */
+    --ink-soft: #3d4d5c;     /* subjudul */
+    --ink-label: #34495e;    /* label statistik */
+    --muted: #7a8a99;        /* keterangan kecil */
+    --orange: #e8622c;       /* aksen oranye */
+    --bg: #f9f9f9;           /* latar section */
+    --card-bg: #ffffff;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Inter', 'Roboto', 'Segoe UI', Arial, sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ====== Section wrapper ====== */
+  .laporan {
+    background: var(--bg);
+    padding: 4rem 1.5rem;
+  }
+
+  .laporan__canvas {
+    position: relative;
+    max-width: 1280px;
+    margin: 0 auto;
+  }
+
+  /* ====== Peta: kanan, di belakang teks ====== */
+  .laporan__map {
+    position: absolute;
+    top: 50%;
+    right: -4%;
+    transform: translateY(-54%);
+    width: 78%;
+    height: auto;
+    pointer-events: none;
+    user-select: none;
+    z-index: 0;
+  }
+
+  /* ====== Header: kiri atas ====== */
+  .laporan__head {
+    position: relative;
+    z-index: 1;
+    width: 38%;
+    min-height: 340px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    padding: 1rem;
+  }
+
+  .laporan__title {
+    font-size: clamp(1.8rem, 3.2vw, 2.6rem);
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 1rem;
+    line-height: 1.25;
+  }
+
+  .laporan__subtitle {
+    font-size: clamp(0.95rem, 1.4vw, 1.05rem);
+    font-weight: 600;
+    color: var(--ink-soft);
+    line-height: 1.65;
+    margin-bottom: 0.6rem;
+  }
+
+  .laporan__highlight {
+    font-size: clamp(0.85rem, 1.2vw, 0.95rem);
+    font-weight: 600;
+    color: var(--orange);
+  }
+
+  /* ====== Statistik: 4 kolom ====== */
+  .laporan__stats {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2.5rem;
+    margin-top: 6rem;
+    padding: 0 1rem;
+  }
+
+  .stat {
+    text-align: center;
+  }
+
+  .stat__number {
+    font-size: clamp(1.5rem, 2.6vw, 2rem);
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 0.5rem;
+  }
+
+  .stat__label {
+    font-size: clamp(1rem, 1.5vw, 1.1rem);
+    font-weight: 700;
+    color: var(--ink-label);
+    line-height: 1.45;
+    margin-bottom: 0.7rem;
+  }
+
+  .stat__desc {
+    font-size: 0.875rem;
+    color: var(--muted);
+    line-height: 1.65;
+    max-width: 260px;
+    margin: 0 auto;
+  }
+
+  /* ====== Tablet ====== */
+  @media (max-width: 991px) {
+    .laporan__canvas { display: flex; flex-direction: column; }
+
+    .laporan__map {
+      position: static;
+      transform: none;
+      width: 100%;
+      order: 1;
+      margin-bottom: 1.5rem;
+    }
+
+    .laporan__head {
+      order: 2;
+      width: 100%;
+      min-height: 0;
+      margin-bottom: 2.5rem;
+    }
+
+    .laporan__stats {
+      order: 3;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2rem;
+      margin-top: 0;
+    }
+  }
+
+  /* ====== HP ====== */
+  @media (max-width: 575px) {
+    .laporan { padding: 3rem 1.25rem; }
+
+    .laporan__stats {
+      grid-template-columns: 1fr;
+      gap: 2.25rem;
+    }
+  }
+</style>
+</head>
+<body>
+
+<section class="laporan">
+  <div class="laporan__canvas">
+
+    <img src="public/website/assets/images/custom/peta_sebaran_orange.svg"
+         alt="Peta sebaran manfaat di wilayah Indonesia"
+         class="laporan__map">
+
+    <header class="laporan__head">
+      <h1 class="laporan__title">Berdampak Lebih Luas</h1>
+      <p class="laporan__subtitle">
+        Berikut Laporan Donasi yang anda titipkan kepada Rumah
+        Zakat Selama Tahun 2025.
+      </p>
+      <p class="laporan__highlight">Dari Indonesia Hingga Penjuru Dunia</p>
+    </header>
+
+    <div class="laporan__stats">
+
+      <article class="stat">
+        <div class="stat__number">468,013M</div>
+        <h3 class="stat__label">Dana Tersalurkan</h3>
+        <p class="stat__desc">Merupakan total jumlah dana tahun 2025 yang disalurkan ke program ini</p>
+      </article>
+
+      <article class="stat">
+        <div class="stat__number">3.300.887</div>
+        <h3 class="stat__label">Penerima Layanan Masyarakat</h3>
+        <p class="stat__desc">Jumlah total penerima manfaat dari layanan manfaat seperti ambulan, dll</p>
+      </article>
+
+      <article class="stat">
+        <div class="stat__number">1.896.896</div>
+        <h3 class="stat__label">Penerima Manfaat</h3>
+        <p class="stat__desc">Jumlah total penerima bantuan atau manfaat dari berbagai asnaf</p>
+      </article>
+
+      <article class="stat">
+        <div class="stat__number">1.751</div>
+        <h3 class="stat__label">Desa &amp; Kelurahan</h3>
+        <p class="stat__desc">Jumlah desa binaan dimana program pemberdayaan berbasis wilayah dilaksanakan</p>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+</body>
+</html>

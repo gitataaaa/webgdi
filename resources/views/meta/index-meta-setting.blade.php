@@ -69,6 +69,70 @@
                     </div>
                 </div>
                 
+                <div class="mb-3 row">
+                    <label class="col-sm-2 col-form-label">Kantor Cabang</label>
+                    <div class="col-sm-10">
+                        <div class="mb-3 row">
+                            <label class="col-sm-2 col-form-label">Nama Cabang</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control needs-empty" name="branch_name">
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                            <label class="col-sm-2 col-form-label">Alamat</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control needs-empty" name="branch_addr">
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                            <label class="col-sm-2 col-form-label">No. Telp/HP</label>
+                            <div class="col-sm-6">
+                                <input type="text" class="form-control needs-empty" name="branch_phone">
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                            <label class="col-sm-2 col-form-label">&nbsp;</label>
+                            <div class="col-sm-6">
+                                <button type="button" class="btn btn-primary btn-branch"><i class="bi-plus-square"></i> Tambahkan</button>
+                            </div>
+                        </div>
+                        
+                        @php
+                            $arrayBranch = [];
+                            if(@$detail['branch']){
+                                $arrayBranch = json_decode($detail['branch'], TRUE);
+                            }
+                        @endphp
+                        <table class="table table-bordered" id="table-branch">
+                            <thead>
+                                <tr>
+                                    <th>Nama Cabang</th>
+                                    <th>Alamat</th>
+                                    <th>No. Telp/HP</th>
+                                    <th><i class="bi-trash"></i></th>
+                                </tr>
+                            </thead>
+                            <tbody id="data-branch">
+                                @if($arrayBranch)
+                                    @foreach($arrayBranch as $key=>$val)
+                                    <tr>
+                                        <input type="hidden" name="br_name[]" value="{{ $val['name'] }}"/>
+                                        <input type="hidden" name="br_addr[]" value="{{ $val['address'] }}"/>
+                                        <input type="hidden" name="br_phone[]" value="{{ $val['phone'] }}"/>
+                                        <td>{{ $val['name'] }}</td>
+                                        <td>{{ $val['address'] }}</td>
+                                        <td>{{ $val['phone'] }}</td>
+                                        <td><button type="button" class="btn btn-sm btn-danger btn-br-del"><i class="bi-trash"></i></button></td>
+                                    </tr>
+                                    @endforeach
+                                    <tr id="needs-hide" style="display: none"><td colspan="4">Tidak ada kantor cabang</td></tr>
+                                @else
+                                    <tr id="needs-hide"><td colspan="4">Tidak ada kantor cabang</td></tr>
+                                @endif
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
                 
                 <div class="mb-3 row">
                     <label class="col-sm-2 col-form-label">&nbsp;</label>
@@ -91,6 +155,35 @@
                 });
             });
 
+            $('.btn-branch').click(function(){
+                var thead = $('#table-branch');
+                var table = $('#data-branch');
+                var brName = $('[name=branch_name]').val();
+                var brAddr = $('[name=branch_addr]').val();
+                var brPhone = $('[name=branch_phone]').val();
+                thead.find('#needs-hide').hide();
+                table.append('<tr>'+
+                        '<input type="hidden" name="br_name[]" value="'+brName+'"/>'+
+                        '<input type="hidden" name="br_addr[]" value="'+brAddr+'"/>'+
+                        '<input type="hidden" name="br_phone[]" value="'+brPhone+'"/>'+
+                        '<td>'+brName+'</td>'+
+                        '<td>'+brAddr+'</td>'+
+                        '<td>'+brPhone+'</td>'+
+                        '<td><button type="button" class="btn btn-sm btn-danger btn-br-del"><i class="bi-trash"></i></button></td>'+
+                    '</tr>');
+                $('.needs-empty').val("")
+            })
+            $(document).on('click', '.btn-br-del', function(){
+                var tr = $(this).parent().parent()
+                var table = $('#table-branch');
+                tr.remove();
+                
+                trLength = table.find('tr').length - 1;
+                console.log(trLength)
+                if(trLength === 1){
+                    $('#needs-hide').show();
+                }
+            })
             /*
             $('.btn-upload-del').click(function(){
                 swal({

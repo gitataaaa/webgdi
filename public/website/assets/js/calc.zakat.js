@@ -1,6 +1,6 @@
 $(function(){
     maskMoney = function(value){
-        return new Intl.NumberFormat('en-US').format(value)
+        return new Intl.NumberFormat().format(value)
     }
     unmaskMoney = function(value){
         return value ? value.replace('.', '').replace(',', '').replace(/\D/g, '') : 0
@@ -20,6 +20,7 @@ $(function(){
     hitung_zakat = function(){
         var jenis = $('[name=zakat_type]').val()
         var nisab = $('#nisab_float').val()
+        var zakat = 0
 
         if(jenis == 'maal'){
             var income = unmaskMoney($('[name=value_treasure_gold]').val())
@@ -33,14 +34,22 @@ $(function(){
             var debt = unmaskMoney($('[name=value_debt]').val())
             selisih = parseFloat(income) + parseFloat(bonus) - debt
         }
-        //console.log(selisih)
-        if(selisih >= nisab){
-            zakat = 0.025 * selisih
-            $('#zakat-alert').html('<div class="alert alert-info">Harta SUDAH mencapai nishab. Dikenakan KEWAJIBAN ZAKAT</div>')
+        
+        nisab = nisab / 12;
+        if(nisab == 0 || nisab == null || nisab == ''){
+            zakat = 0
+            
+            $('#zakat-alert').html('<div class="alert alert-danger">Harga emas harus diisi terlebih dahulu.</div>')
         }else{
-            zakat = 0.00
-            $('#zakat-alert').html('<div class="alert alert-warning">Harta BELUM mencapai nishab. Tidak dikenakan kewajiban zakat</div>')
+            if(selisih >= nisab){
+                zakat = 0.025 * selisih
+                $('#zakat-alert').html('<div class="alert alert-info">Harta SUDAH mencapai nishab. Dikenakan KEWAJIBAN ZAKAT</div>')
+            }else{
+                zakat = 0.00
+                $('#zakat-alert').html('<div class="alert alert-warning">Harta BELUM mencapai nishab. Tidak dikenakan kewajiban zakat</div>')
+            }
         }
+        
 
         $('#zakat-total').html('Rp '+maskMoney(zakat))
         $('#zakat-total').attr('data-value', zakat)

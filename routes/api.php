@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\Api\ApiController;
+use App\Http\Controllers\Api\RedactorController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,7 +20,8 @@ use App\Http\Controllers\Api\ApiController;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
-
+/* PLUGINS: REDACTORX */
+Route::post('redactor/upload', [RedactorController::class, 'upload']);
 Route::get('sample', [ApiController::class, 'sample']);
 
 Route::post('store/payment', [ApiController::class, 'store_payment']);

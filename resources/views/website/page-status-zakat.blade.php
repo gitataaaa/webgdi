@@ -3,7 +3,7 @@
 @section('content')
 <div class="oc-card">
     <form>
-        <div class="oc-card-section oc-card-header">Detail Zakat</div>
+        <div class="oc-card-section oc-card-header oc-back oc-cursor" data-url="{{ url('app/zakat') }}">Detail Zakat</div>
         <div class="oc-card-section">
             <div class="form-group">
                 <ul class="list-group list-group-flush">
@@ -94,3 +94,13 @@
 </div>
 
 @endsection
+
+@push('script')
+<script>
+    $(function(){
+        $('.oc-back').click(function(){
+            window.location.href = $(this).data('url')
+        })
+    })
+</script>
+@endpush

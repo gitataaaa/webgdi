@@ -34,9 +34,10 @@
                             <div class="project-one__tag">
                                 <p>{{ $pg->category }}</p>
                             </div>
-                            <h3 class="project-one__title" style="height: 70px"><a href="/program/donasi/{{ $pg->slug }}">{{ $pg->title }}</a></h3>
+                            <h3 class="project-one__title" style="height: 70px">{{ $pg->title }}</h3>
+                            <!--<h3 class="project-one__title" style="height: 70px"><a href="/program/donasi/{{ $pg->slug }}">{{ $pg->title }}</a></h3>-->
 
-                            
+                            <!--
                             
                             <div class="project-one__remaing">
                                 <div class="icon">
@@ -73,6 +74,7 @@
                             </div>
                             <br/>
                             <a href="/program/donasi/{{ $pg->slug }}" class="thm-btn">Donasi Sekarang</a>
+                            -->
                         </div>
                     </div>
                 </div>

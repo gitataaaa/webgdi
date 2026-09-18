@@ -13,7 +13,7 @@ class Menu extends Model
     protected $table = 'menus';
 
     protected $fillable = [
-        'title', 'parent_id', 'menu_type', 'page_type', 'content', 'slug',
+        'title', 'subtitle', 'parent_id', 'menu_type', 'page_type', 'content', 'slug',
         'order', 'status_display', 'url', 'footer_display', 'featured_img',
         'user_verify' 
     ];

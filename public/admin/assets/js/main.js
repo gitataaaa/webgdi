@@ -39,15 +39,42 @@ ArticleEditor('#article', {
 
 /* redactorx */
 var header = $('meta[name="csrf_token"]').attr('content');
+var url = window.location;
+//console.log(url.origin+'/api/redactor/upload')
+
 RedactorX('#redactor', {
     image: {
         upload: '/admin/redactor/upload/',
         data: {
             _token: header
         },
-        multiple: false,
     }
 });
+/*
+RedactorX('#redactor',{
+    imageUpload: function(data, files, e, upload){
+        return new Promise(function(resolve, reject){
+            var url = '/admin/redactor/upload';
+            var xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function(e){
+                if(xhr.readyState === 4){
+                    if(xhr.status === 200){
+                        resolve(xhr.response);
+                    }else{
+                        reject(xhr.status);
+                    }
+                }
+            }
+            xhr.open('post', url);
+            xhr.send();
+        }).then(function(response){
+            upload.complete(response);
+        }).catch(function(response){
+            upload.complete(response);
+        })
+    }
+})
+*/
 
 $(document).ready(function(){
     $('.loader').hide();

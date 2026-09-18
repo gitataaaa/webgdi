@@ -13,6 +13,37 @@ const paymentModal = new bootstrap.Modal(document.getElementById("payment-modal"
     backdrop: 'static'
 })
 
+function separatePoint(val) {
+    // remove sign if negative
+    val = val.replace(/\D/g, '') //val.replace(/\./g,'')
+    var sign = 1;
+    if (val < 0) {
+      sign = -1;
+      val = -val;
+    }
+    // trim the number decimal point if it exists
+    let num = val.toString().includes('.') ? val.toString().split('.')[0] : val.toString();
+    let len = num.toString().length;
+    let result = '';
+    let count = 1;
+    //console.log(len)
+  
+    for (let i = len - 1; i >= 0; i--) {
+      result = num.toString()[i] + result;
+      if (count % 3 === 0 && count !== 0 && i !== 0) {
+        result = ',' + result;
+      }
+      count++;
+    }
+  
+    // add number after decimal point
+    if (val.toString().includes('.')) {
+      result = result + '.' + val.toString().split('.')[1];
+    }
+    // return result with - sign if negative
+    return sign < 0 ? '-' + result : result;
+}
+
 function modalPayment(){
     paymentModal.show()
 }
@@ -57,14 +88,16 @@ $(document).ready(function(){
 
     $('.money').keyup(function(){
         var el = $(this);
-        el.val(moneyMask(el.val()));
+        var value = separatePoint(el.val());
+        el.val(value);
     })
+    /*
     $('[name=zakat_nominal]').keyup(function(){
         var el = $(this);
         var value = el.val().replace(',','').toString();
         console.log(value)
         el.val(moneyMask(el.val()));
-    })
+    })*/
 
     $('.sapaan').click(function(){
         var el = $(this);

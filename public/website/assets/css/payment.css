@@ -71,6 +71,9 @@ body{
 .oc-text-header{
     font-weight: bold;
 }
+.oc-cursor{
+    cursor: pointer;
+}
 
 .mr-5{
     margin-right: 5px;

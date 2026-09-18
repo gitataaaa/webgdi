@@ -1,5 +1,8 @@
 @extends('layout.layout-page', ['active' => $active])
 @section('title', $pageTitle)
+@section('style')
+<link href="{{ asset('website/assets/css/page.css') }}" rel="stylesheet"/>
+@endsection
 
 @section('breadcrumb')
 <ul class="thm-breadcrumb list-unstyled">
@@ -7,7 +10,8 @@
     <li><span>/</span></li>
     <li>{{ @$detail->title }}</li>
 </ul>
-<h2>{{ @$detail->title }}</h2>
+<h2>{{ @$detail->title }} {!! @$detail->subtitle ? '<div class="subtitle">'.@$detail->subtitle.'</div>' : ''!!}</h2>
+
 @endsection
 
 @section('pageGeneral')
