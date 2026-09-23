@@ -111,23 +111,91 @@
             'date_publish' => '2026-02-20',
             'content'      => 'Pembangunan mushala dan tpa untuk menghidupkan kembali semangat belajar Al-Quran di lingkungan desa binaan yayasan.',
         ],
+        (object) [
+            'title'        => 'Pelatihan Menjahit untuk Ibu Rumah Tangga',
+            'slug'         => null,
+            'featured_img' => 'images/blog/sedekah-ramadhan.jpg',
+            'kategori'     => 'Program',
+            'date_publish' => '2026-02-12',
+            'content'      => 'Pelatihan keterampilan menjahit bagi ibu-ibu dhuafa agar mampu menghasilkan pemasukan tambahan bagi keluarga di rumah.',
+        ],
+        (object) [
+            'title'        => 'Donasi Alat Tulis ke Sekolah Dhuafa',
+            'slug'         => null,
+            'featured_img' => 'images/blog/rice-learnreliggions-com.jpg',
+            'kategori'     => 'Donasi',
+            'date_publish' => '2026-02-05',
+            'content'      => 'Pengadaan buku, alat tulis, dan tas sekolah bagi siswa-siswi dhuafa agar semangat belajar mereka tidak pernah padam.',
+        ],
+        (object) [
+            'title'        => 'Kajian Bulanan: Sabar dan Syukur',
+            'slug'         => null,
+            'featured_img' => 'images/blog/qiyamullail.jpg',
+            'kategori'     => 'Kajian',
+            'date_publish' => '2026-01-28',
+            'content'      => 'Kajian rutin bulanan membedah makna sabar dan syukur sebagai kunci ketenangan hati dalam menghadapi lika-liku kehidupan.',
+        ],
+        (object) [
+            'title'        => 'Buka Puasa Bersama Anak Yatim',
+            'slug'         => null,
+            'featured_img' => 'images/blog/cat.jpg',
+            'kategori'     => 'Program',
+            'date_publish' => '2026-01-20',
+            'content'      => 'Menghadirkan kebersamaan berbuka puasa dan tausiyah hangat bersama anak-anak yatim binaan di bulan penuh berkah.',
+        ],
+        (object) [
+            'title'        => 'Lomba Tahfiz Anak Berprestasi',
+            'slug'         => null,
+            'featured_img' => 'images/blog/download (4).jpeg',
+            'kategori'     => 'Edukasi',
+            'date_publish' => '2026-01-13',
+            'content'      => 'Ajang kompetisi hafalan Al-Quran juz 30 bagi anak-anak dalam rangka memotivasi generasi cinta Al-Quran.',
+        ],
+        (object) [
+            'title'        => 'Hidroponik untuk Ketahanan Pangan',
+            'slug'         => null,
+            'featured_img' => 'images/blog/wow.jpeg',
+            'kategori'     => 'Program',
+            'date_publish' => '2026-01-06',
+            'content'      => 'Pembuatan kebun hidroponik sederhana untuk keluarga dhuafa sebagai sumber sayur sehat dan nilai ekonomi baru.',
+        ],
+        (object) [
+            'title'        => 'Bantuan Korban Bencana Alam',
+            'slug'         => null,
+            'featured_img' => 'images/blog/8a0b575bfeb8b0ea7a2cf1fc2eecec38.jpg',
+            'kategori'     => 'Donasi',
+            'date_publish' => '2025-12-29',
+            'content'      => 'Respon cepat penyaluran bantuan logistik, sandang, dan layanan dapur umum bagi warga terdampak bencana.',
+        ],
+        (object) [
+            'title'        => 'Ambulance Gratis 24 Jam',
+            'slug'         => null,
+            'featured_img' => 'images/blog/panas.jpg',
+            'kategori'     => 'Program',
+            'date_publish' => '2025-12-21',
+            'content'      => 'Layanan ambulance gratis siap sedia 24 jam untuk memudahkan akses kesehatan bagi masyarakat yang membutuhkan.',
+        ],
     ]);
 
-    /* ---- Semua berita: DB (terbaru) + demo, total maksimal 10 kartu ----
-       Pagination "berkurang": halaman 1 tampil SEMUA berita, tiap klik Next
-       tampilannya berkurang 4 kartu (10 → 6 → 2); Prev menambah kembali.
-       Berita teratas (terbaru) selalu tetap tampil. */
-    $semuaBerita = collect(@$blogHome ?? [])->take(10)->values();
-    if ($semuaBerita->count() < 10) {
-        $semuaBerita = $semuaBerita->merge($beritaDemo->take(10 - $semuaBerita->count()));
+    /* ---- Semua berita: DB (terbaru) + demo, total 18 kartu ----
+       Pagination standard: setiap halaman menampilkan $perHalaman kartu
+       berdampingan (mis. halaman 1 = kartu 1-6, halaman 2 = kartu 7-12,
+       halaman 3 = kartu 13-18). Prev/Next & nomor halaman sinkron. */
+    $semuaBerita = collect(@$blogHome ?? [])->take(18)->values();
+    if ($semuaBerita->count() < 18) {
+        $semuaBerita = $semuaBerita->merge($beritaDemo->take(18 - $semuaBerita->count()));
     }
-    $perHalaman = 4;  /* jumlah kartu yang dikurangi per klik Next */
+    $perHalaman = 6;  /* jumlah kartu per halaman */
     $totalBerita = $semuaBerita->count();
     $totalHalaman = max(1, (int) ceil($totalBerita / $perHalaman));
     $halamanAktif = (int) (@$_GET['halaman'] ?? 1);
     $halamanAktif = min(max(1, $halamanAktif), $totalHalaman);
-    /* Jumlah kartu yang tampil pada halaman aktif */
-    $tampilSekarang = max(0, $totalBerita - (($halamanAktif - 1) * $perHalaman));
+    /* Rentang indeks kartu pada halaman aktif (untuk slicing tampilan) */
+    $mulaiData = ($halamanAktif - 1) * $perHalaman;
+    $akhirData = min($mulaiData + $perHalaman, $totalBerita);
+    /* Teks informasi halaman: "Menampilkan X - Y dari Z berita" */
+    $dariTampil = $totalBerita > 0 ? $mulaiData + 1 : 0;
+    $sampaiTampil = $totalBerita > 0 ? $akhirData : 0;
 
     /* ---- Sidebar: Popular posts (fallback ke data demo bila DB kosong) ---- */
     $beritaPopuler = collect(@$blogHomePopular ?? (@$blogHome ?? []));
@@ -162,8 +230,8 @@
                             $urlDetail = !empty($dt->slug) ? '/blog/' . $dt->slug : '/blog';
                             $excerpt = $potongExcerpt($dt->content ?? '');
                             $idxBerita = $loop->index;
-                            /* Kartu di luar jumlah tampil saat ini disembunyikan (ditampilkan via JS saat Prev) */
-                            $diLuarHalaman = $idxBerita >= $tampilSekarang;
+                            /* Kartu di luar rentang halaman aktif disembunyikan (ditampilkan via JS saat pindah halaman) */
+                            $diLuarHalaman = $idxBerita < $mulaiData || $idxBerita >= $akhirData;
                         @endphp
                         <article class="news-card{{ $diLuarHalaman ? ' news-card--hidden' : '' }}" data-news-index="{{ $idxBerita }}">
                             <a href="{{ $urlDetail }}" class="news-card__image">
@@ -190,7 +258,7 @@
                     </div>
 
                     <!-- Penghitung jumlah berita tampil (berubah tiap Next/Prev) -->
-                    <p class="news-counter" id="news-counter">Menampilkan <strong>{{ $tampilSekarang }}</strong> dari {{ $totalBerita }} berita</p>
+                    <p class="news-counter" id="news-counter">Menampilkan <strong>{{ $dariTampil }} - {{ $sampaiTampil }}</strong> dari {{ $totalBerita }} berita</p>
 
                     <!-- Pagination: Prev / nomor halaman / Next -->
                     @if($totalHalaman > 1)
@@ -211,28 +279,28 @@
                         <nav class="blog-pagination" aria-label="Navigasi halaman berita">
                             <ul class="blog-pagination__list">
                                 <li class="blog-pagination__item{{ $halamanAktif <= 1 ? ' blog-pagination__item--disabled' : '' }}">
-                                    <a class="blog-pagination__link" href="{{ $urlHalaman($halamanAktif - 1) }}"
+                                    <a class="blog-pagination__link" data-page="prev" href="{{ $urlHalaman($halamanAktif - 1) }}"
                                        aria-label="Halaman sebelumnya"{{ $halamanAktif <= 1 ? ' tabindex="-1"' : '' }}>&#10094; Prev</a>
                                 </li>
                                 @if($mulai > 1)
                                     <li class="blog-pagination__item">
-                                        <a class="blog-pagination__link" href="{{ $urlHalaman(1) }}">1</a>
+                                        <a class="blog-pagination__link" data-page="1" href="{{ $urlHalaman(1) }}">1</a>
                                     </li>
                                     <li class="blog-pagination__item blog-pagination__item--gap"><span>...</span></li>
                                 @endif
                                 @for($no = $mulai; $no <= $akhir; $no++)
                                     <li class="blog-pagination__item{{ $no === $halamanAktif ? ' blog-pagination__item--active' : '' }}">
-                                        <a class="blog-pagination__link" href="{{ $urlHalaman($no) }}"{{ $no === $halamanAktif ? ' aria-current="page"' : '' }}>{{ $no }}</a>
+                                        <a class="blog-pagination__link" data-page="{{ $no }}" href="{{ $urlHalaman($no) }}"{{ $no === $halamanAktif ? ' aria-current="page"' : '' }}>{{ $no }}</a>
                                     </li>
                                 @endfor
                                 @if($akhir < $totalHalaman)
                                     <li class="blog-pagination__item blog-pagination__item--gap"><span>...</span></li>
                                     <li class="blog-pagination__item">
-                                        <a class="blog-pagination__link" href="{{ $urlHalaman($totalHalaman) }}">{{ $totalHalaman }}</a>
+                                        <a class="blog-pagination__link" data-page="{{ $totalHalaman }}" href="{{ $urlHalaman($totalHalaman) }}">{{ $totalHalaman }}</a>
                                     </li>
                                 @endif
                                 <li class="blog-pagination__item{{ $halamanAktif >= $totalHalaman ? ' blog-pagination__item--disabled' : '' }}">
-                                    <a class="blog-pagination__link" href="{{ $urlHalaman($halamanAktif + 1) }}"
+                                    <a class="blog-pagination__link" data-page="next" href="{{ $urlHalaman($halamanAktif + 1) }}"
                                        aria-label="Halaman berikutnya"{{ $halamanAktif >= $totalHalaman ? ' tabindex="-1"' : '' }}>Next &#10095;</a>
                                 </li>
                             </ul>
@@ -271,82 +339,112 @@
 </section>
 
 <script>
-/* ===== Pagination tanpa reload (mode "berkurang") =====
-   Semua kartu sudah ada di DOM. Halaman 1 = tampil semua; tiap klik Next
-   menyembunyikan 4 kartu dari bawah (jumlah tampil berkurang); Prev
-   menambahkannya kembali. Posisi scroll halaman TIDAK bergerak. */
+/* ===== Pagination tanpa reload (mode standard) =====
+   Semua kartu sudah ada di DOM. currentPage menentukan rentang kartu
+   yang ditampilkan (6 kartu per halaman). Klik nomor / Prev / Next
+   mengubah currentPage lalu menyinkronkan: tampilan kartu, teks
+   penghitung "Menampilkan X - Y dari Z berita", highlight angka aktif,
+   dan status disabled Prev/Next. Posisi scroll halaman tidak bergerak. */
 (function () {
     var grid = document.getElementById('news-grid');
     var nav = document.querySelector('.blog-pagination');
-    if (!grid || !nav) return;
+    var counter = document.getElementById('news-counter');
+    if (!grid || !nav || !counter) return;
 
     var perHalaman = {{ $perHalaman }};
     var total = grid.querySelectorAll('.news-card').length;
     var totalHalaman = Math.max(1, Math.ceil(total / perHalaman));
-    var counter = document.getElementById('news-counter');
+
+    function clamp(no, min, max) {
+        return Math.min(Math.max(no, min), max);
+    }
+
+    /* State halaman aktif — satu sumber kebenaran untuk semua pembaruan */
+    var currentPage = clamp(parseInt((window.location.search.match(/halaman=(\d+)/) || [])[1], 10) || 1, 1, totalHalaman);
 
     function tampilHalaman(no) {
-        no = Math.min(Math.max(1, no), totalHalaman);
-        /* Mode berkurang: halaman 1 = semua, tiap Next mengurangi perHalaman kartu */
-        var tampilJumlah = Math.max(0, total - (no - 1) * perHalaman);
+        /* Update state dulu, baru sinkronkan seluruh tampilan */
+        currentPage = clamp(no, 1, totalHalaman);
+        var mulai = (currentPage - 1) * perHalaman;
+        var akhir = Math.min(mulai + perHalaman, total);
 
+        /* 1) Tampilkan kartu dalam rentang halaman aktif */
         grid.querySelectorAll('.news-card').forEach(function (card) {
             var idx = parseInt(card.getAttribute('data-news-index'), 10);
-            var tampil = idx < tampilJumlah;
+            var tampil = (idx >= mulai && idx < akhir);
             card.classList.toggle('news-card--hidden', !tampil);
-            /* Animasi fade-in untuk kartu yang baru muncul */
-            card.classList.remove('news-card--show');
             if (tampil) {
+                card.classList.remove('news-card--show');
                 void card.offsetWidth; /* restart animasi CSS */
                 card.classList.add('news-card--show');
+            } else {
+                card.classList.remove('news-card--show');
             }
         });
 
-        /* Perbarui penghitung "Menampilkan X dari Y berita" */
-        if (counter) {
-            counter.innerHTML = 'Menampilkan <strong>' + tampilJumlah + '</strong> dari ' + total + ' berita';
-        }
+        /* 2) Perbarui teks penghitung "Menampilkan X - Y dari Z berita" */
+        var dariN = total > 0 ? mulai + 1 : 0;
+        var sampaiN = total > 0 ? akhir : 0;
+        counter.innerHTML = 'Menampilkan <strong>' + dariN + ' - ' + sampaiN + '</strong> dari ' + total + ' berita';
 
-        /* Perbarui nomor halaman aktif */
-        nav.querySelectorAll('.blog-pagination__item').forEach(function (li) {
-            var a = li.querySelector('a');
-            if (!a) return;
-            var m = a.getAttribute('href').match(/halaman=(\d+)/);
-            var aktif = m && parseInt(m[1], 10) === no;
-            li.classList.toggle('blog-pagination__item--active', aktif);
-            if (aktif) a.setAttribute('aria-current', 'page');
-            else a.removeAttribute('aria-current');
+        /* 3) Highlight angka halaman aktif */
+        nav.querySelectorAll('.blog-pagination__link').forEach(function (a) {
+            var li = a.closest('.blog-pagination__item');
+            if (!li) return;
+            if (a.getAttribute('data-page') === String(currentPage) && li.classList.contains('blog-pagination__item--gap') === false) {
+                li.classList.add('blog-pagination__item--active');
+                a.setAttribute('aria-current', 'page');
+            } else {
+                li.classList.remove('blog-pagination__item--active');
+                a.removeAttribute('aria-current');
+            }
         });
 
-        /* Prev/Next nonaktif di ujung */
-        var prev = nav.querySelector('[aria-label="Halaman sebelumnya"]');
-        var next = nav.querySelector('[aria-label="Halaman berikutnya"]');
-        if (prev) prev.parentElement.classList.toggle('blog-pagination__item--disabled', no <= 1);
-        if (next) next.parentElement.classList.toggle('blog-pagination__item--disabled', no >= totalHalaman);
+        /* 4) Prev/Next nonaktif di ujung halaman */
+        nav.querySelectorAll('.blog-pagination__link[data-page="prev"], .blog-pagination__link[data-page="next"]').forEach(function (a) {
+            var li = a.closest('.blog-pagination__item');
+            if (!li) return;
+            var nonaktif = a.getAttribute('data-page') === 'prev' ? currentPage <= 1 : currentPage >= totalHalaman;
+            li.classList.toggle('blog-pagination__item--disabled', nonaktif);
+            if (nonaktif) a.setAttribute('tabindex', '-1');
+            else a.removeAttribute('tabindex');
+        });
 
-        /* Perbarui URL tanpa reload (?halaman=N) */
+        /* 5) Perbarui URL tanpa reload (?halaman=N) */
         if (window.history && history.pushState) {
             var url = new URL(window.location.href);
-            url.searchParams.set('halaman', no);
+            url.searchParams.set('halaman', currentPage);
             history.pushState({}, '', url);
         }
     }
 
+    /* Satu delegasi event untuk SELURUH tombol pagination */
     nav.addEventListener('click', function (e) {
         var a = e.target.closest('a.blog-pagination__link');
         if (!a) return;
-        if (a.parentElement.classList.contains('blog-pagination__item--disabled')) return;
-        var m = a.getAttribute('href').match(/halaman=(\d+)/);
-        if (!m) return;
-        e.preventDefault(); /* cegah lompat/lompatan anchor & reload */
-        tampilHalaman(parseInt(m[1], 10));
+        var li = a.closest('.blog-pagination__item');
+        if (li && li.classList.contains('blog-pagination__item--disabled')) return;
+
+        e.preventDefault(); /* cegah reload & lompatan anchor */
+
+        var page = a.getAttribute('data-page');
+        if (page === 'prev') {
+            tampilHalaman(currentPage - 1);
+        } else if (page === 'next') {
+            tampilHalaman(currentPage + 1);
+        } else {
+            tampilHalaman(parseInt(page, 10));
+        }
     });
 
-    /* Dukung tombol back/forward browser */
+    /* Dukung tombol back/forward browser: baca dari URL */
     window.addEventListener('popstate', function () {
         var m = window.location.search.match(/halaman=(\d+)/);
         tampilHalaman(m ? parseInt(m[1], 10) : 1);
     });
+
+    /* Sinkronkan keadaan awal (jika URL membawa ?halaman=N, mis. saat refresh) */
+    tampilHalaman(currentPage);
 })();
 </script>
 

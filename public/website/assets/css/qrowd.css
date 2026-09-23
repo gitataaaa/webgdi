@@ -50,6 +50,8 @@
 }
 
 body {
+  margin: 0;
+  padding: 0;
   font-family: var(--qrowd-font);
   color: var(--qrowd-gray);
   font-size: 16px;

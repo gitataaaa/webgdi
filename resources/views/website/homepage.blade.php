@@ -18,9 +18,13 @@
         display: none !important;
     }
 
-    /* Jarak agar foto hero & kartu slider program turun dan tidak tertutup navbar */
+    /* Jarak agar foto hero & kartu slider program turun dan tidak tertutup navbar.
+       Pakai padding-top (bukan margin-top) agar margin tidak collapse menembus
+       .page-wrapper yang memakai overflow:clip — margin collapse inilah yang
+       membuat area putih kosong 100px di atas header. */
     .main-slider-two {
-        margin-top: 100px;
+        margin-top: 0;
+        padding-top: 100px;
     }
 
     /* Rapikan jarak section informasi/berita: padding bawaan template terlalu besar (120px/90px) */
@@ -260,14 +264,7 @@
 
 
 
-
 @include('website.partials.program-unggulan')
-
-
-
-    
-    
-
 
 <section class="faq-one">
     <div class="faq-one-bg" style="background-image: url('website/assets/images/backgrounds/faq-one-bg.png')"></div>
@@ -291,6 +288,8 @@
 
 {{-- Section: Berdampak Lebih Luas (statistik donasi + peta oranye) --}}
 @include('website.partials.peta-dampak')
+
+@include('website.partials.timeline')
 
 @endsection
 

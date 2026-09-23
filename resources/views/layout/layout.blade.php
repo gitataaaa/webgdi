@@ -81,17 +81,17 @@
         @yield('homeAbout')
         <!--About One End-->
 
-        <!--Ready One Start-->
-        @yield('homeAds')
-        <!--Ready One End-->
+        <!--Every Step Start-->
+        @yield('homeInfo')
+        <!--Every Step End-->
 
         <!--Project TWo Start-->
         @yield('homeProgram')
         <!--Project TWo End-->
 
-        <!--Every Step Start-->
-        @yield('homeInfo')
-        <!--Every Step End-->
+        <!--Ready One Start-->
+        @yield('homeAds')
+        <!--Ready One End-->
 
         <!--News One Start-->
         @yield('homeBlog')
