@@ -13,6 +13,14 @@ use App\Http\Controllers\MessageController;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\ProgramController;
+use App\Http\Controllers\ProgramImplementasiController;
+use App\Http\Controllers\ProgramUtamaController;
+use App\Http\Controllers\ProgramLandingController;
+use App\Http\Controllers\ProgramDokumentasiController;
+use App\Http\Controllers\ProgramStatistikController;
+use App\Http\Controllers\ProgramFaqController;
+use App\Http\Controllers\ProgramManfaatController;
+use App\Http\Controllers\ProgramGaleriController;
 use App\Http\Controllers\WebsiteController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Kernel;
@@ -38,6 +46,11 @@ Route::get('/', [WebsiteController::class, 'index']);
 Route::get('/blog', [BlogFrontController::class, 'index'])->name('website.blog');
 Route::get('/blog/category/{kategori}', [BlogFrontController::class, 'index'])->name('website.blog.category');
 Route::get('/blog/{slug}', [BlogFrontController::class, 'detail'])->name('website.blog.detail');
+
+Route::get('/budaya', [WebsiteController::class, 'index_budaya']);
+Route::get('/cinta', [WebsiteController::class, 'index_cinta']);
+Route::get('/senyum', [WebsiteController::class, 'index_senyum']);
+Route::get('/wakaf-hibah', [WebsiteController::class, 'index_wakaf_hibah']);
 
 Route::get('/{slug}', [WebsiteController::class, 'index']);
 Route::get('/program/{slug}', [WebsiteController::class, 'index_program']);
@@ -113,6 +126,70 @@ Route::group(['prefix'=>'admin', 'middleware'=>['auth']], function(){
     Route::get('/program/realisasi/{program}/{id}/edit', [ProgramController::class, 'form_realisasi']);
     Route::get('/program/realisasi/{id}/delete', [ProgramController::class, 'delete_realisasi']);
     Route::post('/program/realisasi/add', [ProgramController::class, 'store_realisasi']);
+
+    /* PROGRAM: IMPLEMENTASI */
+    Route::get('/program/implementasi', [ProgramImplementasiController::class, 'index']);
+    Route::get('/program/implementasi/table', [ProgramImplementasiController::class, 'table']);
+    Route::get('/program/implementasi/add', [ProgramImplementasiController::class, 'form']);
+    Route::get('/program/implementasi/{id}/edit', [ProgramImplementasiController::class, 'form']);
+    Route::get('/program/implementasi/{id}/delete', [ProgramImplementasiController::class, 'delete']);
+    Route::post('/program/implementasi/add', [ProgramImplementasiController::class, 'store']);
+
+    /* PROGRAM: UTAMA */
+    Route::get('/program/utama', [ProgramUtamaController::class, 'index']);
+    Route::get('/program/utama/table', [ProgramUtamaController::class, 'table']);
+    Route::get('/program/utama/add', [ProgramUtamaController::class, 'form']);
+    Route::get('/program/utama/{id}/edit', [ProgramUtamaController::class, 'form']);
+    Route::get('/program/utama/{id}/delete', [ProgramUtamaController::class, 'delete']);
+    Route::post('/program/utama/add', [ProgramUtamaController::class, 'store']);
+
+    /* PROGRAM: HERO LANDING */
+    Route::get('/program/landing', [ProgramLandingController::class, 'index']);
+    Route::get('/program/landing/table', [ProgramLandingController::class, 'table']);
+    Route::get('/program/landing/urutan', [ProgramLandingController::class, 'urutan']);
+    Route::post('/program/landing/move', [ProgramLandingController::class, 'move']);
+    Route::get('/program/landing/add', [ProgramLandingController::class, 'form']);
+    Route::get('/program/landing/{id}/edit', [ProgramLandingController::class, 'form']);
+    Route::get('/program/landing/{id}/delete', [ProgramLandingController::class, 'delete']);
+    Route::post('/program/landing/add', [ProgramLandingController::class, 'store']);
+
+    /* PROGRAM: DOKUMENTASI */
+    Route::get('/program/dokumentasi', [ProgramDokumentasiController::class, 'index']);
+    Route::get('/program/dokumentasi/table', [ProgramDokumentasiController::class, 'table']);
+    Route::get('/program/dokumentasi/add', [ProgramDokumentasiController::class, 'form']);
+    Route::get('/program/dokumentasi/{id}/edit', [ProgramDokumentasiController::class, 'form']);
+    Route::get('/program/dokumentasi/{id}/delete', [ProgramDokumentasiController::class, 'delete']);
+    Route::post('/program/dokumentasi/add', [ProgramDokumentasiController::class, 'store']);
+
+    /* PROGRAM: STATISTIK (4 KOTAK) */
+    Route::get('/program/statistik', [ProgramStatistikController::class, 'index']);
+    Route::get('/program/statistik/table', [ProgramStatistikController::class, 'table']);
+    Route::get('/program/statistik/add', [ProgramStatistikController::class, 'form']);
+    Route::get('/program/statistik/{id}/edit', [ProgramStatistikController::class, 'form']);
+    Route::get('/program/statistik/{id}/delete', [ProgramStatistikController::class, 'delete']);
+    Route::post('/program/statistik/add', [ProgramStatistikController::class, 'store']);
+
+    /* PROGRAM: FAQ */
+    Route::get('/program/faq', [ProgramFaqController::class, 'index']);
+    Route::get('/program/faq/table', [ProgramFaqController::class, 'table']);
+    Route::get('/program/faq/add', [ProgramFaqController::class, 'form']);
+    Route::get('/program/faq/{id}/edit', [ProgramFaqController::class, 'form']);
+    Route::get('/program/faq/{id}/delete', [ProgramFaqController::class, 'delete']);
+    Route::post('/program/faq/add', [ProgramFaqController::class, 'store']);
+
+    /* PROGRAM: MANFAAT */
+    Route::get('/program/manfaat', [ProgramManfaatController::class, 'index']);
+    Route::get('/program/manfaat/table', [ProgramManfaatController::class, 'table']);
+    Route::get('/program/manfaat/add', [ProgramManfaatController::class, 'form']);
+    Route::get('/program/manfaat/{id}/edit', [ProgramManfaatController::class, 'form']);
+    Route::get('/program/manfaat/{id}/delete', [ProgramManfaatController::class, 'delete']);
+    Route::post('/program/manfaat/add', [ProgramManfaatController::class, 'store']);
+
+    /* PROGRAM: GALERI */
+    Route::get('/program/galeri', [ProgramGaleriController::class, 'index']);
+    Route::post('/program/galeri/upload', [ProgramGaleriController::class, 'upload']);
+    Route::post('/program/galeri/{id}/update', [ProgramGaleriController::class, 'update']);
+    Route::get('/program/galeri/{id}/delete', [ProgramGaleriController::class, 'delete']);
 
     Route::get('/program/rekapitulasi', [ProgramController::class, 'index_recap']);
     Route::get('/program/rekapitulasi/donatur', [ProgramController::class, 'index_recap_donatur']);

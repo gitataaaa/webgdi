@@ -64,105 +64,67 @@
 
 
     <div class="page-wrapper">
-        <header class="main-header">
-            <div class="main-header__top">
-                <div class="main-header__top-inner">
-                    <div class="main-header__top-left">
-                        @php
-                            $contact = App\Helper::displayContact();
-                        @endphp
-                        <ul class="list-unstyled main-header__contact-list">
-                            @if($contact['inst_addr'])
-                            <li>
-                                <div class="icon">
-                                    <i class="fas fa-map-marker-alt"></i>
-                                </div>
-                                <div class="text">
-                                    <p>{{$contact['inst_addr']}}</p>
-                                </div>
-                            </li>
-                            @endif
-
-                            @if($contact['inst_email'])
-                            <li>
-                                <div class="icon">
-                                    <i class="fas fa-envelope"></i>
-                                </div>
-                                <div class="text">
-                                    <p><a href="mailto:{{ $contact['inst_email'] }}">{{ $contact['inst_email'] }}</a></p>
-                                </div>
-                            </li>
-                            @endif
-                        </ul>
-                    </div>
-                    <div class="main-header__top-right">
-                        @php
-                            $socialMedia = App\Helper::displaySocialMedia();
-                        @endphp
-
-                        @if($socialMedia)
-                        <div class="main-header__social">
-                            @foreach($socialMedia as $sm)
-                                <a href="{{ $sm->url }}"><i class="{{ $sm->classname }}"></i></a>
-                            @endforeach
-                        </div>
-                        @endif
-                    </div>
-                </div>
-            </div>
-            <nav class="main-menu">
-                <div class="main-menu__wrapper">
-                    <div class="main-menu__wrapper-inner clearfix">
-                        <div class="main-menu__left">
-                            <div class="main-menu__logo">
-                                <a href="/"><img src="{{ asset('website/assets/images/custom/logo_gdi_ext.png') }}" alt=""></a>
-                            </div>
-                        </div>
-                        <div class="main-menu__main-menu-box">
-                            @include('layout.layout-menu', @$active ?? [])
-                        </div>
-                        <div class="main-menu__right">
-                            <!--
-                            <div class="main-menu-two__search-btn-box">
-                                <div class="main-menu-two__search-box">
-                                    <a href="#" class="main-menu-two__search search-toggler icon-magnifying-glass"></a>
-                                </div>
-                                <div class="main-menu-two__btn-box">
-                                    <a href="project-details.html" class="thm-btn main-menu-two__btn"><i
-                                            class="icon-plus-symbol"></i>Add a Project</a>
-                                </div>
-                            </div>
-                            -->
-                        </div>
-                    </div>
-                </div>
-            </nav>
+        <header class="main-header-two">
+            @include('layout.layout-header-about', ['active' => @$active ?? []])
         </header>
 
-        <div class="stricky-header stricked-menu main-menu">
+        <div class="stricky-header stricked-menu main-menu main-menu-two">
             <div class="sticky-header__content"></div><!-- /.sticky-header__content -->
         </div><!-- /.stricky-header -->
 
         <!--Page Header Start-->
+        @if(empty($hidePageHeader))
         <section class="page-header">
             <div class="page-header-bg" style="background-image: url({{ asset('website/assets/images/backgrounds/page-header-bg-3.jpeg') }})">
             </div>
-            <div class="page-header-shape-1 float-bob-x">
-                <img src="{{ asset('website/assets/images/shapes/page-header-shape-1.png') }}" alt="">
-            </div>
-            <div class="page-header-shape-2 float-bob-y">
-                <img src="{{ asset('website/assets/images/shapes/page-header-shape-2.png') }}" alt="">
-            </div>
-            <div class="page-header-shape-3 float-bob-x">
-                <img src="{{ asset('website/assets/images/shapes/page-header-shape-3.png') }}" alt="">
-            </div>
+            <div class="page-header-overlay" aria-hidden="true"></div>
             <div class="container">
                 <div class="page-header__inner">
                     @yield('breadcrumb')
                 </div>
             </div>
         </section>
+        @endif
         <!--Page Header End-->
+
+        <style>
+            /* === GDI Custom: samakan gaya page-header dengan tema hijau header === */
+            .page-header {
+                background: linear-gradient(135deg, #06301f 0%, #0a4a2e 55%, #0d5c38 100%);
+                overflow: hidden;
+            }
+
+            .page-header-bg {
+                opacity: 0.25;
+                mix-blend-mode: luminosity;
+            }
+
+            .page-header-overlay {
+                position: absolute;
+                inset: 0;
+                background:
+                    radial-gradient(600px 260px at 10% 0%, rgba(45, 212, 167, 0.25), transparent 60%),
+                    radial-gradient(500px 240px at 92% 20%, rgba(255, 138, 61, 0.18), transparent 55%);
+                pointer-events: none;
+            }
+
+            .page-header__inner h2 {
+                color: #ffffff;
+            }
+
+            .page-header__inner .subtitle {
+                color: #7ef0c0;
+            }
+
+            .thm-breadcrumb li a,
+            .thm-breadcrumb li span {
+                color: rgba(255, 255, 255, 0.75);
+            }
+
+            .thm-breadcrumb li + li::before {
+                color: rgba(255, 255, 255, 0.4);
+            }
+        </style>
 
         <!--General Page Start-->
         @yield('pageGeneral')
@@ -176,35 +138,14 @@
 
         @yield('pageContact')
 
-        
-        <section class="ready-one">
-            <div class="container">
-                <div class="ready-one__inner" style="background-image: url('website/assets/images/backgrounds/banner2.jpeg'); background-size: cover">
-                    <div class="ready-one-shape-1 float-bob-x">
-                        <img src="{{ asset('website/assets/images/shapes/ready-one-shape-1.png') }}" alt="">
-                    </div>
-                    <div class="ready-one__big-icon float-bob-y-2">
-                        <span class="icon-fundraiser"></span>
-                    </div>
-                    <div class="ready-one__left">
-                        <div class="icon">
-                            <span class="icon-fundraiser"></span>
-                        </div>
-                        <div class="content">
-                            <p>Zakat Infaq Shodaqoh</p>
-                            <h3>Graha Dhuafa Indonesia senantiasa berkomitmen untuk terus ambil peran dalam menjaga generasi pelanjut.</h3>
-                        </div>
-                    </div>
-                    <div class="ready-one__right">
-                        <a href="{{ url('app/zakat') }}" class="thm-btn ready-one__btn">Tunaikan</a>
-                    </div>
-                </div>
-            </div>
-        </section>
-
         <!--Site Footer Start-->
         <footer class="site-footer">
-            @include('layout.layout-footer')
+            @if(!empty($minimalFooter))
+                {{-- Footer ringkas khusus halaman tertentu (mis. Wakaf & Hibah) --}}
+                @include('layout.layout-footer-minimal')
+            @else
+                @include('layout.layout-footer')
+            @endif
         </footer>
         <!--Site Footer End-->
 

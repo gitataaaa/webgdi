@@ -103,6 +103,11 @@
     $videoSrc = $video['embed_url'];
     $videoSrc .= (strpos($videoSrc, '?') !== false ? '&' : '?') . 'enablejsapi=1&playsinline=1&rel=0&modestbranding=1';
 
+    /* Carousel video kegiatan (mis. halaman Wakaf & Hibah):
+       slide berisi teks keterangan kegiatan di kiri + video YouTube di kanan.
+       Jika controller tidak mengirim $videoSlides, tampil video tunggal seperti sebelumnya. */
+    $videoSlides = isset($videoSlides) && is_array($videoSlides) && count($videoSlides) ? $videoSlides : null;
+
     $defaultFaq = [
         [
             'question' => 'Bagaimana cara mendaftar sebagai peserta?',
@@ -127,6 +132,102 @@
     ];
     $faq = isset($timelineFaq) && is_array($timelineFaq) ? $timelineFaq : $defaultFaq;
 @endphp
+
+@if(!empty($videoSlides))
+<!-- ====== Video Kegiatan — Carousel: teks keterangan kiri + video kanan ====== -->
+<section class="gdi-videocar">
+    <div class="swiper-container thm-swiper__slider gdi-videocar__swiper" data-swiper-options='{
+        "slidesPerView": 1,
+        "loop": false,
+        "speed": 650,
+        "grabCursor": true,
+        "navigation": {
+            "nextEl": ".gdi-videocar__next",
+            "prevEl": ".gdi-videocar__prev"
+        }
+    }'>
+        <div class="swiper-wrapper">
+            @foreach($videoSlides as $vs)
+                <div class="swiper-slide gdi-videocar__slide">
+                    <div class="gdi-videocar__text">
+                        <p class="gdi-videocar__tagline">Video Kegiatan</p>
+                        <h3 class="gdi-videocar__title">{{ $vs['title'] }}</h3>
+                        <ul class="gdi-videocar__points">
+                            @foreach($vs['points'] as $p)
+                                <li>
+                                    <span class="gdi-videocar__num">{{ str_pad($loop->index + 1, 2, '0', STR_PAD_LEFT) }}</span>
+                                    <span>{{ $p }}</span>
+                                </li>
+                            @endforeach
+                        </ul>
+                    </div>
+                    <div class="gdi-videocar__media">
+                        <div class="gdi-videocar__frame">
+                            <iframe
+                                src="{{ $vs['embed_url'] }}{{ strpos($vs['embed_url'], '?') !== false ? '&' : '?' }}enablejsapi=1&playsinline=1&rel=0&modestbranding=1"
+                                title="{{ $vs['title'] }}"
+                                frameborder="0"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                allowfullscreen
+                                loading="lazy"></iframe>
+                            <div class="gdi-videocar__overlay">
+                                <button type="button" class="gdi-videocar__play" aria-label="Putar video">
+                                    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                                        <path d="M8 5.14v13.72c0 .9.97 1.46 1.75 1.01l11-6.86a1.19 1.19 0 0 0 0-2.01l-11-6.86A1.2 1.2 0 0 0 8 5.14z"/>
+                                    </svg>
+                                    <span>Putar Video</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            @endforeach
+        </div>
+    </div>
+
+    <!-- Panah navigasi di tepi kiri & kanan (vertikal tengah, seperti referensi) -->
+    <button type="button" class="gdi-videocar__arrow gdi-videocar__prev" aria-label="Video sebelumnya">
+        <i class="fas fa-chevron-left"></i>
+    </button>
+    <button type="button" class="gdi-videocar__arrow gdi-videocar__next" aria-label="Video berikutnya">
+        <i class="fas fa-chevron-right"></i>
+    </button>
+</section>
+@else
+<!-- ====== Video Youtube Embedded (di atas Jadwal Kegiatan) ====== -->
+<section class="gdi-video">
+    <div class="container">
+        <div class="gdi-video__inner">
+            <p class="gdi-video__tagline">VIDEO INFORMASI</p>
+            <h2 class="gdi-video__title">{{ $video['title'] }}</h2>
+            <p class="gdi-video__sub">Saksikan momen kebahagiaan adik-adik dalam kegiatan rekreasi dan edukasi bersama.</p>
+
+            <div class="gdi-video__stage">
+                <div class="gdi-video__glow" aria-hidden="true"></div>
+                <div class="gdi-video__frame">
+                    <iframe
+                        id="gdiVideoFrame"
+                        src="{{ $videoSrc }}"
+                        title="{{ $video['title'] }}"
+                        frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        allowfullscreen
+                        loading="lazy"></iframe>
+                    <div class="gdi-video__overlay" id="gdiVideoOverlay">
+                        <button type="button" class="gdi-video__play" id="gdiVideoPlay" aria-label="Putar video">
+                            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                                <path d="M8 5.14v13.72c0 .9.97 1.46 1.75 1.01l11-6.86a1.19 1.19 0 0 0 0-2.01l-11-6.86A1.2 1.2 0 0 0 8 5.14z"/>
+                            </svg>
+                            <span class="gdi-video__play-text">Putar Video</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+@endif
+<!-- ====== End Video ====== -->
 
 <!-- ====== Timeline Jadwal Kegiatan ====== -->
 <section class="gdi-timeline">
@@ -202,10 +303,18 @@
             @empty
                 <div class="gdi-timeline__empty">Belum ada jadwal kegiatan untuk ditampilkan.</div>
             @endforelse
+
+            <div class="gdi-timeline__flow" aria-hidden="true">
+                <span class="gdi-timeline__flow-line"></span>
+                <span class="gdi-timeline__flow-chip"><i class="fas fa-chevron-down"></i> Lanjut ke Tanya Jawab</span>
+            </div>
         </div>
     </div>
 </section>
 <!-- ====== End Timeline ====== -->
+
+{{-- Slot konten tambahan tepat di bawah timeline (mis. section penghargaan) --}}
+@yield('after_timeline')
 
 <!-- ====== Placeholder: FAQ Accordion ====== -->
 <section class="gdi-faq">
@@ -244,40 +353,6 @@
     </div>
 </section>
 <!-- ====== End FAQ ====== -->
-
-<!-- ====== Placeholder: Video Youtube Embedded ====== -->
-<section class="gdi-video">
-    <div class="container">
-        <div class="gdi-video__inner">
-            <p class="gdi-video__tagline">VIDEO INFORMASI</p>
-            <h2 class="gdi-video__title">{{ $video['title'] }}</h2>
-            <p class="gdi-video__sub">Saksikan momen kebahagiaan adik-adik dalam kegiatan rekreasi dan edukasi bersama.</p>
-
-            <div class="gdi-video__stage">
-                <div class="gdi-video__glow" aria-hidden="true"></div>
-                <div class="gdi-video__frame">
-                    <iframe
-                        id="gdiVideoFrame"
-                        src="{{ $videoSrc }}"
-                        title="{{ $video['title'] }}"
-                        frameborder="0"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                        allowfullscreen
-                        loading="lazy"></iframe>
-                    <div class="gdi-video__overlay" id="gdiVideoOverlay">
-                        <button type="button" class="gdi-video__play" id="gdiVideoPlay" aria-label="Putar video">
-                            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                                <path d="M8 5.14v13.72c0 .9.97 1.46 1.75 1.01l11-6.86a1.19 1.19 0 0 0 0-2.01l-11-6.86A1.2 1.2 0 0 0 8 5.14z"/>
-                            </svg>
-                            <span class="gdi-video__play-text">Putar Video</span>
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-<!-- ====== End Video ====== -->
 
 <script>
 document.addEventListener('DOMContentLoaded', function () {
@@ -339,11 +414,256 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 </script>
 
+<script>
+/* Carousel video kegiatan: pause semua video saat slide bergeser + tombol putar custom */
+document.addEventListener('DOMContentLoaded', function () {
+    document.querySelectorAll('.gdi-videocar').forEach(function (root) {
+        var swEl = root.querySelector('.gdi-videocar__swiper');
+        if (!swEl) return;
+
+        function pauseAllVideos() {
+            root.querySelectorAll('.gdi-videocar__frame iframe').forEach(function (f) {
+                try {
+                    f.contentWindow.postMessage(JSON.stringify({ event: 'command', func: 'pauseVideo', args: [] }), '*');
+                } catch (e) {}
+            });
+            root.querySelectorAll('.gdi-videocar__overlay').forEach(function (o) {
+                o.classList.remove('is-playing');
+            });
+        }
+
+        root.querySelectorAll('.gdi-videocar__overlay').forEach(function (ov) {
+            var btn = ov.querySelector('.gdi-videocar__play');
+            if (!btn) return;
+            btn.addEventListener('click', function () {
+                var frame = ov.parentElement.querySelector('iframe');
+                if (!frame) return;
+                try {
+                    frame.contentWindow.postMessage(JSON.stringify({ event: 'command', func: 'playVideo', args: [] }), '*');
+                } catch (e) {}
+                ov.classList.add('is-playing');
+            });
+        });
+
+        /* Pasang hook slideChange setelah qrowd.js menginisialisasi Swiper */
+        (function bindSwiper() {
+            if (swEl.swiper) {
+                swEl.swiper.on('slideChange', pauseAllVideos);
+            } else {
+                setTimeout(bindSwiper, 250);
+            }
+        })();
+    });
+});
+</script>
+
 <style>
+/* ================= Video Kegiatan (carousel teks kiri + video kanan) ================= */
+.gdi-videocar {
+    position: relative;
+    padding: 60px 0;
+    background: #ffffff;
+    overflow: hidden;
+}
+
+.gdi-videocar__swiper {
+    max-width: 1240px;
+    margin: 0 auto;
+    padding: 0 15px;
+}
+
+.gdi-videocar__slide {
+    display: grid;
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    align-items: center;
+    gap: 48px;
+    padding: 0 92px; /* ruang panah di tepi */
+}
+
+/* Kolom teks keterangan kegiatan */
+.gdi-videocar__text {
+    min-width: 0;
+}
+
+.gdi-videocar__tagline {
+    text-align: center;
+    color: #2f7d3b;
+    font-size: 12.5px;
+    font-weight: 800;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+}
+
+.gdi-videocar__title {
+    text-align: center;
+    font-size: clamp(24px, 3vw, 38px);
+    font-weight: 800;
+    color: #20242b;
+    line-height: 1.3;
+    margin-bottom: 24px;
+}
+
+.gdi-videocar__points {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 16px;
+}
+
+.gdi-videocar__points li {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    color: #46534c;
+    font-size: 15px;
+    line-height: 1.75;
+}
+
+.gdi-videocar__num {
+    flex: 0 0 auto;
+    min-width: 28px;
+    font-weight: 800;
+    color: #1a8b4c;
+}
+
+/* Kolom video */
+.gdi-videocar__media {
+    min-width: 0;
+}
+
+.gdi-videocar__frame {
+    position: relative;
+    border-radius: 14px;
+    overflow: hidden;
+    background: #0b1f16;
+    box-shadow: 0 26px 60px rgba(20, 58, 44, 0.20);
+    aspect-ratio: 16 / 9;
+}
+
+.gdi-videocar__frame iframe {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+}
+
+.gdi-videocar__overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(6, 30, 20, 0.30);
+    transition: opacity 0.3s ease;
+}
+
+.gdi-videocar__overlay.is-playing {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.gdi-videocar__play {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 28px;
+    border: none;
+    border-radius: 999px;
+    background: #e02f2f;
+    color: #ffffff;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 14px 34px rgba(0, 0, 0, 0.35);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.gdi-videocar__play:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 20px 44px rgba(0, 0, 0, 0.45);
+}
+
+.gdi-videocar__play svg {
+    width: 20px;
+    height: 20px;
+}
+
+/* Panah navigasi bundar abu di tepi kiri & kanan (seperti referensi) */
+.gdi-videocar__arrow {
+    position: absolute;
+    top: 50%;
+    z-index: 30;
+    width: 42px;
+    height: 42px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    border: none;
+    border-radius: 50%;
+    background: #4b5350;
+    color: #ffffff;
+    font-size: 14px;
+    cursor: pointer;
+    box-shadow: 0 10px 24px rgba(20, 58, 44, 0.25);
+    transform: translateY(-50%);
+    transition: background 0.3s ease, transform 0.3s ease;
+}
+
+.gdi-videocar__arrow:hover {
+    background: #1a8b4c;
+    transform: translateY(-50%) scale(1.06);
+}
+
+.gdi-videocar__arrow.gdi-videocar__prev {
+    left: 20px;
+}
+
+.gdi-videocar__arrow.gdi-videocar__next {
+    right: 20px;
+}
+
+@media (max-width: 991px) {
+    .gdi-videocar {
+        padding: 48px 0;
+    }
+
+    .gdi-videocar__slide {
+        grid-template-columns: 1fr;
+        gap: 30px;
+        padding: 0 60px;
+    }
+
+    .gdi-videocar__points li {
+        font-size: 14.5px;
+    }
+
+    .gdi-videocar__arrow {
+        width: 36px;
+        height: 36px;
+        font-size: 12px;
+    }
+
+    .gdi-videocar__arrow.gdi-videocar__prev {
+        left: 10px;
+    }
+
+    .gdi-videocar__arrow.gdi-videocar__next {
+        right: 10px;
+    }
+}
+
 /* ================= Timeline ================= */
 .gdi-timeline {
     position: relative;
-    padding: 56px 0 40px;
+    padding: 52px 0 64px;
     background-color: #f6fbf8;
 
     /* Pola dot grid halus (subtle dot pattern) */
@@ -353,7 +673,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 .gdi-timeline__header {
     text-align: center;
-    margin-bottom: 36px;
+    margin-bottom: 30px;
 }
 
 .gdi-timeline__tagline {
@@ -413,7 +733,22 @@ document.addEventListener('DOMContentLoaded', function () {
     grid-template-columns: 1fr 1fr;
     column-gap: var(--gdi-gap);
     align-items: stretch;
-    margin-bottom: 34px;
+    margin-bottom: 28px;
+}
+
+/* Penghubung horizontal tipis antara node kiri & kanan dalam satu baris,
+   membuat tiap pasangan kartu terlihat "terhubung" (bracket gate). */
+.gdi-timeline__row::before {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: calc(var(--gdi-gap) - 62px);
+    height: 2px;
+    transform: translate(-50%, -50%);
+    background: linear-gradient(to right, rgba(0, 135, 90, 0.55), rgba(0, 135, 90, 0.12));
+    border-radius: 999px;
+    z-index: 1;
 }
 
 .gdi-timeline__row:last-child {
@@ -429,13 +764,13 @@ document.addEventListener('DOMContentLoaded', function () {
    Node di-anchor ke ITEM (kolom kiri/kanan) tetapi digeser dengan
    calc() agar JATUH TEPAT DI GARIS VERTIKAL TENGAH (di antara kedua
    kolom), sehingga tidak pernah menutupi teks/tajuk di dalam kartu.
-   Node kiri = atas baris, node kanan = bawah baris (tidak bertumpuk). */
+   Node kiri & kanan sama-sama di-center vertikal (top:50%) sehingga
+   sepasang node dalam satu baris selalu simetris & sejajar. */
 .gdi-timeline__node {
     position: absolute;
     width: 54px;
     height: 54px;
     z-index: 2;
-    transform: translateX(-50%);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -446,12 +781,14 @@ document.addEventListener('DOMContentLoaded', function () {
 
 .gdi-timeline__item--left > .gdi-timeline__node {
     left: calc(100% + (var(--gdi-gap) / 2));
-    top: 44px;
+    top: 50%;
+    transform: translate(-50%, -50%);
 }
 
 .gdi-timeline__item--right > .gdi-timeline__node {
     left: calc(-1 * (var(--gdi-gap) / 2));
-    bottom: 44px;
+    top: 50%;
+    transform: translate(-50%, -50%);
 }
 
 .gdi-timeline__node svg {
@@ -641,6 +978,54 @@ document.addEventListener('DOMContentLoaded', function () {
     padding: 30px 0;
 }
 
+/* -------- Penghubung "nyambung ke bawah" menuju FAQ --------
+   Chip kecil di ujung bawah garis tengah, mengarahkan pengunjung ke
+   section Tanya Jawab yang berada tepat di bawahnya. */
+.gdi-timeline__flow {
+    position: absolute;
+    left: 50%;
+    bottom: -62px;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 7px;
+    z-index: 1;
+}
+
+.gdi-timeline__flow-line {
+    width: 2px;
+    height: 22px;
+    border-radius: 999px;
+    background: linear-gradient(to bottom, rgba(0, 135, 90, 0.55), rgba(0, 135, 90, 0.05));
+}
+
+.gdi-timeline__flow-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    color: #00875A;
+    background: #ffffff;
+    border: 1px solid #d7efe3;
+    padding: 8px 16px;
+    border-radius: 999px;
+    box-shadow: 0 6px 16px rgba(0, 135, 90, 0.12);
+    white-space: nowrap;
+}
+
+.gdi-timeline__flow-chip i {
+    animation: gdi-flow-bounce 1.6s ease-in-out infinite;
+}
+
+@keyframes gdi-flow-bounce {
+    0%, 100% { transform: translateY(0); opacity: 1; }
+    50%      { transform: translateY(3px); opacity: 0.5; }
+}
+
 /* Kolom tunggal di layar tablet ke bawah: garis di kiri, node di kiri */
 @media (max-width: 991px) {
     .gdi-timeline__list::before {
@@ -652,6 +1037,10 @@ document.addEventListener('DOMContentLoaded', function () {
     .gdi-timeline__row {
         display: block;
         margin-bottom: 22px;
+    }
+
+    .gdi-timeline__row::before {
+        display: none;
     }
 
     .gdi-timeline__item--left,
@@ -666,6 +1055,12 @@ document.addEventListener('DOMContentLoaded', function () {
         left: 25px;
         top: 30px;
         bottom: auto;
+        transform: translateX(-50%);
+    }
+
+    /* Chip penghubung disembunyikan di layar kecil (garis di sisi kiri) */
+    .gdi-timeline__flow {
+        display: none;
     }
 }
 
@@ -686,6 +1081,7 @@ document.addEventListener('DOMContentLoaded', function () {
         bottom: auto;
         width: 44px;
         height: 44px;
+        transform: translateX(-50%);
     }
 
     .gdi-timeline__node svg {
