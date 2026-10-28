@@ -84,7 +84,7 @@
                     <span class="galeri-format">WEBP</span>
                 </div>
                 <p class="galeri-dropzone__note">
-                    Foto yang dipilih masuk daftar pratinjau dulu. Tekan <strong>Simpan</strong> di bagian bawah untuk mengunggahnya, lalu klik <strong>Edit</strong> pada foto untuk mengisi keterangan &amp; alt text.
+                    Foto yang dipilih masuk daftar pratinjau dulu. Tekan <strong>Simpan</strong> di bagian bawah untuk mengunggahnya, lalu klik <strong>Edit</strong> pada foto untuk mengisi judul &amp; keterangan.
                 </p>
 
                 {{-- progress unggah --}}
@@ -106,7 +106,7 @@
             {{-- Daftar thumbnail --}}
             <div class="galeri-toolbar">
                 <h6 class="mb-0">Foto Galeri</h6>
-                <span class="galeri-toolbar__hint"><i class="bi bi-info-circle"></i> Klik foto untuk melihat ukuran penuh &middot; tombol Edit untuk keterangan</span>
+                <span class="galeri-toolbar__hint"><i class="bi bi-info-circle"></i> Klik foto untuk melihat ukuran penuh &middot; tombol Edit untuk judul &amp; keterangan</span>
             </div>
 
             <div class="galeri-grid" id="galeriGrid">
@@ -116,19 +116,24 @@
                         $fileSize = $filePath && is_file($filePath) ? filesize($filePath) : 0;
                     @endphp
                     <div class="galeri-thumb" data-id="{{ $g->id }}" data-size="{{ $fileSize }}"
-                         data-keterangan="{{ $g->keterangan }}" data-alt="{{ $g->alt_text }}">
+                         data-judul="{{ $g->keterangan }}" data-keterangan="{{ $g->alt_text }}">
                         <a href="{{ asset($g->gambar_url) }}" target="_blank" rel="noopener" class="galeri-thumb__link"
                            style="animation-delay: {{ min($loop->index, 14) * 35 }}ms" title="Lihat foto">
-                            <img src="{{ asset($g->gambar_url) }}" loading="lazy"
-                                 alt="{{ $g->alt_text ?: ($g->keterangan ?: 'Foto galeri') }}"/>
-                            <span class="galeri-thumb__overlay"><i class="bi bi-arrows-fullscreen"></i> Lihat foto</span>
-                            <span class="galeri-thumb__size">{{ $formatBytes($fileSize) }}</span>
-                            @if($g->keterangan)
-                                <span class="galeri-thumb__caption">{{ $g->keterangan }}</span>
+                            <span class="galeri-thumb__media">
+                                <img src="{{ asset($g->gambar_url) }}" loading="lazy"
+                                     alt="{{ $g->alt_text ?: ($g->keterangan ?: 'Foto galeri') }}"/>
+                                <span class="galeri-thumb__overlay"><i class="bi bi-arrows-fullscreen"></i> Lihat foto</span>
+                                <span class="galeri-thumb__size">{{ $formatBytes($fileSize) }}</span>
+                                @if($g->keterangan)
+                                    <span class="galeri-thumb__judul">{{ $g->keterangan }}</span>
+                                @endif
+                            </span>
+                            @if($g->alt_text)
+                                <span class="galeri-thumb__caption">{{ $g->alt_text }}</span>
                             @endif
                         </a>
                         <button type="button" class="galeri-thumb__edit btn-edit-photo" data-id="{{ $g->id }}"
-                                title="Edit keterangan &amp; alt text"><i class="bi bi-pencil"></i><span>Edit</span></button>
+                                title="Edit judul &amp; keterangan"><i class="bi bi-pencil"></i><span>Edit</span></button>
                         <button type="button" class="galeri-thumb__remove btn-del-photo" data-id="{{ $g->id }}" title="Hapus foto">&times;</button>
                     </div>
                 @endforeach
@@ -171,17 +176,17 @@
                         <input type="hidden" id="galeriEditId"/>
 
                         <div class="mb-3">
-                            <label class="form-label" for="galeriEditKeterangan">Keterangan <span class="text-muted fw-normal">(caption)</span></label>
-                            <input type="text" class="form-control" id="galeriEditKeterangan" maxlength="255"
+                            <label class="form-label" for="galeriEditJudul">Judul</label>
+                            <input type="text" class="form-control" id="galeriEditJudul" maxlength="255"
                                    placeholder="Contoh: Penyaluran bantuan sembako"/>
-                            <div class="galeri-modal__hint">Tampil sebagai caption pada foto di halaman program.</div>
+                            <div class="galeri-modal__hint">Tampil sebagai judul di dalam foto.</div>
                         </div>
 
                         <div>
-                            <label class="form-label" for="galeriEditAlt">Alt text</label>
-                            <input type="text" class="form-control" id="galeriEditAlt" maxlength="255"
-                                   placeholder="Deskripsi singkat foto untuk pembaca layar"/>
-                            <div class="galeri-modal__hint">Dipakai untuk aksesibilitas dan SEO gambar.</div>
+                            <label class="form-label" for="galeriEditKeterangan">Keterangan</label>
+                            <input type="text" class="form-control" id="galeriEditKeterangan" maxlength="255"
+                                   placeholder="Deskripsi singkat foto"/>
+                            <div class="galeri-modal__hint">Tampil sebagai keterangan di bawah foto.</div>
                         </div>
 
                         <p class="galeri-modal__error" id="galeriEditError" hidden></p>
@@ -398,16 +403,18 @@
             font-size: 12px;
         }
         .galeri-grid {
+            align-items: start;
             display: grid;
             gap: 14px;
             grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
         }
         .galeri-thumb {
-            aspect-ratio: 1 / 1;
             background: #ffffff;
             border: 1px solid #eef2f5;
             border-radius: 16px;
             box-shadow: 0 6px 18px rgba(16, 24, 40, .06);
+            display: flex;
+            flex-direction: column;
             overflow: hidden;
             position: relative;
             transition: border-color .2s ease, box-shadow .2s ease, transform .2s ease;
@@ -419,8 +426,15 @@
         }
         .galeri-thumb__link {
             animation: galeriFade .45s ease both;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            width: 100%;
+        }
+        .galeri-thumb__media {
+            aspect-ratio: 1 / 1;
             display: block;
-            height: 100%;
+            overflow: hidden;
             position: relative;
             width: 100%;
         }
@@ -428,14 +442,14 @@
             from { opacity: 0; transform: translateY(8px); }
             to   { opacity: 1; transform: translateY(0); }
         }
-        .galeri-thumb img {
+        .galeri-thumb__media img {
             display: block;
             height: 100%;
             object-fit: cover;
             transition: transform .35s ease;
             width: 100%;
         }
-        .galeri-thumb:hover img {
+        .galeri-thumb:hover .galeri-thumb__media img {
             transform: scale(1.06);
         }
         .galeri-thumb__overlay {
@@ -468,19 +482,32 @@
             top: 8px;
             z-index: 1;
         }
-        .galeri-thumb__caption {
+        .galeri-thumb__judul {
             background: linear-gradient(0deg, rgba(15, 23, 42, .72), rgba(15, 23, 42, 0));
             bottom: 0;
             color: #ffffff;
-            font-size: 11px;
-            font-weight: 600;
+            display: -webkit-box;
+            font-size: 11.5px;
+            font-weight: 700;
             left: 0;
+            line-height: 1.35;
             overflow: hidden;
             padding: 18px 10px 8px;
             position: absolute;
             right: 0;
-            text-overflow: ellipsis;
-            white-space: nowrap;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 2;
+        }
+        .galeri-thumb__caption {
+            color: #5b6b66;
+            display: -webkit-box;
+            font-size: 11.5px;
+            font-weight: 400;
+            line-height: 1.5;
+            overflow: hidden;
+            padding: 9px 11px 11px;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 2;
         }
         .galeri-thumb__edit {
             align-items: center;
@@ -780,8 +807,8 @@
             var editModalEl    = document.getElementById('galeriEditModal');
             var editForm       = document.getElementById('galeriEditForm');
             var editId         = document.getElementById('galeriEditId');
+            var editJudul      = document.getElementById('galeriEditJudul');
             var editKeterangan = document.getElementById('galeriEditKeterangan');
-            var editAlt        = document.getElementById('galeriEditAlt');
             var editPreview    = document.getElementById('galeriEditPreview');
             var editError      = document.getElementById('galeriEditError');
             var editSubmit     = document.getElementById('galeriEditSubmit');
@@ -1106,16 +1133,32 @@
             /* ============ edit keterangan & alt text ============ */
             var editModal = (editModalEl && window.bootstrap) ? new bootstrap.Modal(editModalEl) : null;
 
-            function applyPhotoInfo(thumb, keterangan, altText) {
+            function applyPhotoInfo(thumb, judul, keterangan) {
+                thumb.dataset.judul = judul;
                 thumb.dataset.keterangan = keterangan;
-                thumb.dataset.alt = altText;
 
                 var img = thumb.querySelector('img');
-                if (img) img.alt = altText || keterangan || 'Foto galeri';
+                if (img) img.alt = keterangan || judul || 'Foto galeri';
 
                 var link = thumb.querySelector('.galeri-thumb__link');
                 if (!link) return;
 
+                var media = link.querySelector('.galeri-thumb__media');
+
+                /* judul tampil di dalam foto */
+                var judulEl = link.querySelector('.galeri-thumb__judul');
+                if (judul) {
+                    if (!judulEl) {
+                        judulEl = document.createElement('span');
+                        judulEl.className = 'galeri-thumb__judul';
+                        (media || link).appendChild(judulEl);
+                    }
+                    judulEl.textContent = judul;
+                } else if (judulEl) {
+                    judulEl.remove();
+                }
+
+                /* keterangan tampil di bawah foto */
                 var caption = link.querySelector('.galeri-thumb__caption');
                 if (keterangan) {
                     if (!caption) {
@@ -1133,8 +1176,8 @@
                 if (!thumb || !editModal) return;
 
                 editId.value = thumb.dataset.id || '';
+                editJudul.value = thumb.dataset.judul || '';
                 editKeterangan.value = thumb.dataset.keterangan || '';
-                editAlt.value = thumb.dataset.alt || '';
                 editError.hidden = true;
                 editError.textContent = '';
 
@@ -1163,8 +1206,9 @@
                     payload.append('_token', token);
                     payload.append('program', program);
                     if (dokumentasi) payload.append('program_dokumentasi_id', dokumentasi);
-                    payload.append('keterangan', editKeterangan.value.trim());
-                    payload.append('alt_text', editAlt.value.trim());
+                    /* kolom `keterangan` menyimpan judul foto, kolom `alt_text` menyimpan keterangan foto */
+                    payload.append('keterangan', editJudul.value.trim());
+                    payload.append('alt_text', editKeterangan.value.trim());
 
                     var submitHtml = editSubmit.innerHTML;
                     editSubmit.disabled = true;
@@ -1186,7 +1230,7 @@
                         var thumb = grid.querySelector('.galeri-thumb[data-id="' + editId.value + '"]');
                         if (thumb) applyPhotoInfo(thumb, data.keterangan || '', data.alt_text || '');
                         if (editModal) editModal.hide();
-                        swal('Berhasil!', 'Keterangan foto telah diperbarui.', 'success');
+                        swal('Berhasil!', 'Judul & keterangan foto telah diperbarui.', 'success');
                     })
                     .catch(function (err) {
                         editError.textContent = err.message || 'Gagal menyimpan perubahan.';

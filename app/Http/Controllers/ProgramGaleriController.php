@@ -119,15 +119,16 @@ class ProgramGaleriController extends Controller
         return response()->json(['status' => true, 'count' => $count]);
     }
 
-    /* simpan keterangan & alt text satu foto */
+    /* simpan judul & keterangan satu foto
+       (kolom `keterangan` menyimpan judul, kolom `alt_text` menyimpan keterangan) */
     public function update(Request $req, $id)
     {
         $req->validate([
             'keterangan' => ['nullable', 'string', 'max:255'],
             'alt_text'   => ['nullable', 'string', 'max:255'],
         ], [
-            'keterangan.max' => 'Keterangan maksimal 255 karakter.',
-            'alt_text.max'   => 'Alt text maksimal 255 karakter.',
+            'keterangan.max' => 'Judul maksimal 255 karakter.',
+            'alt_text.max'   => 'Keterangan maksimal 255 karakter.',
         ]);
 
         $foto = ProgramGaleri::findOrFail($id);

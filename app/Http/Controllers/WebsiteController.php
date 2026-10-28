@@ -449,6 +449,7 @@ class WebsiteController extends Controller
         /* galeri: data kegiatan, level program, lalu foto bawaan halaman */
         $galeri = $this->wakafProgramData(ProgramGaleri::class, $programSlug, $dokumentasiId)
             ->map(function ($row) {
+                /* kolom `keterangan` = judul foto, kolom `alt_text` = keterangan foto */
                 return $this->wakafGaleriItem($row->gambar_url, $row->keterangan, $row->alt_text);
             })->all();
         if (empty($galeri)) {
@@ -492,7 +493,7 @@ class WebsiteController extends Controller
     }
 
     /* Satu item galeri untuk halaman Wakaf & Hibah. */
-    protected function wakafGaleriItem($gambarUrl, $keterangan, $altText)
+    protected function wakafGaleriItem($gambarUrl, $judul, $keterangan)
     {
         $src = $gambarUrl && file_exists(public_path($gambarUrl))
             ? asset($gambarUrl)
@@ -500,8 +501,9 @@ class WebsiteController extends Controller
 
         return [
             'src'     => $src,
-            'alt'     => $altText ?: ($keterangan ?: 'Foto galeri Wakaf & Hibah'),
-            'caption' => $keterangan ?: ($altText ?: 'Wakaf & Hibah'),
+            'alt'     => $keterangan ?: ($judul ?: 'Foto galeri Wakaf & Hibah'),
+            'judul'   => $judul ?: '',
+            'caption' => $keterangan ?: $judul,
         ];
     }
 

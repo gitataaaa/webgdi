@@ -660,19 +660,26 @@
 
     .wakaf-galeri__item {
         position: relative;
+        display: flex;
+        flex-direction: column;
+        background: #ffffff;
         border-radius: 18px;
         overflow: hidden;
         box-shadow: 0 10px 28px rgba(20, 58, 44, 0.12);
     }
 
-    .wakaf-galeri__item img {
+    .wakaf-galeri__media {
+        position: relative;
+    }
+
+    .wakaf-galeri__media img {
         width: 100%;
         height: 240px;
         object-fit: cover;
         display: block;
     }
 
-    .wakaf-galeri__item::after {
+    .wakaf-galeri__media::after {
         content: "";
         position: absolute;
         inset: 0;
@@ -680,15 +687,26 @@
         pointer-events: none;
     }
 
-    .wakaf-galeri__caption {
+    .wakaf-galeri__judul {
         position: absolute;
         left: 18px;
+        right: 18px;
         bottom: 14px;
         z-index: 1;
         color: #ffffff;
         font-weight: 700;
         font-size: 15px;
+        line-height: 1.35;
         text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+    }
+
+    .wakaf-galeri__caption {
+        margin: 0;
+        padding: 13px 18px 16px;
+        color: #5b6b66;
+        font-size: 13.5px;
+        font-weight: 400;
+        line-height: 1.6;
     }
 
     /* ================= CTA bawah ================= */
@@ -997,8 +1015,15 @@
     <div class="wakaf-galeri">
         @foreach($galeri as $g)
             <div class="wakaf-galeri__item">
-                <img src="{{ $g['src'] }}" alt="{{ $g['alt'] }}"/>
-                <span class="wakaf-galeri__caption">{{ $g['caption'] }}</span>
+                <div class="wakaf-galeri__media">
+                    <img src="{{ $g['src'] }}" alt="{{ $g['alt'] }}"/>
+                    @if(!empty($g['judul']))
+                        <span class="wakaf-galeri__judul">{{ $g['judul'] }}</span>
+                    @endif
+                </div>
+                @if(!empty($g['caption']))
+                    <p class="wakaf-galeri__caption">{{ $g['caption'] }}</p>
+                @endif
             </div>
         @endforeach
     </div>

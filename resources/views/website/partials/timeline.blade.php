@@ -21,7 +21,6 @@
             'description' => 'Isi formulir online secara praktis di sistem kami ini atau melalui tautan resmi.',
             'status'      => 'selesai',
             'status_note' => 'Silakan isi data lengkap peserta dan unggah bukti pembayaran. Pendaftaran Tahap 1 & 2 telah ditutup.',
-            'icon'        => 'register',
         ],
         [
             'date'        => '08 - 09 JULI 2026',
@@ -29,7 +28,6 @@
             'description' => 'Isi formulir online secara praktis di sistem kami ini atau melalui tautan resmi.',
             'status'      => 'aktif',
             'status_note' => 'Silakan isi data lengkap peserta dan unggah bukti pembayaran. Pendaftaran Tahap 3 resmi dibuka!',
-            'icon'        => 'register3',
         ],
         [
             'date'        => '09 JULI 2026',
@@ -37,7 +35,6 @@
             'description' => 'Batas akhir pendaftaran online dan pelunasan administrasi Tahap 3.',
             'status'      => 'mendatang',
             'status_note' => 'Pendaftaran akan ditutup otomatis pada pukul 23:59 WIB.',
-            'icon'        => 'deadline',
         ],
         [
             'date'        => '10 JULI 2026',
@@ -45,7 +42,6 @@
             'description' => 'Cek pengumuman di Instagram @event.grahadhuafa atau langsung di tab status pendaftaran.',
             'status'      => 'mendatang',
             'status_note' => 'Berlaku untuk semua cabang lomba.',
-            'icon'        => 'announcement',
         ],
         [
             'date'        => '10 JULI 2026',
@@ -53,7 +49,6 @@
             'description' => 'Briefing daring via Zoom & pengumuman 5 finalis terbaik untuk Lomba Menyanyi, Pantomim, dan Pildacil.',
             'status'      => 'mendatang',
             'status_note' => 'Tautan Zoom akan dibagikan di grup WhatsApp resmi peserta.',
-            'icon'        => 'meeting',
         ],
         [
             'date'        => '10 JULI 2026',
@@ -61,7 +56,6 @@
             'description' => 'Pelaksanaan babak seleksi penyisihan offline untuk seluruh peserta Lomba Tahfiz Juz 30.',
             'status'      => 'mendatang',
             'status_note' => 'Tempat babak penyisihan dilaksanakan di Masjid Pandan Bandung.',
-            'icon'        => 'tahfiz',
         ],
         [
             'date'        => '11 JULI 2026 (SABTU)',
@@ -69,7 +63,6 @@
             'description' => 'Babak Penyisihan & Final Cerdas Cermat, serta Grand Final Lomba Pantomim & Menyanyi Solo.',
             'status'      => 'mendatang',
             'status_note' => 'Penyisihan LCC (09:00 - 11:30), Final LCC & Pantomim (13:00 - 15:00), Final Menyanyi (15:00 - 16:30).',
-            'icon'        => 'final',
         ],
         [
             'date'        => '12 JULI 2026 (MINGGU)',
@@ -77,23 +70,10 @@
             'description' => 'Pelaksanaan Lomba Menggambar, Pildacil, Tahfiz, Santunan Yatim, serta Pengumuman Pemenang seluruh lomba.',
             'status'      => 'mendatang',
             'status_note' => 'Menggambar (08:30 - 10:00), Pildacil (10:00 - 10:45), Tahfiz (10:45 - 11:30), Pengumuman Pemenang & Penyerahan Hadiah (13:00 - 14:15).',
-            'icon'        => 'awarding',
         ],
     ];
 
     $timeline = isset($timelineItems) && is_array($timelineItems) ? $timelineItems : $defaultTimeline;
-
-    // Kumpulan ikon SVG bersih (stroke, style feather) utk node timeline
-    $timelineIcons = [
-        'register' => '<path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><line x1="20" y1="8" x2="20" y2="14"/><line x1="23" y1="11" x2="17" y2="11"/>',
-        'register3' => '<path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><polyline points="17 11 19 13 23 9"/>',
-        'deadline' => '<circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>',
-        'announcement' => '<polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/>',
-        'meeting' => '<polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/>',
-        'tahfiz' => '<path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>',
-        'final' => '<circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/>',
-        'awarding' => '<polyline points="20 12 20 22 4 22 4 12"/><rect x="2" y="7" width="20" height="5"/><line x1="12" y1="22" x2="12" y2="7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/>',
-    ];
 
     $defaultVideo = [
         'title'     => 'Zoorney With Anak Yatim Dan Dhuafa | Kebun Binatang Bandung',
@@ -242,75 +222,62 @@
         </div>
 
         @php
-                    $halfCount = (int) ceil(count($timeline) / 2);
-                    $leftItems = array_slice($timeline, 0, $halfCount);
-                    $rightItems = array_slice($timeline, $halfCount);
-                    $timelineRows = [];
-                    foreach ($leftItems as $k => $item) {
-                        $timelineRows[] = [
-                            'left'  => $item,
-                            'right' => isset($rightItems[$k]) ? $rightItems[$k] : null,
-                        ];
-                    }
-                @endphp
-        <div class="gdi-timeline__list">
-            @forelse($timelineRows as $rowIndex => $row)
-                <div class="gdi-timeline__row">
-                    @foreach(['left', 'right'] as $side)
-                        @if(isset($row[$side]) && $row[$side])
-                            @php
-                                $item = $row[$side];
-                                $globalI = ($rowIndex * 2) + ($side === 'right' ? 1 : 0);
-                                $status = isset($item['status']) ? strtolower($item['status']) : 'mendatang';
-                                $statusKey = in_array($status, ['selesai', 'aktif']) ? $status : 'mendatang';
-                                $statusLabel = ['selesai' => 'Selesai', 'aktif' => 'Berlangsung', 'mendatang' => 'Mendatang'][$statusKey];
-                                $iconKey = isset($item['icon']) && isset($timelineIcons[$item['icon']]) ? $item['icon'] : 'register';
-                                $delay = ($globalI % 4) * 100;
-                            @endphp
-                            <div class="gdi-timeline__item gdi-timeline__item--{{ $side }} gdi-timeline__item--{{ $statusKey }} wow fadeInUp" data-wow-delay="{{ $delay }}ms">
-                                <div class="gdi-timeline__node gdi-timeline__node--{{ $statusKey }}">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                         stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                                        {!! $timelineIcons[$iconKey] !!}
-                                    </svg>
-                                </div>
-                                <div class="gdi-timeline__card">
-                                    <div class="gdi-timeline__card-top">
-                                        <span class="gdi-timeline__date">
-                                            <i class="fas fa-calendar-alt"></i>
-                                            {{ $item['date'] }}
-                                        </span>
-                                        <span class="gdi-timeline__badge gdi-timeline__badge--{{ $statusKey }}">
-                                            @if($statusKey === 'aktif')
-                                                <span class="gdi-timeline__badge-dot"></span>
-                                            @endif
-                                            {{ $statusLabel }}
-                                        </span>
-                                    </div>
-                                    <h3 class="gdi-timeline__card-title">{{ $item['title'] }}</h3>
-                                    <p class="gdi-timeline__card-desc">{{ $item['description'] }}</p>
-                                    @if(isset($item['status_note']) && $item['status_note'])
-                                        <div class="gdi-timeline__note gdi-timeline__note--{{ $statusKey }}">
-                                            <i class="fas fa-info-circle"></i>
-                                            {{ $item['status_note'] }}
-                                        </div>
-                                    @endif
-                                </div>
-                            </div>
-                        @endif
-                    @endforeach
-                </div>
-            @empty
-                <div class="gdi-timeline__empty">Belum ada jadwal kegiatan untuk ditampilkan.</div>
-            @endforelse
+            $timelineCount = count($timeline);
+        @endphp
 
-            <div class="gdi-timeline__flow" aria-hidden="true">
-                <span class="gdi-timeline__flow-line"></span>
-                <span class="gdi-timeline__flow-chip"><i class="fas fa-chevron-down"></i> Lanjut ke Tanya Jawab</span>
+        <div class="gdi-timeline__frame">
+            <div class="gdi-timeline__clock" title="Jumlah agenda">
+                <span class="gdi-timeline__clock-dot" aria-hidden="true"></span>
+                <span class="gdi-timeline__clock-num">{{ str_pad($timelineCount, 2, '0', STR_PAD_LEFT) }}</span>
+            </div>
+
+            <div class="gdi-timeline__list">
+                @forelse($timeline as $i => $item)
+                    @php
+                        $status = isset($item['status']) ? strtolower($item['status']) : 'mendatang';
+                        $statusKey = in_array($status, ['selesai', 'aktif']) ? $status : 'mendatang';
+                        $statusLabel = ['selesai' => 'Selesai', 'aktif' => 'Berlangsung', 'mendatang' => 'Mendatang'][$statusKey];
+                        $side = ($i % 2 === 0) ? 'right' : 'left';
+                        $delay = ($i % 4) * 100;
+                    @endphp
+                    <div class="gdi-timeline__item gdi-timeline__item--{{ $side }} gdi-timeline__item--{{ $statusKey }} wow fadeInUp" data-wow-delay="{{ $delay }}ms">
+                        <div class="gdi-timeline__card">
+                            <span class="gdi-timeline__year">{{ $item['date'] }}</span>
+                            <div class="gdi-timeline__panel gdi-timeline__panel--main">
+                                <h3 class="gdi-timeline__card-title">{{ $item['title'] }}</h3>
+                                <p class="gdi-timeline__card-desc">{{ $item['description'] }}</p>
+                                @if(!empty($item['status_note']))
+                                    <p class="gdi-timeline__note gdi-timeline__note--{{ $statusKey }}">
+                                        <i class="fas fa-info-circle"></i>
+                                        {{ $item['status_note'] }}
+                                    </p>
+                                @endif
+                            </div>
+                            <div class="gdi-timeline__panel gdi-timeline__panel--side">
+                                <span class="gdi-timeline__side-label">Status</span>
+                                <span class="gdi-timeline__side-value gdi-timeline__side-value--{{ $statusKey }}">
+                                    @if($statusKey === 'aktif')
+                                        <span class="gdi-timeline__badge-dot" aria-hidden="true"></span>
+                                    @endif
+                                    {{ $statusLabel }}
+                                </span>
+                            </div>
+                        </div>
+                        <span class="gdi-timeline__node gdi-timeline__node--{{ $statusKey }}" aria-hidden="true"></span>
+                    </div>
+                @empty
+                    <div class="gdi-timeline__empty">Belum ada jadwal kegiatan untuk ditampilkan.</div>
+                @endforelse
+
+                <div class="gdi-timeline__flow" aria-hidden="true">
+                    <span class="gdi-timeline__flow-line"></span>
+                    <span class="gdi-timeline__flow-chip"><i class="fas fa-chevron-down"></i> Lanjut ke Tanya Jawab</span>
+                </div>
             </div>
         </div>
     </div>
 </section>
+<!-- ====== End Timeline ====== -->
 <!-- ====== End Timeline ====== -->
 
 {{-- Slot konten tambahan tepat di bawah timeline (mis. section penghargaan) --}}
@@ -704,260 +671,219 @@ document.addEventListener('DOMContentLoaded', function () {
     line-height: 1.7;
 }
 
-/* Alur tengah: 1 garis vertikal tunggal di tengah halaman */
+/* -------- Bingkai gradien hijau (tempat garis & kartu) -------- */
+.gdi-timeline__frame {
+    --tl-ink: #143a2c;
+    --tl-ink-soft: #5b6b66;
+    --tl-year-bg: #f2d391;
+    --tl-year-ink: #4a3a12;
+    position: relative;
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 30px 34px 34px;
+    border-radius: 28px;
+    background:
+        radial-gradient(120% 90% at 8% 0%, rgba(255, 255, 255, 0.55), transparent 55%),
+        linear-gradient(140deg, #f2faf5 0%, #dcefe4 50%, #b6d8c5 100%);
+    box-shadow: 0 24px 50px -34px rgba(6, 74, 46, 0.28);
+    overflow: hidden;
+}
+
+/* -------- Penghitung agenda di kiri atas -------- */
+.gdi-timeline__clock {
+    position: absolute;
+    top: 22px;
+    left: 26px;
+    z-index: 3;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 11px 18px;
+    border-radius: 14px;
+    background: linear-gradient(135deg, #04231a 0%, #06301f 55%, #0a4a2e 100%);
+    box-shadow:
+        0 10px 22px -12px rgba(3, 25, 18, 0.9),
+        inset 0 1px 0 rgba(255, 255, 255, 0.12);
+}
+
+.gdi-timeline__clock-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #e0776f;
+    box-shadow: 0 0 0 3px rgba(224, 119, 111, 0.16), 0 0 8px 1px rgba(224, 119, 111, 0.45);
+    animation: gdi-tl-blink 1.6s ease-in-out infinite;
+}
+
+.gdi-timeline__clock-num {
+    font-family: ui-monospace, "SFMono-Regular", Consolas, monospace;
+    font-size: 30px;
+    line-height: 1;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    color: #ffffff;
+    font-variant-numeric: tabular-nums;
+}
+
+/* -------- Garis putus-putus vertikal di tengah -------- */
 .gdi-timeline__list {
     position: relative;
-    max-width: 1180px;
-    margin: 0 auto;
+    margin-top: 84px;
 }
 
 .gdi-timeline__list::before {
     content: "";
     position: absolute;
-    left: 50%;
     top: 0;
     bottom: 0;
-    width: 3px;
-    border-radius: 999px;
+    left: 50%;
+    width: 2px;
     transform: translateX(-50%);
-    background: linear-gradient(to bottom, #bff0dc, #00875A 55%, rgba(0, 135, 90, 0));
+    background-image: linear-gradient(to bottom, rgba(6, 92, 62, 0.28) 55%, transparent 55%);
+    background-size: 2px 14px;
+    background-repeat: repeat-y;
 }
 
-/* Baris kartu kiri-kanan sejajar (pair grid).
-   --gdi-gap: lebar "jalur tengah" antara kolom kiri & kanan tempat
-   lingkaran ikon diletakkan. Node tidak menyentuh bingkai kartu. */
-.gdi-timeline__row {
-    --gdi-gap: 110px;
+/* -------- Item kiri / kanan (bergantian) -------- */
+.gdi-timeline__item {
     position: relative;
     display: grid;
     grid-template-columns: 1fr 1fr;
-    column-gap: var(--gdi-gap);
-    align-items: stretch;
-    margin-bottom: 28px;
+    column-gap: 76px;
+    align-items: center;
+    margin-bottom: 44px;
 }
 
-/* Penghubung horizontal tipis antara node kiri & kanan dalam satu baris,
-   membuat tiap pasangan kartu terlihat "terhubung" (bracket gate). */
-.gdi-timeline__row::before {
-    content: "";
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    width: calc(var(--gdi-gap) - 62px);
-    height: 2px;
-    transform: translate(-50%, -50%);
-    background: linear-gradient(to right, rgba(0, 135, 90, 0.55), rgba(0, 135, 90, 0.12));
-    border-radius: 999px;
-    z-index: 1;
-}
-
-.gdi-timeline__row:last-child {
+.gdi-timeline__item:last-of-type {
     margin-bottom: 0;
 }
 
-.gdi-timeline__item {
+.gdi-timeline__item--left > .gdi-timeline__card {
+    grid-column: 1;
+}
+
+.gdi-timeline__item--right > .gdi-timeline__card {
+    grid-column: 2;
+}
+
+/* -------- Simpul belah ketupat di garis tengah -------- */
+.gdi-timeline__node {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 11px;
+    height: 11px;
+    border-radius: 2px;
+    background: #ffffff;
+    transform: translate(-50%, -50%) rotate(45deg);
+    box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.55), 0 3px 8px rgba(6, 74, 46, 0.18);
+    z-index: 2;
+}
+
+.gdi-timeline__node--aktif {
+    animation: gdi-tl-node 2s ease-in-out infinite;
+}
+
+@keyframes gdi-tl-node {
+    0%, 100% { box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.55), 0 3px 8px rgba(6, 74, 46, 0.18); }
+    70%      { box-shadow: 0 0 0 12px rgba(6, 92, 62, 0), 0 3px 8px rgba(6, 74, 46, 0.18); }
+}
+
+/* -------- Kartu: dua panel + bayangan peach berlapis -------- */
+.gdi-timeline__card {
     position: relative;
+    display: flex;
+    align-items: stretch;
+    gap: 7px;
+    padding: 8px;
+    border-radius: 14px;
+    background: #ffffff;
+    box-shadow:
+        -9px 9px 0 0 #f4ddd3,
+        -17px 17px 0 -1px rgba(255, 245, 240, 0.7),
+        0 18px 30px -22px rgba(20, 58, 44, 0.35);
+}
+
+/* Badge tanggal di pojok kiri atas kartu */
+.gdi-timeline__year {
+    position: absolute;
+    top: -10px;
+    left: 14px;
+    z-index: 2;
+    max-width: calc(100% - 28px);
+    padding: 2px 9px;
+    border-radius: 5px;
+    background: var(--tl-year-bg);
+    color: var(--tl-year-ink);
+    font-size: 0.72rem;
+    font-weight: 700;
+    line-height: 1.5;
+    letter-spacing: 0.02em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    box-shadow: 0 3px 6px -3px rgba(80, 60, 20, 0.28);
+}
+
+.gdi-timeline__panel {
+    border-radius: 10px;
+    padding: 18px 16px 16px;
+}
+
+.gdi-timeline__panel--main {
+    flex: 1 1 auto;
     min-width: 0;
 }
 
-/* -------- Node / Ikon (SVG) --------
-   Node di-anchor ke ITEM (kolom kiri/kanan) tetapi digeser dengan
-   calc() agar JATUH TEPAT DI GARIS VERTIKAL TENGAH (di antara kedua
-   kolom), sehingga tidak pernah menutupi teks/tajuk di dalam kartu.
-   Node kiri & kanan sama-sama di-center vertikal (top:50%) sehingga
-   sepasang node dalam satu baris selalu simetris & sejajar. */
-.gdi-timeline__node {
-    position: absolute;
-    width: 54px;
-    height: 54px;
-    z-index: 2;
+.gdi-timeline__panel--side {
+    flex: 0 0 34%;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
-    border-radius: 50%;
-    color: #ffffff;
-    box-shadow: 0 8px 18px rgba(0, 135, 90, 0.35);
-}
-
-.gdi-timeline__item--left > .gdi-timeline__node {
-    left: calc(100% + (var(--gdi-gap) / 2));
-    top: 50%;
-    transform: translate(-50%, -50%);
-}
-
-.gdi-timeline__item--right > .gdi-timeline__node {
-    left: calc(-1 * (var(--gdi-gap) / 2));
-    top: 50%;
-    transform: translate(-50%, -50%);
-}
-
-.gdi-timeline__node svg {
-    width: 24px;
-    height: 24px;
-}
-
-/* Gradient hijau halus (default: aktif) */
-.gdi-timeline__node--aktif {
-    background: linear-gradient(135deg, #2dd4a7, #00875A);
-    animation: gdi-pulse 2s ease-in-out infinite;
-}
-
-.gdi-timeline__node--selesai {
-    background: linear-gradient(135deg, #a9f2d3, #10b981);
-    color: #065f46;
-    box-shadow: 0 8px 18px rgba(16, 185, 129, 0.30);
-}
-
-.gdi-timeline__node--mendatang {
-    background: #eafaf1;
-    color: #00875A;
-    border: 2px solid #bfe8d4;
-    box-shadow: 0 6px 14px rgba(0, 135, 90, 0.15);
-}
-
-@keyframes gdi-pulse {
-    0%   { box-shadow: 0 0 0 0 rgba(0, 135, 90, 0.45); }
-    70%  { box-shadow: 0 0 0 14px rgba(0, 135, 90, 0); }
-    100% { box-shadow: 0 0 0 0 rgba(0, 135, 90, 0); }
-}
-
-/* -------- Kartu -------- */
-.gdi-timeline__card {
-    background: #ffffff;
-    border: 1px solid #e5eef0;
-    border-top: 4px solid transparent;
-    border-radius: 16px;
-    padding: 18px 20px;
-    box-shadow: 0 6px 18px rgba(20, 58, 44, 0.06);
-    transition: transform 0.30s ease, box-shadow 0.30s ease, border-color 0.30s ease;
-    position: relative;
-    height: 100%;
-}
-
-.gdi-timeline__item--aktif .gdi-timeline__card {
-    border-top-color: #00875A;
-    border-color: #bfe8d4;
-}
-
-.gdi-timeline__item--selesai .gdi-timeline__card {
-    border-top-color: #10b981;
-}
-
-/* Lift-up + soft glow hijau saat hover */
-.gdi-timeline__card:hover {
-    transform: translateY(-6px);
-    box-shadow: 0 18px 34px rgba(0, 135, 90, 0.18);
-    border-color: #9adfc2;
-}
-
-.gdi-timeline__card-top {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex-wrap: nowrap;
-    gap: 8px;
-    margin-bottom: 10px;
-}
-
-.gdi-timeline__card-top .gdi-timeline__badge {
-    margin-left: auto;
-    white-space: nowrap;
-}
-
-.gdi-timeline__date {
-    display: inline-flex;
-    align-items: center;
-    font-size: 13px;
-    font-weight: 700;
-    color: #00875A;
-    letter-spacing: 0.04em;
-    background: #eafaf1;
-    border-radius: 8px;
-    padding: 5px 12px;
-}
-
-.gdi-timeline__date i {
-    margin-right: 8px;
-    color: #10b981;
-}
-
-/* -------- Badge status (pojok kanan atas) -------- */
-.gdi-timeline__badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    font-size: 12px;
-    font-weight: 700;
-    padding: 5px 14px;
-    border-radius: 999px;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-}
-
-.gdi-timeline__badge--selesai {
-    color: #065f46;
-    background: linear-gradient(135deg, #d4f7e6, #a9f2d3);
-}
-
-.gdi-timeline__badge--aktif {
-    color: #ffffff;
-    background: linear-gradient(135deg, #12b76a, #00875A);
-    box-shadow: 0 4px 12px rgba(0, 135, 90, 0.35);
-}
-
-.gdi-timeline__badge--mendatang {
-    color: #9a6700;
-    background: linear-gradient(135deg, #fff4d6, #ffe3a3);
-}
-
-.gdi-timeline__badge-dot {
-    width: 7px;
-    height: 7px;
-    border-radius: 50%;
-    background: #ffffff;
-    animation: gdi-blink 1.2s ease-in-out infinite;
-}
-
-@keyframes gdi-blink {
-    0%, 100% { opacity: 1; }
-    50%      { opacity: 0.25; }
+    text-align: center;
+    background: linear-gradient(180deg, #ffffff 0%, #fbf1ec 100%);
+    border: 1px solid #f3e7e0;
 }
 
 .gdi-timeline__card-title {
     font-size: 17px;
     font-weight: 700;
-    color: #1d2b26;
-    line-height: 1.4;
-    margin-bottom: 6px;
+    line-height: 1.3;
+    color: var(--tl-ink);
+    margin-bottom: 5px;
     overflow-wrap: break-word;
 }
 
 .gdi-timeline__card-desc {
-    color: #5b6b66;
-    line-height: 1.65;
-    margin-bottom: 10px;
+    margin: 0;
+    font-size: 12.5px;
+    line-height: 1.55;
+    color: var(--tl-ink-soft);
     overflow-wrap: break-word;
 }
 
+/* -------- Catatan status di dalam kartu -------- */
 .gdi-timeline__note {
-    font-size: 14px;
-    line-height: 1.6;
-    border-radius: 10px;
-    padding: 10px 14px;
+    margin: 10px 0 0;
+    padding: 8px 10px;
+    border-radius: 8px;
+    font-size: 11.5px;
+    line-height: 1.55;
     display: flex;
     align-items: flex-start;
-    gap: 8px;
+    gap: 6px;
 }
 
 .gdi-timeline__note i {
-    margin-top: 3px;
+    margin-top: 2px;
     flex-shrink: 0;
 }
 
 .gdi-timeline__note--selesai {
     color: #4b5563;
     background: #f3f6f8;
-    border-left: 3px solid #9ca3af;
+    border-left: 3px solid #c3ccd4;
 }
 
 .gdi-timeline__note--aktif {
@@ -972,32 +898,73 @@ document.addEventListener('DOMContentLoaded', function () {
     border-left: 3px solid #f5b93a;
 }
 
-.gdi-timeline__empty {
-    text-align: center;
-    color: #8a9a94;
-    padding: 30px 0;
+/* -------- Panel status (kanan kartu) -------- */
+.gdi-timeline__side-label {
+    display: block;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #5f7169;
+    margin-bottom: 4px;
 }
 
-/* -------- Penghubung "nyambung ke bawah" menuju FAQ --------
-   Chip kecil di ujung bawah garis tengah, mengarahkan pengunjung ke
-   section Tanya Jawab yang berada tepat di bawahnya. */
+.gdi-timeline__side-value {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 14.5px;
+    font-weight: 700;
+    line-height: 1.3;
+    color: var(--tl-ink);
+}
+
+.gdi-timeline__side-value--selesai {
+    color: #7a8a80;
+}
+
+.gdi-timeline__side-value--aktif {
+    color: #00875A;
+}
+
+.gdi-timeline__side-value--mendatang {
+    color: #a06a00;
+}
+
+.gdi-timeline__badge-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: currentColor;
+    animation: gdi-tl-blink 1.2s ease-in-out infinite;
+}
+
+@keyframes gdi-tl-blink {
+    0%, 100% { opacity: 1; }
+    50%      { opacity: 0.25; }
+}
+
+.gdi-timeline__empty {
+    text-align: center;
+    color: #f2fbf6;
+    padding: 40px 0;
+}
+
+/* -------- Penghubung ke Tanya Jawab -------- */
 .gdi-timeline__flow {
-    position: absolute;
-    left: 50%;
-    bottom: -62px;
-    transform: translateX(-50%);
+    position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 7px;
-    z-index: 1;
+    margin-top: 40px;
 }
 
 .gdi-timeline__flow-line {
     width: 2px;
     height: 22px;
     border-radius: 999px;
-    background: linear-gradient(to bottom, rgba(0, 135, 90, 0.55), rgba(0, 135, 90, 0.05));
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 0.75), rgba(255, 255, 255, 0.1));
 }
 
 .gdi-timeline__flow-chip {
@@ -1010,10 +977,10 @@ document.addEventListener('DOMContentLoaded', function () {
     text-transform: uppercase;
     color: #00875A;
     background: #ffffff;
-    border: 1px solid #d7efe3;
+    border: 1px solid rgba(255, 255, 255, 0.9);
     padding: 8px 16px;
     border-radius: 999px;
-    box-shadow: 0 6px 16px rgba(0, 135, 90, 0.12);
+    box-shadow: 0 6px 16px rgba(16, 44, 70, 0.18);
     white-space: nowrap;
 }
 
@@ -1026,71 +993,154 @@ document.addEventListener('DOMContentLoaded', function () {
     50%      { transform: translateY(3px); opacity: 0.5; }
 }
 
-/* Kolom tunggal di layar tablet ke bawah: garis di kiri, node di kiri */
+/* -------- Tablet & mobile: satu kolom, garis di kiri -------- */
 @media (max-width: 991px) {
+    .gdi-timeline__frame {
+        padding: 22px 20px 28px;
+        border-radius: 22px;
+    }
+
+    .gdi-timeline__clock {
+        top: 18px;
+        left: 18px;
+        padding: 9px 15px;
+    }
+
+    .gdi-timeline__clock-num {
+        font-size: 26px;
+    }
+
+    .gdi-timeline__list {
+        margin-top: 76px;
+    }
+
     .gdi-timeline__list::before {
-        left: 25px;
+        left: 21px;
         transform: none;
-        background: linear-gradient(to bottom, #bff0dc, #00875A);
     }
 
-    .gdi-timeline__row {
-        display: block;
-        margin-bottom: 22px;
-    }
-
-    .gdi-timeline__row::before {
-        display: none;
-    }
-
+    .gdi-timeline__item,
     .gdi-timeline__item--left,
     .gdi-timeline__item--right {
-        padding-left: 66px;
-        text-align: left;
+        grid-template-columns: 1fr;
+        column-gap: 0;
+        padding-left: 52px;
+        margin-bottom: 38px;
     }
 
-    /* Node kembali di-gutter kiri milik masing-masing kartu */
+    .gdi-timeline__item--left > .gdi-timeline__card,
+    .gdi-timeline__item--right > .gdi-timeline__card {
+        grid-column: 1 / -1;
+    }
+
+    .gdi-timeline__node,
     .gdi-timeline__item--left > .gdi-timeline__node,
     .gdi-timeline__item--right > .gdi-timeline__node {
-        left: 25px;
-        top: 30px;
-        bottom: auto;
-        transform: translateX(-50%);
+        left: 21px;
+        top: 50%;
+        transform: translate(-50%, -50%) rotate(45deg);
     }
 
-    /* Chip penghubung disembunyikan di layar kecil (garis di sisi kiri) */
-    .gdi-timeline__flow {
-        display: none;
+    .gdi-timeline__card {
+        box-shadow:
+            -7px 7px 0 0 #f4ddd3,
+            -13px 13px 0 -1px rgba(255, 245, 240, 0.7),
+            0 16px 26px -20px rgba(20, 58, 44, 0.32);
     }
 }
 
 @media (max-width: 575px) {
-    .gdi-timeline__list::before {
-        left: 21px;
+    .gdi-timeline__frame {
+        padding: 18px 14px 24px;
+        border-radius: 18px;
     }
 
+    .gdi-timeline__clock {
+        top: 14px;
+        left: 14px;
+        gap: 8px;
+        padding: 8px 13px;
+        border-radius: 11px;
+    }
+
+    .gdi-timeline__clock-num {
+        font-size: 22px;
+    }
+
+    .gdi-timeline__list {
+        margin-top: 66px;
+    }
+
+    .gdi-timeline__list::before {
+        left: 15px;
+    }
+
+    .gdi-timeline__item,
     .gdi-timeline__item--left,
     .gdi-timeline__item--right {
-        padding-left: 60px;
+        padding-left: 42px;
+        margin-bottom: 32px;
     }
 
+    .gdi-timeline__node,
     .gdi-timeline__item--left > .gdi-timeline__node,
     .gdi-timeline__item--right > .gdi-timeline__node {
-        left: 21px;
-        top: 28px;
-        bottom: auto;
-        width: 44px;
-        height: 44px;
-        transform: translateX(-50%);
-    }
-
-    .gdi-timeline__node svg {
-        width: 20px;
-        height: 20px;
+        left: 15px;
+        width: 10px;
+        height: 10px;
     }
 
     .gdi-timeline__card {
-        padding: 16px 18px;
+        flex-direction: column;
+        gap: 6px;
+        padding: 7px;
+    }
+
+    .gdi-timeline__year {
+        white-space: normal;
+        font-size: 0.68rem;
+    }
+
+    .gdi-timeline__panel {
+        padding: 15px 13px 13px;
+    }
+
+    .gdi-timeline__panel--side {
+        flex: 1 1 auto;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        gap: 8px;
+        text-align: left;
+        padding: 10px 13px;
+    }
+
+    .gdi-timeline__side-label {
+        margin-bottom: 0;
+    }
+
+    .gdi-timeline__card-title {
+        font-size: 15.5px;
+    }
+
+    .gdi-timeline__card-desc {
+        font-size: 12px;
+    }
+
+    .gdi-timeline__flow-chip {
+        max-width: 100%;
+        white-space: normal;
+        text-align: center;
+        font-size: 11px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .gdi-timeline__clock-dot,
+    .gdi-timeline__badge-dot,
+    .gdi-timeline__node--aktif,
+    .gdi-timeline__flow-chip i {
+        animation: none;
     }
 }
 
